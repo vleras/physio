@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<!-- saved from url=(0156)https://avacr7.com/web-pixels@ae1676cfwd2530674p4253c800m34e853cb/custom/web-pixel-205455734@1/sandbox/modern/en/products/pistola-massajadora-pro-physio-pro -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Pro Physio Pro | Professional Massage Gun | AVA – AVACR7</title>
+    <script src="./sae1676cfwd2530674p4253c800m34e853cbm.js.download"></script>
+
+    <script type="text/javascript">
+  (function(shopify) {shopify.extend('WebPixel::Render', function(api) {
+var analytics=api.analytics,browser=api.browser,init=api.init;
+analytics.subscribe('checkout_started', (event) => {
+
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://tatu.avacr7.com/Kbsrhxocd.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','8=aWQ9aHR0cHM6Ly90YXR1LmF2YWNyNy5jb20%3D&sort=desc');
+
+window.dataLayer = window.dataLayer || [];
+  
+  console.log('custom event', event)
+  window.dataLayer.push({
+   'event': 'begin_checkout',
+    'fired_from': 'custom_pixel',
+    'token': event.data.checkout.token,
+    'user_data': {
+      'email': event.data.checkout.email,
+      'phone': event.data.checkout.shippingAddress.phone,
+      'first_name': event.data.checkout.shippingAddress.firstName,
+      'last_name': event.data.checkout.shippingAddress.lastName,
+      'address': event.data.checkout.shippingAddress.address1,
+      'city': event.data.checkout.shippingAddress.city,
+      'region': event.data.checkout.shippingAddress.provinceCode,
+      'country': event.data.checkout.shippingAddress.countryCode,
+      'zip': event.data.checkout.shippingAddress.zip,
+        },
+   'ecommerce': {
+      'quantity': event.data.checkout.lineItems.length,
+      'value': event.data.checkout.totalPrice.amount,
+      'currency': event.data.checkout.currencyCode,
+      'items': event.data.checkout.lineItems.map(lineItem => ({
+        'item_id': lineItem.variant.product.id,
+        'item_name':lineItem.title,
+        'item_brand': lineItem.variant.product.vendor,
+        'item_category': lineItem.variant.product.type,
+        'price': lineItem.variant.price.amount,
+        'quantity': lineItem.quantity,
+
+})),
+  }});
+});
+
+analytics.subscribe('payment_info_submitted', (event) => {
+
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://tatu.avacr7.com/Kbsrhxocd.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','8=aWQ9aHR0cHM6Ly90YXR1LmF2YWNyNy5jb20%3D&sort=desc');
+
+window.dataLayer = window.dataLayer || [];
+  
+  console.log('custom event', event)
+  window.dataLayer.push({
+   'event': 'add_payment_info',
+    'fired_from': 'custom_pixel',
+    'token': event.data.checkout.token,
+    'user_data': {
+      'email': event.data.checkout.email,
+      'phone': event.data.checkout.shippingAddress.phone,
+      'first_name': event.data.checkout.shippingAddress.firstName,
+      'last_name': event.data.checkout.shippingAddress.lastName,
+      'address': event.data.checkout.shippingAddress.address1,
+      'city': event.data.checkout.shippingAddress.city,
+      'region': event.data.checkout.shippingAddress.provinceCode,
+      'country': event.data.checkout.shippingAddress.countryCode,
+      'zip': event.data.checkout.shippingAddress.zip,
+        },
+   'ecommerce': {
+      'quantity': event.data.checkout.lineItems.length,
+      'value': event.data.checkout.totalPrice.amount,
+      'currency': event.data.checkout.currencyCode,
+      'items': event.data.checkout.lineItems.map(lineItem => ({
+        'item_id': lineItem.variant.product.id,
+        'item_name':lineItem.title,
+        'item_brand': lineItem.variant.product.vendor,
+        'item_category': lineItem.variant.product.type,
+        'price': lineItem.variant.price.amount,
+        'quantity': lineItem.quantity,
+
+})),
+  }});
+});
+
+analytics.subscribe('checkout_address_info_submitted', (event) => {
+
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://tatu.avacr7.com/Kbsrhxocd.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','8=aWQ9aHR0cHM6Ly90YXR1LmF2YWNyNy5jb20%3D&sort=desc');
+
+window.dataLayer = window.dataLayer || [];
+  
+  console.log('custom event', event)
+  window.dataLayer.push({
+   'event': 'add_shipping_info',
+    'fired_from': 'custom_pixel',
+    'token': event.data.checkout.token,
+    'user_data': {
+      'email': event.data.checkout.email,
+      'phone': event.data.checkout.shippingAddress.phone,
+      'first_name': event.data.checkout.shippingAddress.firstName,
+      'last_name': event.data.checkout.shippingAddress.lastName,
+      'address': event.data.checkout.shippingAddress.address1,
+      'city': event.data.checkout.shippingAddress.city,
+      'region': event.data.checkout.shippingAddress.provinceCode,
+      'country': event.data.checkout.shippingAddress.countryCode,
+      'zip': event.data.checkout.shippingAddress.zip,
+        },
+   'ecommerce': {
+      'quantity': event.data.checkout.lineItems.length,
+      'value': event.data.checkout.totalPrice.amount,
+      'currency': event.data.checkout.currencyCode,
+      'items': event.data.checkout.lineItems.map(lineItem => ({
+        'item_id': lineItem.variant.product.id,
+        'item_name':lineItem.title,
+        'item_brand': lineItem.variant.product.vendor,
+        'item_category': lineItem.variant.product.type,
+        'price': lineItem.variant.price.amount,
+        'quantity': lineItem.quantity,
+
+})),
+  }});
+});
+
+analytics.subscribe('checkout_completed', (event) => {
+
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://tatu.avacr7.com/Kbsrhxocd.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','8=aWQ9aHR0cHM6Ly90YXR1LmF2YWNyNy5jb20%3D&sort=desc');
+
+window.dataLayer = window.dataLayer || [];
+  
+  console.log('custom event', event)
+  window.dataLayer.push({
+   'event': 'purchase_mdt',
+    'fired_from': 'custom_pixel',
+    'token': event.data.checkout.token,
+     'transaction_id': event.data.checkout.order.id,
+     'currency': event.data.checkout.currencyCode,
+     'value': event.data.checkout.totalPrice.amount,
+     'shipping': event.data.checkout.shippingLine.price.amount,
+     'tax': event.data.checkout.totalTax,
+     'new_customer': event.data.checkout.order.customer.isFirstOrder,
+'coupon': event.data.checkout.discountApplications[0].title,
+    'user_data': {
+      'email': event.data.checkout.email,
+      'phone': event.data.checkout.shippingAddress.phone,
+      'first_name': event.data.checkout.shippingAddress.firstName,
+      'last_name': event.data.checkout.shippingAddress.lastName,
+      'address': event.data.checkout.shippingAddress.address1,
+      'city': event.data.checkout.shippingAddress.city,
+      'region': event.data.checkout.shippingAddress.provinceCode,
+      'country': event.data.checkout.shippingAddress.countryCode,
+      'zip': event.data.checkout.shippingAddress.zip,
+        },
+   'ecommerce': {
+      'quantity': event.data.checkout.lineItems.length,
+      'value': event.data.checkout.totalPrice.amount,
+      'currency': event.data.checkout.currencyCode,
+      'items': event.data.checkout.lineItems.map(lineItem => ({
+        'item_id': lineItem.variant.product.id,
+        'item_name':lineItem.title,
+        'item_brand': lineItem.variant.product.vendor,
+        'item_category': lineItem.variant.product.type,
+        'price': lineItem.variant.price.amount,
+        'quantity': lineItem.quantity,
+
+})),
+  }});
+});
+
+});})(self.webPixelsManager.createShopifyExtend('205455734', 'custom'));
+
+</script>
+
+  </head>
+  <body>
+
+</body></html>
