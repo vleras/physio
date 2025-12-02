@@ -11,6 +11,7 @@ import {
 } from "@/components/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import ContinuousCarousel from "@/components/ContinuousCarousel";
+import VerticalContinuousCarousel from "@/components/VerticalContinuousCarousel";
 
 export default function TestCarouselPage() {
   const [logos, setLogos] = useState<string[]>([]);
@@ -275,6 +276,64 @@ export default function TestCarouselPage() {
                 pauseOnHover={true}
                 className="py-4"
               />
+            ) : (
+              <div className="flex items-center justify-center h-24">
+                <p>No logos available</p>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Vertical Continuous Moving Carousel */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold mb-4">
+            Vertical Continuous Moving Carousel
+          </h2>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            {isLoading ? (
+              <div className="flex items-center justify-center h-24">
+                <p>Loading...</p>
+              </div>
+            ) : logos.length > 0 ? (
+              <div className="flex justify-center">
+                <VerticalContinuousCarousel
+                  items={logos}
+                  speed={20}
+                  direction="up"
+                  pauseOnHover={true}
+                  className="py-4"
+                  maxWidth="700px"
+                />
+              </div>
+            ) : (
+              <div className="flex items-center justify-center h-24">
+                <p>No logos available</p>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Vertical Continuous Moving Carousel - Down Direction */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold mb-4">
+            Vertical Continuous Moving (Down Direction)
+          </h2>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            {isLoading ? (
+              <div className="flex items-center justify-center h-24">
+                <p>Loading...</p>
+              </div>
+            ) : logos.length > 0 ? (
+              <div className="flex justify-center">
+                <VerticalContinuousCarousel
+                  items={logos}
+                  speed={15}
+                  direction="down"
+                  pauseOnHover={true}
+                  className="py-4"
+                  maxWidth="700px"
+                />
+              </div>
             ) : (
               <div className="flex items-center justify-center h-24">
                 <p>No logos available</p>
