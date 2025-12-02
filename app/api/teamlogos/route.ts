@@ -5,16 +5,10 @@ import { existsSync } from 'fs';
 
 export async function GET() {
   try {
-    // Try to read from root images/teamlogos first, then public/images/teamlogos
-    const rootPath = join(process.cwd(), 'images', 'teamlogos');
-    const publicPath = join(process.cwd(), 'public', 'images', 'teamlogos');
+    // Read from public/images/teamlogos
+    const teamlogosPath = join(process.cwd(), 'public', 'images', 'teamlogos');
     
-    let teamlogosPath: string;
-    if (existsSync(rootPath)) {
-      teamlogosPath = rootPath;
-    } else if (existsSync(publicPath)) {
-      teamlogosPath = publicPath;
-    } else {
+    if (!existsSync(teamlogosPath)) {
       return NextResponse.json(
         { error: 'Teamlogos directory not found', images: [] },
         { status: 404 }

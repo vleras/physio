@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import ProductsSidebar from "@/components/ProductsSidebar";
 import HeroSlider2 from "@/components/HeroSlider2";
+import LogoCarousels from "@/components/LogoCarousel";
 import Image from "next/image";
 
 export default function Home() {
@@ -257,6 +258,16 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      {/* Logo Carousel Section */}
+      <section className="logo-carousel-section">
+        <LogoCarousels
+          title="Our Partners"
+          description="Trusted by leading organizations"
+          buttonText="Contact Us"
+          buttonLink="/services"
+        />
+      </section>
     </main>
   );
 }
