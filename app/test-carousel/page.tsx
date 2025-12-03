@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Carousel,
   CarouselContent,
@@ -12,10 +13,23 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import ContinuousCarousel from "@/components/ContinuousCarousel";
 import VerticalContinuousCarousel from "@/components/VerticalContinuousCarousel";
+import VerticalProductCarousel from "@/components/VerticalProductCarousel";
+import { getProducts } from "@/lib/getProducts";
+
+interface SupabaseProduct {
+  id: number;
+  name: string;
+  price: string;
+  description_1?: string;
+  description_2?: string;
+  description_3?: string;
+  images?: string[];
+}
 
 export default function TestCarouselPage() {
   const [logos, setLogos] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [products, setProducts] = useState<SupabaseProduct[]>([]);
 
   useEffect(() => {
     const fetchTeamLogos = async () => {
@@ -32,7 +46,17 @@ export default function TestCarouselPage() {
       }
     };
 
+    const fetchProducts = async () => {
+      try {
+        const data = await getProducts();
+        setProducts(data.slice(0, 6)); // Get first 6 products like sidebar
+      } catch (error) {
+        console.error("Error loading products:", error);
+      }
+    };
+
     fetchTeamLogos();
+    fetchProducts();
   }, []);
 
   return (
@@ -319,24 +343,21 @@ export default function TestCarouselPage() {
             Vertical Continuous Moving (Down Direction)
           </h2>
           <div className="bg-white p-6 rounded-lg shadow-md">
-            {isLoading ? (
+            {products.length === 0 ? (
               <div className="flex items-center justify-center h-24">
-                <p>Loading...</p>
+                <p>Loading products...</p>
               </div>
-            ) : logos.length > 0 ? (
+            ) : (
               <div className="flex justify-center">
-                <VerticalContinuousCarousel
-                  items={logos}
+                <VerticalProductCarousel
+                  products={products}
                   speed={15}
                   direction="down"
                   pauseOnHover={true}
                   className="py-4"
-                  maxWidth="700px"
+                  maxWidth="400px"
+                  height="600px"
                 />
-              </div>
-            ) : (
-              <div className="flex items-center justify-center h-24">
-                <p>No logos available</p>
               </div>
             )}
           </div>

@@ -212,7 +212,7 @@ export default function Home() {
       <section className="professionals-section">
         <div className="container">
           <h2 className="professionals-title animate-on-scroll">
-            Professionals who trust us
+            Profesionistët që na besojnë
           </h2>
           <div className="professionals-grid" ref={carouselRef}>
             {/* Duplicate images for seamless infinite scroll */}

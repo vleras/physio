@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getProducts } from "@/lib/getProducts";
@@ -19,7 +19,14 @@ export default function ProductsSidebar() {
   const [products, setProducts] = useState<SupabaseProduct[]>([]);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Tripled products for seamless infinite scroll
+  const tripledProducts = useMemo(() => {
+    if (products.length === 0) return [];
+    return [...products, ...products, ...products];
+  }, [products]);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -66,68 +73,27 @@ export default function ProductsSidebar() {
     };
   }, []);
 
-  // CAROUSEL-STYLE DOWNWARD AUTO-SCROLLING
+  // CSS Animation-based continuous scrolling (like VerticalProductCarousel)
   useEffect(() => {
-    if (products.length === 0) return;
+    if (products.length === 0 || !trackRef.current) return;
 
-    const productsContainer = sidebarRef.current?.querySelector(
-      ".sidebar-products"
-    ) as HTMLElement;
-    if (!productsContainer) return;
+    const track = trackRef.current;
+    const duration = 20; // Total animation duration in seconds
 
-    console.log("🎬 Starting DOWNWARD carousel-style auto-scroll");
+    console.log(
+      "🎬 Starting CSS animation DOWNWARD carousel-style auto-scroll"
+    );
 
-    let animationId: number;
-    let lastTime: number | null = null;
-    const scrollSpeed = 50; // pixels per second - DOWNWARD
+    // Clean up any existing animations
+    track.style.animation = "none";
+    // Force reflow
+    void track.offsetHeight;
 
-    const animate = (currentTime: number) => {
-      if (!lastTime) lastTime = currentTime;
-
-      const deltaTime = (currentTime - lastTime) / 1000; // Convert to seconds
-      lastTime = currentTime;
-
-      // Get container and item measurements
-      const container = sidebarRef.current;
-      if (!container) return;
-
-      const containerHeight = container.clientHeight;
-      const firstItem = productsContainer.querySelector(
-        ".sidebar-product-item"
-      ) as HTMLElement;
-      if (!firstItem) return;
-
-      const itemHeight = firstItem.offsetHeight;
-      const gap = 16; // 1rem gap from CSS
-      const totalContentHeight = (itemHeight + gap) * products.length;
-
-      // Calculate current scroll position
-      const currentScroll = productsContainer.scrollTop || 0;
-
-      // MOVE DOWNWARD (increase scroll position)
-      const newScroll = currentScroll + scrollSpeed * deltaTime;
-
-      // Reset when we reach the end (carousel loop)
-      if (newScroll >= totalContentHeight) {
-        productsContainer.scrollTop = 0; // Loop back to top
-      } else {
-        productsContainer.scrollTop = newScroll; // Continue scrolling down
-      }
-
-      // Update current index for tracking
-      const visibleIndex =
-        Math.floor(newScroll / (itemHeight + gap)) % products.length;
-      setCurrentIndex(visibleIndex);
-
-      animationId = requestAnimationFrame(animate);
-    };
-
-    animationId = requestAnimationFrame(animate);
+    // Apply the CSS animation
+    track.style.animation = `scroll-down ${duration}s linear infinite`;
 
     return () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
+      track.style.animation = "none";
     };
   }, [products.length]);
 
@@ -155,59 +121,62 @@ export default function ProductsSidebar() {
       {/* CAROUSEL-STYLE CONTENT AREA */}
       <div
         className="sidebar-products"
-        style={{ overflowY: "auto", height: "100%" }}
+        style={{ overflow: "hidden", height: "100%" }}
       >
-        {/* DUPLICATE CONTENT FOR SEAMLESS LOOPING */}
-        {[...products, ...products].map((product, index) => (
-          <div
-            key={`${product.id}-${index}`}
-            ref={(el) => {
-              const actualIndex = index % products.length;
-              if (index < products.length) {
-                itemsRef.current[actualIndex] = el;
-              }
-            }}
-            className="sidebar-product-item"
-            style={{
-              opacity: 1,
-              transform: "translateY(0)",
-              transition: `opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${
-                (index % products.length) * 0.1
-              }s, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${
-                (index % products.length) * 0.1
-              }s`,
-            }}
-          >
-            <div className="sidebar-product-image">
-              <Image
-                src={
-                  product.images && product.images.length > 0
-                    ? product.images[0]
-                    : "/images/services/hero1.png"
+        {/* Track container for seamless looping */}
+        <div
+          ref={trackRef}
+          className="flex flex-col"
+          style={{
+            willChange: "transform",
+          }}
+        >
+          {/* DUPLICATE CONTENT FOR SEAMLESS LOOPING */}
+          {tripledProducts.map((product, index) => (
+            <div
+              key={`${product.id}-${index}`}
+              ref={(el) => {
+                const actualIndex = index % products.length;
+                if (index < products.length) {
+                  itemsRef.current[actualIndex] = el;
                 }
-                alt={product.name}
-                width={130}
-                height={130}
-                loading="lazy"
-              />
-            </div>
-            <div className="sidebar-product-content">
-              <div className="sidebar-product-name">{product.name}</div>
-              <div className="sidebar-product-description">
-                {product.description_1 ||
-                  product.description_2 ||
-                  product.description_3 ||
-                  ""}
+              }}
+              className="sidebar-product-item flex-shrink-0"
+              style={{
+                opacity: 1,
+              }}
+            >
+              <div className="sidebar-product-image">
+                <Image
+                  src={
+                    product.images && product.images.length > 0
+                      ? product.images[0]
+                      : "/images/services/hero1.png"
+                  }
+                  alt={product.name}
+                  width={130}
+                  height={130}
+                  loading="lazy"
+                />
               </div>
-              <Link
-                href={`/product/${product.id}`}
-                className="sidebar-product-link"
-              >
-                Shiko Detajet
-              </Link>
+              <div className="sidebar-product-content">
+                <div className="sidebar-product-name">{product.name}</div>
+                <div className="sidebar-product-description">
+                  {product.description_1 ||
+                    product.description_2 ||
+                    product.description_3 ||
+                    ""}
+                </div>
+                <Link
+                  href={`/product/${product.id}`}
+                  className="sidebar-product-link"
+                >
+                  Shiko Detajet
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       <div className="sidebar-see-more">
