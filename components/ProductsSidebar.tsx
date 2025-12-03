@@ -146,7 +146,7 @@ export default function ProductsSidebar() {
             />
           </div>
           <div className="sidebar-cr7">
-            CR<span className="sidebar-cr7-number">7</span>
+            by CR<span className="sidebar-cr7-number">7</span>
           </div>
         </div>
         <h2>Produktet</h2>

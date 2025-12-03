@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import ProductsSidebar from "@/components/ProductsSidebar";
 import HeroSlider2 from "@/components/HeroSlider2";
-import LogoCarousels from "@/components/LogoCarousel";
 import Image from "next/image";
 
 export default function Home() {
@@ -186,12 +185,12 @@ export default function Home() {
             <div className="container">
               <h2 className="section-title animate-on-scroll">Lokacioni Ynë</h2>
               <p className="location-address animate-on-scroll">
-                Adresa: Rruga B...
+                Adresa: Rruga Valbona, Rruga C
               </p>
               <div className="location-content">
                 <div className="map-container animate-on-scroll">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2934.5!2d21.15!3d42.66!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDLCsDM5JzM2LjAiTiAyMcKwMDknMDAuMCJF!5e0!3m2!1sen!2s!4v1234567890123!5m2!1sen!2s"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2934.5!2d21.1775131!3d42.6495972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDLCsDM4JzU4LjYiTiAyMcKwMTAnMzkuMSJF!5e0!3m2!1sen!2s!4v1736789123456!5m2!1sen!2s"
                     width="100%"
                     height="400"
                     style={{ border: 0 }}
@@ -258,16 +257,6 @@ export default function Home() {
           </div>
         </section>
       )}
-
-      {/* Logo Carousel Section */}
-      <section className="logo-carousel-section">
-        <LogoCarousels
-          title="Our Partners"
-          description="Trusted by leading organizations"
-          buttonText="Contact Us"
-          buttonLink="/services"
-        />
-      </section>
     </main>
   );
 }

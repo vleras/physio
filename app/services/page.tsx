@@ -78,11 +78,11 @@ export default function Services() {
             </div>
             <div className="service-layout__image">
               <Image
-                src="/images/services/hero5.jpg"
+                src="/images/hero7.jpg"
                 alt="Our Services"
-                width={600}
-                height={600}
+                fill
                 className="service-layout__image-el"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
           </div>
@@ -91,11 +91,11 @@ export default function Services() {
           <div className="service-layout">
             <div className="service-layout__image">
               <Image
-                src="/images/services/hero6.jpg"
+                src="/images/hero8.jpg"
                 alt="Our Services"
-                width={600}
-                height={600}
+                fill
                 className="service-layout__image-el"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
             <div className="service-layout__content">

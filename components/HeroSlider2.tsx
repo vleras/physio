@@ -10,6 +10,8 @@ const heroImages = [
   "/images/services/hero5.jpg",
   "/images/services/hero6.jpg",
   "/images/services/needle.jpg",
+  // "/images/hero10.jpg",
+  "/homepage3.jpg",
 ];
 
 export default function HeroSlider2() {
