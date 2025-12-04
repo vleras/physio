@@ -5,7 +5,7 @@ import { getProducts, Product } from "@/lib/getProducts";
 import Image from "next/image";
 
 export default function ProductList() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>([] as Product[]);
 
   useEffect(() => {
     getProducts().then((products: Product[]) => setProducts(products));
