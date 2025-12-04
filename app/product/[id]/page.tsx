@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect, use, useRef } from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getProductById } from "@/lib/getProducts";
@@ -26,6 +26,10 @@ export default function ProductDetails({ params }: PageProps) {
   const [product, setProduct] = useState<SupabaseProduct | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+  const imageWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function fetchProduct() {
@@ -93,6 +97,53 @@ export default function ProductDetails({ params }: PageProps) {
     );
   };
 
+  // Touch drag handlers for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (productImages.length <= 1) return;
+    touchStartX.current = e.touches[0].clientX;
+    setIsDragging(true);
+    setDragOffset(0);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!touchStartX.current || productImages.length <= 1) return;
+    const currentX = e.touches[0].clientX;
+    const offset = currentX - touchStartX.current;
+    setDragOffset(offset);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || productImages.length <= 1) {
+      setIsDragging(false);
+      setDragOffset(0);
+      return;
+    }
+
+    const minSwipeDistance = 50; // Minimum distance to trigger navigation
+    const swipeThreshold = 100; // Distance for a strong swipe
+
+    if (Math.abs(dragOffset) > minSwipeDistance) {
+      if (dragOffset > swipeThreshold) {
+        // Swiped right - previous image
+        prevImage();
+      } else if (dragOffset < -swipeThreshold) {
+        // Swiped left - next image
+        nextImage();
+      } else if (dragOffset > 0) {
+        // Small right swipe
+        prevImage();
+      } else {
+        // Small left swipe
+        nextImage();
+      }
+    }
+
+    // Reset
+    touchStartX.current = null;
+    setIsDragging(false);
+    setDragOffset(0);
+  };
+
   return (
     <main className="main-content">
       <section className="product-detail-section">
@@ -125,7 +176,18 @@ export default function ProductDetails({ params }: PageProps) {
                   </button>
                 )}
                 {productImages.length > 0 && (
-                  <div className="product-image-wrapper">
+                  <div 
+                    className="product-image-wrapper"
+                    ref={imageWrapperRef}
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                    style={{
+                      transform: isDragging ? `translateX(${dragOffset}px)` : 'none',
+                      transition: isDragging ? 'none' : 'transform 0.3s ease-out',
+                      touchAction: 'pan-y pinch-zoom',
+                    }}
+                  >
                     <Image
                       key={currentImageIndex}
                       src={productImages[currentImageIndex]}
@@ -134,6 +196,7 @@ export default function ProductDetails({ params }: PageProps) {
                       width={800}
                       height={800}
                       priority={currentImageIndex === 0}
+                      draggable={false}
                     />
                   </div>
                 )}
