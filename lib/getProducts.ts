@@ -1,6 +1,16 @@
 import { supabase } from "@/lib/supabase";
 
-export async function getProducts() {
+export interface Product {
+  id: number;
+  name: string;
+  price: string;
+  description_1?: string;
+  description_2?: string;
+  description_3?: string;
+  images?: string[];
+}
+
+export async function getProducts(): Promise<Product[]> {
   const { data, error } = await supabase
     .from("Products")
     .select(
@@ -13,10 +23,10 @@ export async function getProducts() {
     return [];
   }
 
-  return data || [];
+  return (data || []) as Product[];
 }
 
-export async function getProductById(id) {
+export async function getProductById(id: number): Promise<Product | null> {
   const { data, error } = await supabase
     .from("Products")
     .select(
@@ -30,5 +40,6 @@ export async function getProductById(id) {
     return null;
   }
 
-  return data;
+  return data as Product | null;
 }
+
