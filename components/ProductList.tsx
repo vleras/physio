@@ -1,28 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getProducts } from "@/lib/getProducts";
+import { getProducts, type Product } from "@/lib/getProducts";
 import Image from "next/image";
-
-// LOCAL Product type - DO NOT IMPORT
-type Product = {
-  id: number;
-  name: string;
-  price: string;
-  description_1: string;
-  description_2: string;
-  description_3: string;
-  images?: string[];
-};
 
 export default function ProductList() {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    // EXPLICIT type casting - don't use .then(setProducts) directly
-    getProducts().then((data: any) => {
-      setProducts(data as Product[]);
-    });
+    getProducts().then(setProducts);
   }, []);
 
   return (
