@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useEffect, useState } from "react";
 import { getProducts, Product } from "@/lib/getProducts";
@@ -8,7 +8,7 @@ export default function ProductList() {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    getProducts().then(setProducts);
+    getProducts().then((products: Product[]) => setProducts(products));
   }, []);
 
   return (
@@ -22,11 +22,11 @@ export default function ProductList() {
           <p>{p.description_3}</p>
 
           {p.images?.map((img: string, i: number) => (
-            <Image 
-              key={i} 
-              src={img} 
+            <Image
+              key={i}
+              src={img}
               alt={`${p.name} - Image ${i + 1}`}
-              width={200} 
+              width={200}
               height={200}
             />
           ))}
@@ -35,4 +35,3 @@ export default function ProductList() {
     </div>
   );
 }
-
