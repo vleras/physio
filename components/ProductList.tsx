@@ -4,8 +4,18 @@ import { useEffect, useState } from "react";
 import { getProducts } from "@/lib/getProducts";
 import Image from "next/image";
 
+interface Product {
+  id: any;
+  name: any;
+  price: any;
+  description_1?: any;
+  description_2?: any;
+  description_3?: any;
+  images?: any;
+}
+
 export default function ProductList() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     getProducts().then(setProducts);
@@ -21,7 +31,7 @@ export default function ProductList() {
           <p>{p.description_2}</p>
           <p>{p.description_3}</p>
 
-          {p.images?.map((img, i) => (
+          {p.images?.map((img: any, i: number) => (
             <Image 
               key={i} 
               src={img} 
