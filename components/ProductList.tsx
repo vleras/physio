@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getProducts } from "@/lib/getProducts";
 import Image from "next/image";
 
-// Define Product type locally to avoid any import conflicts
+// LOCAL Product type - DO NOT IMPORT
 type Product = {
   id: number;
   name: string;
@@ -16,13 +16,11 @@ type Product = {
 };
 
 export default function ProductList() {
-  // Explicitly type the state with our local Product type
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    // Type the promise explicitly
+    // EXPLICIT type casting - don't use .then(setProducts) directly
     getProducts().then((data: any) => {
-      // Cast to our Product type
       setProducts(data as Product[]);
     });
   }, []);
