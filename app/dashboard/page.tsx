@@ -63,7 +63,6 @@ export default function Dashboard() {
     try {
       setLoading(true);
       const data = await getAllProducts();
-      console.log("Fetched products:", data);
       setProducts(data);
     } catch (error) {
       console.error("Error fetching products:", error);

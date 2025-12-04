@@ -80,9 +80,7 @@ export default function ProductsSidebar() {
     const track = trackRef.current;
     const duration = 20; // Total animation duration in seconds
 
-    console.log(
-      "🎬 Starting CSS animation DOWNWARD carousel-style auto-scroll"
-    );
+    // Starting CSS animation DOWNWARD carousel-style auto-scroll
 
     // Clean up any existing animations
     track.style.animation = "none";
