@@ -1,14 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getProductById } from "@/lib/getProducts";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 interface SupabaseProduct {
@@ -22,6 +22,7 @@ interface SupabaseProduct {
 }
 
 export default function ProductDetails({ params }: PageProps) {
+  const { id } = use(params);
   const [product, setProduct] = useState<SupabaseProduct | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -29,20 +30,26 @@ export default function ProductDetails({ params }: PageProps) {
   useEffect(() => {
     async function fetchProduct() {
       try {
-        const data = await getProductById(parseInt(params.id));
+        const productId = parseInt(id);
+        if (isNaN(productId)) {
+          console.error("Invalid product ID:", id);
+          notFound();
+          return;
+        }
+        const data = await getProductById(productId);
         setProduct(data);
         if (!data) {
           notFound();
         }
       } catch (error) {
-        console.error("Error loading product:", error);
+        console.error("Error fetching product:", error);
         notFound();
       } finally {
         setLoading(false);
       }
     }
     fetchProduct();
-  }, [params.id]);
+  }, [id]);
 
   if (loading) {
     return (

@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect } from "react";
 import Image from "next/image";
 
 export default function Services() {
@@ -48,23 +51,53 @@ export default function Services() {
   const firstGroup = services.slice(0, 4);
   const secondGroup = services.slice(4, 8);
 
+  useEffect(() => {
+    // Trigger animations on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate-in");
+        }
+      });
+    }, observerOptions);
+
+    // Observe elements for animation
+    const animatedElements = document.querySelectorAll(".animate-on-scroll");
+    animatedElements.forEach((el) => observer.observe(el));
+
+    return () => {
+      animatedElements.forEach((el) => observer.unobserve(el));
+    };
+  }, []);
+
   return (
     <main className="main-content">
       {/* Alternating Sections */}
       <section className="page-section services-flow">
         <div className="container">
           <h1
-            className="page-title"
+            className="page-title animate-on-scroll"
             style={{ marginBottom: "3rem", textAlign: "center" }}
           >
             Shërbimet
           </h1>
           {/* First Section: Content Left, Image Right */}
           <div className="service-layout">
-            <div className="service-layout__content">
+            <div className="service-layout__content animate-on-scroll">
               <ul className="service-list">
                 {firstGroup.map((service, index) => (
-                  <li key={index} className="service-list__item">
+                  <li
+                    key={index}
+                    className="service-list__item"
+                    style={{
+                      animationDelay: `${index * 0.1}s`,
+                    }}
+                  >
                     <h3>
                       <span className="service-number">
                         {String(index + 1).padStart(2, "0")}
@@ -76,7 +109,7 @@ export default function Services() {
                 ))}
               </ul>
             </div>
-            <div className="service-layout__image">
+            <div className="service-layout__image animate-on-scroll">
               <Image
                 src="/images/hero7.jpg"
                 alt="Our Services"
@@ -89,7 +122,7 @@ export default function Services() {
 
           {/* Second Section: Image Left, Content Right */}
           <div className="service-layout">
-            <div className="service-layout__image">
+            <div className="service-layout__image animate-on-scroll">
               <Image
                 src="/images/hero8.jpg"
                 alt="Our Services"
@@ -98,10 +131,16 @@ export default function Services() {
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
-            <div className="service-layout__content">
+            <div className="service-layout__content animate-on-scroll">
               <ul className="service-list">
                 {secondGroup.map((service, index) => (
-                  <li key={index} className="service-list__item">
+                  <li
+                    key={index}
+                    className="service-list__item"
+                    style={{
+                      animationDelay: `${index * 0.1}s`,
+                    }}
+                  >
                     <h3>
                       <span className="service-number">
                         {String(index + 5).padStart(2, "0")}

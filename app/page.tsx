@@ -17,7 +17,6 @@ export default function Home() {
   const carouselRef = useRef<HTMLDivElement | null>(null);
 
   const [teamsImages, setTeamsImages] = useState<string[]>([]);
-  const teamsCarouselRef = useRef<HTMLDivElement | null>(null);
 
   // Fetch team logos dynamically
   useEffect(() => {
@@ -107,68 +106,6 @@ export default function Home() {
     };
   }, [professionalsImages.length]);
 
-  // Infinite auto-scrolling teams carousel - FIXED VERSION
-  useEffect(() => {
-    const carousel = teamsCarouselRef.current;
-    console.log("🚀 Teams Carousel useEffect triggered");
-
-    if (!carousel) {
-      console.log("❌ No carousel element found");
-      return;
-    }
-
-    let animationFrame: number;
-    let lastTime = performance.now();
-    let scrollPosition = 0;
-    let frameCount = 0;
-
-    const scrollSpeed = 1.5;
-
-    const animate = (currentTime: number) => {
-      frameCount++;
-
-      if (!carousel) {
-        animationFrame = requestAnimationFrame(animate);
-        return;
-      }
-
-      const deltaTime = currentTime - lastTime;
-      const normalizedSpeed = scrollSpeed * (deltaTime / 16.67);
-
-      // Always update scroll position for continuous movement
-      scrollPosition += normalizedSpeed;
-
-      // Get the actual maximum scroll position (total width - visible width)
-      const maxScroll = carousel.scrollWidth - carousel.clientWidth;
-
-      // Reset when we reach the actual end of the duplicated content
-      if (scrollPosition >= maxScroll) {
-        console.log("🔄 RESET TRIGGERED!", {
-          beforeReset: Math.round(scrollPosition),
-          maxScroll: Math.round(maxScroll),
-          newPosition: 0,
-        });
-        scrollPosition = 0;
-      }
-
-      // Apply the scroll position
-      carousel.scrollLeft = scrollPosition;
-
-      lastTime = currentTime;
-      animationFrame = requestAnimationFrame(animate);
-    };
-
-    console.log("🎬 Starting animation...");
-    animationFrame = requestAnimationFrame(animate);
-
-    return () => {
-      console.log("🛑 Cleaning up teams carousel animation");
-      if (animationFrame) {
-        cancelAnimationFrame(animationFrame);
-      }
-    };
-  }, [teamsImages.length]);
-
   return (
     <main className="main-content">
       <div className="content-layout">
@@ -240,19 +177,40 @@ export default function Home() {
       {teamsImages.length > 0 && (
         <section className="teams-carousel-section">
           <div className="container">
-            <div className="teams-carousel" ref={teamsCarouselRef}>
-              {/* Duplicate images for seamless infinite scroll */}
-              {[...teamsImages, ...teamsImages].map((src, index) => (
-                <div key={`${src}-${index}`} className="teams-carousel__item">
-                  <Image
-                    src={src}
-                    alt={`Team logo ${index + 1}`}
-                    width={150}
-                    height={150}
-                    className="teams-carousel__image"
-                  />
-                </div>
-              ))}
+            <div className="teams-carousel-wrapper">
+              {/* Wrapper with CSS animation */}
+              <div
+                className="teams-carousel-track"
+                style={{
+                  // Create a seamless loop with 3 duplicates
+                  // Width calculation: (itemWidth * count + gap * (count - 1)) * 3
+                  // Item width: 150px, Gap: 2rem (32px)
+                  display: "flex",
+                  width: `${
+                    (teamsImages.length * 150 + (teamsImages.length - 1) * 32) *
+                    3
+                  }px`, // 3 copies of all images with gaps
+                  animation: `teamsScroll 20s linear infinite`,
+                }}
+              >
+                {/* Render 3 copies for seamless looping */}
+                {[...teamsImages, ...teamsImages, ...teamsImages].map(
+                  (src, index) => (
+                    <div
+                      key={`${src}-${index}`}
+                      className="teams-carousel__item"
+                    >
+                      <Image
+                        src={src}
+                        alt={`Team logo ${index + 1}`}
+                        width={150}
+                        height={150}
+                        className="teams-carousel__image"
+                      />
+                    </div>
+                  )
+                )}
+              </div>
             </div>
           </div>
         </section>

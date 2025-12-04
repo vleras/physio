@@ -1194,8 +1194,8 @@ body {
   }
 
   .professionals-title {
-    text-align: left;
-    margin-left: 0.5rem;
+    text-align: center;
+    margin-left: 0;
   }
 
   .professionals-grid {
@@ -1208,8 +1208,8 @@ body {
 .teams-carousel-section {
   width: 100%;
   max-width: 100%;
-  padding: 3rem 0;
-  background: #fff;
+  padding: 2rem 0;
+  background: white;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -1221,6 +1221,28 @@ body {
   padding-right: clamp(1rem, 4vw, 3rem);
   margin-left: 0;
   margin-right: auto;
+}
+
+.teams-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.teams-carousel-track {
+  display: flex;
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+/* Keyframes for continuous scroll */
+@keyframes teamsScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-33.333%));
+  }
 }
 
 .teams-carousel {
@@ -1447,6 +1469,17 @@ body {
   margin-bottom: 3.5rem;
   margin-top: 1rem;
   text-align: center;
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.page-title.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.95);
+}
+
+.page-title.animate-on-scroll.animate-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 .content-wrapper {
@@ -1960,6 +1993,37 @@ body {
   aspect-ratio: 4 / 5;
   min-height: 300px;
   max-height: 360px;
+  transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+}
+
+.service-layout__image.animate-on-scroll {
+  opacity: 0;
+  transform: translateX(50px) scale(0.95);
+}
+
+.service-layout__image.animate-on-scroll.animate-in {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+/* First section image slides from right */
+.service-layout:first-of-type .service-layout__image.animate-on-scroll {
+  transform: translateX(50px) scale(0.95);
+}
+
+.service-layout:first-of-type
+  .service-layout__image.animate-on-scroll.animate-in {
+  transform: translateX(0) scale(1);
+}
+
+/* Second section image slides from left */
+.service-layout:nth-of-type(2) .service-layout__image.animate-on-scroll {
+  transform: translateX(-50px) scale(0.95);
+}
+
+.service-layout:nth-of-type(2)
+  .service-layout__image.animate-on-scroll.animate-in {
+  transform: translateX(0) scale(1);
 }
 
 .service-layout__image-el {
@@ -1968,11 +2032,36 @@ body {
   object-fit: cover;
   border-radius: 28px;
   display: block;
+  transition: transform 0.6s ease-out;
+}
+
+.service-layout__image:hover .service-layout__image-el {
+  transform: scale(1.05);
 }
 
 .service-layout__content {
   flex: 1;
   min-width: 0;
+}
+
+.service-layout__content.animate-on-scroll {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.service-layout__content.animate-on-scroll.animate-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Second section content slides from right */
+.service-layout:nth-of-type(2) .service-layout__content.animate-on-scroll {
+  transform: translateX(30px);
+}
+
+.service-layout:nth-of-type(2)
+  .service-layout__content.animate-on-scroll.animate-in {
+  transform: translateX(0);
 }
 
 .service-layout__eyebrow {
@@ -2020,6 +2109,18 @@ body {
   color: #555;
   line-height: 1.7;
   font-size: 0.95rem;
+}
+
+/* Staggered animation for service list items */
+.service-list__item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.service-layout__content.animate-in .service-list__item {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @media (max-width: 992px) {
@@ -2642,6 +2743,18 @@ body {
   height: 100%;
 }
 
+@media (max-width: 768px) {
+  .product-detail-section .container {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-detail-section .container {
+    padding: 0 0.75rem;
+  }
+}
+
 .product-detail-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2686,6 +2799,35 @@ body {
   .product-image-container {
     width: 100%;
     max-width: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-image-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .product-detail-layout {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-image-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .product-detail-section {
+    padding: 2rem 0 1rem 0;
+    min-height: auto;
+    height: auto;
+  }
+
+  .product-detail-section .container {
+    height: auto;
+    padding: 0 0.5rem;
   }
 }
 
@@ -2779,6 +2921,36 @@ body {
 
 .carousel-arrow-right {
   right: 1rem;
+}
+
+@media (max-width: 768px) {
+  .carousel-arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .carousel-arrow-left {
+    left: 0.5rem;
+  }
+
+  .carousel-arrow-right {
+    right: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-arrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .carousel-arrow-left {
+    left: 0.25rem;
+  }
+
+  .carousel-arrow-right {
+    right: 0.25rem;
+  }
 }
 
 /* Product Info Section */
