@@ -184,10 +184,10 @@ export default function Home() {
                 style={{
                   // Create a seamless loop with 3 duplicates
                   // Width calculation: (itemWidth * count + gap * (count - 1)) * 3
-                  // Item width: 150px, Gap: 2rem (32px)
+                  // Item width: 100px, Gap: 2rem (32px)
                   display: "flex",
                   width: `${
-                    (teamsImages.length * 150 + (teamsImages.length - 1) * 32) *
+                    (teamsImages.length * 100 + (teamsImages.length - 1) * 32) *
                     3
                   }px`, // 3 copies of all images with gaps
                   animation: `teamsScroll 20s linear infinite`,
@@ -203,8 +203,8 @@ export default function Home() {
                       <Image
                         src={src}
                         alt={`Team logo ${index + 1}`}
-                        width={150}
-                        height={150}
+                        width={100}
+                        height={100}
                         className="teams-carousel__image"
                       />
                     </div>
