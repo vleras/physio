@@ -609,6 +609,11 @@ body {
     max-height: none;
     height: auto;
     overflow: visible;
+    touch-action: pan-y;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+    /* Prevent sidebar from interfering with page scroll */
+    pointer-events: auto;
   }
 
   .sidebar-products {
@@ -619,6 +624,13 @@ body {
     height: auto;
     min-height: 420px;
     flex: 0 0 auto;
+    /* Allow both horizontal and vertical, but vertical scroll passes through to page */
+    touch-action: pan-y pan-x;
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Ensure touch events can pass through for vertical scrolling */
+    will-change: transform;
   }
 
   .sidebar-products .flex.flex-col,
@@ -637,6 +649,8 @@ body {
     margin-bottom: 0;
     min-height: 380px;
     justify-content: flex-start;
+    touch-action: pan-x pan-y;
+    pointer-events: auto;
   }
 
   .sidebar-product-image {

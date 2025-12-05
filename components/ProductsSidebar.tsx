@@ -35,6 +35,7 @@ export default function ProductsSidebar() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isTouching, setIsTouching] = useState(false);
 
   // Tripled products for seamless infinite scroll
   const tripledProducts = useMemo(() => {
@@ -143,20 +144,80 @@ export default function ProductsSidebar() {
     };
   }, [products.length, isMobile]);
 
-  // Pause/resume animation on hover
+  // Pause/resume animation on hover or touch (mobile)
   useEffect(() => {
     if (!trackRef.current) return;
 
     const track = trackRef.current;
 
-    if (isHovered) {
+    if (isHovered || isTouching) {
       // Pause the animation smoothly
       track.style.animationPlayState = "paused";
     } else {
       // Resume the animation smoothly
       track.style.animationPlayState = "running";
     }
-  }, [isHovered]);
+  }, [isHovered, isTouching]);
+
+  // Handle touch events on mobile to pause animation and allow page scroll
+  useEffect(() => {
+    if (!isMobile || !sidebarRef.current) return;
+
+    const sidebar = sidebarRef.current;
+    let touchStartY = 0;
+    let touchStartX = 0;
+    let isVerticalScroll = false;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+      touchStartX = e.touches[0].clientX;
+      isVerticalScroll = false;
+      setIsTouching(true);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!touchStartY || !touchStartX) return;
+
+      const touchY = e.touches[0].clientY;
+      const touchX = e.touches[0].clientX;
+      const deltaY = Math.abs(touchY - touchStartY);
+      const deltaX = Math.abs(touchX - touchStartX);
+
+      // Determine if this is primarily a vertical scroll
+      if (deltaY > deltaX && deltaY > 10) {
+        isVerticalScroll = true;
+        // Allow default behavior for vertical scrolling (page scroll)
+        return;
+      }
+
+      // For horizontal scrolling within sidebar, prevent default to allow horizontal scroll
+      if (deltaX > deltaY && deltaX > 10) {
+        isVerticalScroll = false;
+      }
+    };
+
+    const handleTouchEnd = () => {
+      // Small delay before resuming to ensure smooth transition
+      setTimeout(() => {
+        setIsTouching(false);
+      }, 100);
+      touchStartY = 0;
+      touchStartX = 0;
+      isVerticalScroll = false;
+    };
+
+    sidebar.addEventListener("touchstart", handleTouchStart, { passive: true });
+    sidebar.addEventListener("touchmove", handleTouchMove, { passive: true });
+    sidebar.addEventListener("touchend", handleTouchEnd, { passive: true });
+    sidebar.addEventListener("touchcancel", handleTouchEnd, { passive: true });
+
+    return () => {
+      sidebar.removeEventListener("touchstart", handleTouchStart);
+      sidebar.removeEventListener("touchmove", handleTouchMove);
+      sidebar.removeEventListener("touchend", handleTouchEnd);
+      sidebar.removeEventListener("touchcancel", handleTouchEnd);
+    };
+  }, [isMobile]);
 
   return (
     <aside
@@ -198,6 +259,7 @@ export default function ProductsSidebar() {
           className={isMobile ? "flex flex-row" : "flex flex-col"}
           style={{
             willChange: "transform",
+            touchAction: isMobile ? "pan-y pan-x" : "auto",
           }}
         >
           {/* DUPLICATE CONTENT FOR SEAMLESS LOOPING */}
