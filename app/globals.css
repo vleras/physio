@@ -608,6 +608,42 @@ body {
     position: relative;
     max-height: none;
   }
+
+  .sidebar-products {
+    flex-direction: row;
+    overflow-x: hidden;
+    overflow-y: visible;
+    padding: 1rem 0;
+    height: auto;
+  }
+
+  .sidebar-products .flex.flex-col,
+  .sidebar-products .flex.flex-row {
+    flex-direction: row !important;
+    width: max-content;
+  }
+
+  .sidebar-product-item {
+    min-width: 280px;
+    max-width: 280px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-right: 1rem;
+    margin-bottom: 0;
+  }
+
+  .sidebar-product-image {
+    width: 100px;
+    min-width: 100px;
+    height: 100px;
+    margin: 0 auto;
+  }
+
+  .sidebar-product-content {
+    width: 100%;
+    align-items: center;
+  }
 }
 
 .products-sidebar::-webkit-scrollbar {
@@ -3282,8 +3318,14 @@ body {
 @media (max-width: 768px) {
   /* Header styles moved to first media query to avoid conflicts */
 
+  .main-content {
+    display: flex;
+    flex-direction: column;
+  }
+
   .content-layout {
     flex-direction: column;
+    order: 1;
   }
 
   .main-content-area {
@@ -3306,8 +3348,16 @@ body {
     order: 2;
   }
 
-  .location-section {
+  .professionals-section {
+    order: 2;
+  }
+
+  .teams-carousel-section {
     order: 3;
+  }
+
+  .location-section {
+    order: 4;
     width: 100%;
   }
 

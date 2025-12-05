@@ -34,6 +34,7 @@ export default function ProductsSidebar() {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Tripled products for seamless infinite scroll
   const tripledProducts = useMemo(() => {
@@ -41,11 +42,25 @@ export default function ProductsSidebar() {
     return [...products, ...products, ...products];
   }, [products]);
 
+  // Detect mobile viewport
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, []);
+
   useEffect(() => {
     async function fetchProducts() {
       try {
         const data = await getProducts();
-        
+
         // Filter and sort products according to whitelist order
         const filteredProducts = ALLOWED_SIDEBAR_PRODUCTS.map((allowedName) => {
           // Find product by name (case-insensitive match)
@@ -54,8 +69,10 @@ export default function ProductsSidebar() {
               product.name.toLowerCase().trim() ===
               allowedName.toLowerCase().trim()
           );
-        }).filter((product): product is SupabaseProduct => product !== undefined);
-        
+        }).filter(
+          (product): product is SupabaseProduct => product !== undefined
+        );
+
         setProducts(filteredProducts);
       } catch (error) {
         console.error("Error loading products:", error);
@@ -104,27 +121,27 @@ export default function ProductsSidebar() {
     const track = trackRef.current;
     const duration = 20; // Total animation duration in seconds
 
-    // Starting CSS animation DOWNWARD carousel-style auto-scroll
-
     // Clean up any existing animations
     track.style.animation = "none";
     // Force reflow
     void track.offsetHeight;
 
-    // Apply the CSS animation
-    track.style.animation = `scroll-down ${duration}s linear infinite`;
+    // Apply the CSS animation based on screen size
+    // Mobile: horizontal scroll (scroll-left), Desktop: vertical scroll (scroll-down)
+    const animationName = isMobile ? "scroll-left" : "scroll-down";
+    track.style.animation = `${animationName} ${duration}s linear infinite`;
 
     return () => {
       track.style.animation = "none";
     };
-  }, [products.length]);
+  }, [products.length, isMobile]);
 
   // Pause/resume animation on hover
   useEffect(() => {
     if (!trackRef.current) return;
 
     const track = trackRef.current;
-    
+
     if (isHovered) {
       // Pause the animation smoothly
       track.style.animationPlayState = "paused";
@@ -135,8 +152,8 @@ export default function ProductsSidebar() {
   }, [isHovered]);
 
   return (
-    <aside 
-      className="products-sidebar" 
+    <aside
+      className="products-sidebar"
       ref={sidebarRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -168,7 +185,7 @@ export default function ProductsSidebar() {
         {/* Track container for seamless looping */}
         <div
           ref={trackRef}
-          className="flex flex-col"
+          className={isMobile ? "flex flex-row" : "flex flex-col"}
           style={{
             willChange: "transform",
           }}
@@ -183,7 +200,7 @@ export default function ProductsSidebar() {
                   itemsRef.current[actualIndex] = el;
                 }
               }}
-              className="sidebar-product-item flex-shrink-0"
+              className="sidebar-product-item shrink-0"
               style={{
                 opacity: 1,
               }}
