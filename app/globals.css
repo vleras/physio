@@ -3133,7 +3133,31 @@ body {
 
 @media (max-width: 768px) {
   .product-detail-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
+  }
+
+  .product-current-price {
+    font-size: 1.25rem;
+  }
+
+  .product-description {
+    font-size: 0.85rem;
+  }
+
+  .product-description p {
+    font-size: 0.85rem;
+  }
+
+  .product-breadcrumb {
+    font-size: 0.7rem;
+  }
+
+  .product-specs h3 {
+    font-size: 0.9rem;
+  }
+
+  .product-specs li {
+    font-size: 0.8rem;
   }
 }
 
