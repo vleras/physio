@@ -15,12 +15,25 @@ interface SupabaseProduct {
   images?: string[];
 }
 
+// Whitelist of allowed product names in exact order for sidebar
+const ALLOWED_SIDEBAR_PRODUCTS = [
+  "Cryo Sport",
+  "LedBoots",
+  "AVABoots",
+  "Actin One",
+  "Warm Pro",
+  "Foot massager",
+  "Deep Light",
+  "Bioimpedance scale",
+];
+
 export default function ProductsSidebar() {
   const [products, setProducts] = useState<SupabaseProduct[]>([]);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   // Tripled products for seamless infinite scroll
   const tripledProducts = useMemo(() => {
@@ -32,7 +45,18 @@ export default function ProductsSidebar() {
     async function fetchProducts() {
       try {
         const data = await getProducts();
-        setProducts(data.slice(0, 6));
+        
+        // Filter and sort products according to whitelist order
+        const filteredProducts = ALLOWED_SIDEBAR_PRODUCTS.map((allowedName) => {
+          // Find product by name (case-insensitive match)
+          return data.find(
+            (product) =>
+              product.name.toLowerCase().trim() ===
+              allowedName.toLowerCase().trim()
+          );
+        }).filter((product): product is SupabaseProduct => product !== undefined);
+        
+        setProducts(filteredProducts);
       } catch (error) {
         console.error("Error loading products:", error);
       }
@@ -95,8 +119,28 @@ export default function ProductsSidebar() {
     };
   }, [products.length]);
 
+  // Pause/resume animation on hover
+  useEffect(() => {
+    if (!trackRef.current) return;
+
+    const track = trackRef.current;
+    
+    if (isHovered) {
+      // Pause the animation smoothly
+      track.style.animationPlayState = "paused";
+    } else {
+      // Resume the animation smoothly
+      track.style.animationPlayState = "running";
+    }
+  }, [isHovered]);
+
   return (
-    <aside className="products-sidebar" ref={sidebarRef}>
+    <aside 
+      className="products-sidebar" 
+      ref={sidebarRef}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="sidebar-header">
         <div className="sidebar-logo-container">
           <div className="sidebar-logo">
