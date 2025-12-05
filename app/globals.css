@@ -614,6 +614,10 @@ body {
     -webkit-overflow-scrolling: touch;
     /* Prevent sidebar from interfering with page scroll */
     pointer-events: auto;
+    /* Prevent layout shifts that could reset scroll */
+    contain: layout style;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   .sidebar-products {

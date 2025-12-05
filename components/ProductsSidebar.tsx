@@ -36,6 +36,7 @@ export default function ProductsSidebar() {
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isTouching, setIsTouching] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   // Tripled products for seamless infinite scroll
   const tripledProducts = useMemo(() => {
@@ -43,13 +44,21 @@ export default function ProductsSidebar() {
     return [...products, ...products, ...products];
   }, [products]);
 
-  // Detect mobile viewport
+  // Detect mobile viewport - set immediately to prevent layout shifts
   useEffect(() => {
+    // Set initial state immediately (synchronously) to prevent height calculation from running
+    if (typeof window !== "undefined") {
+      setIsMobile(window.innerWidth <= 768);
+      // Mark as initialized after a brief delay to allow page to settle
+      setTimeout(() => {
+        setIsInitialized(true);
+      }, 50);
+    }
+
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
 
-    checkMobile();
     window.addEventListener("resize", checkMobile);
 
     return () => {
@@ -85,10 +94,19 @@ export default function ProductsSidebar() {
   // Set sidebar max-height to match from start to end of location section (desktop only)
   useEffect(() => {
     const sidebar = sidebarRef.current;
-    if (!sidebar || isMobile) return;
+    if (!sidebar) return;
+
+    // Early return for mobile - never run height calculations on mobile
+    const isMobileWidth = window.innerWidth <= 768;
+    if (isMobileWidth) {
+      // Ensure mobile styles are applied immediately
+      sidebar.style.maxHeight = "";
+      sidebar.style.height = "";
+      return;
+    }
 
     const updateHeight = () => {
-      // Skip height calculation on mobile
+      // Double-check we're still on desktop
       if (window.innerWidth <= 768) {
         sidebar.style.maxHeight = "";
         sidebar.style.height = "";
@@ -103,23 +121,34 @@ export default function ProductsSidebar() {
       ) as HTMLElement;
 
       if (mainContentArea && locationSection) {
-        const mainContentTop = mainContentArea.getBoundingClientRect().top;
-        const locationBottom = locationSection.getBoundingClientRect().bottom;
-        const totalHeight = locationBottom - mainContentTop;
+        // Use requestAnimationFrame to prevent layout shifts during scroll
+        requestAnimationFrame(() => {
+          const mainContentTop = mainContentArea.getBoundingClientRect().top;
+          const locationBottom = locationSection.getBoundingClientRect().bottom;
+          const totalHeight = locationBottom - mainContentTop;
 
-        sidebar.style.maxHeight = `${totalHeight}px`;
-        sidebar.style.height = `${totalHeight}px`;
+          sidebar.style.maxHeight = `${totalHeight}px`;
+          sidebar.style.height = `${totalHeight}px`;
+        });
       }
     };
 
-    updateHeight();
-    window.addEventListener("resize", updateHeight);
-    const timeoutId = setTimeout(updateHeight, 500);
+    // Only run on desktop
+    if (!isMobileWidth) {
+      updateHeight();
+      window.addEventListener("resize", updateHeight);
+      // Only set timeout on desktop
+      const timeoutId = setTimeout(() => {
+        if (window.innerWidth > 768) {
+          updateHeight();
+        }
+      }, 500);
 
-    return () => {
-      window.removeEventListener("resize", updateHeight);
-      clearTimeout(timeoutId);
-    };
+      return () => {
+        window.removeEventListener("resize", updateHeight);
+        clearTimeout(timeoutId);
+      };
+    }
   }, [isMobile]);
 
   // CSS Animation-based continuous scrolling (like VerticalProductCarousel)
@@ -129,20 +158,43 @@ export default function ProductsSidebar() {
     const track = trackRef.current;
     const duration = 20; // Total animation duration in seconds
 
-    // Clean up any existing animations
-    track.style.animation = "none";
-    // Force reflow
-    void track.offsetHeight;
+    // On mobile, wait for initialization to prevent scroll jumps
+    const initAnimation = () => {
+      // Clean up any existing animations
+      track.style.animation = "none";
+      // Force reflow
+      void track.offsetHeight;
 
-    // Apply the CSS animation based on screen size
-    // Mobile: horizontal scroll (scroll-left), Desktop: vertical scroll (scroll-down)
-    const animationName = isMobile ? "scroll-left" : "scroll-down";
-    track.style.animation = `${animationName} ${duration}s linear infinite`;
+      // Apply the CSS animation based on screen size
+      // Mobile: horizontal scroll (scroll-left), Desktop: vertical scroll (scroll-down)
+      const animationName = isMobile ? "scroll-left" : "scroll-down";
+      track.style.animation = `${animationName} ${duration}s linear infinite`;
+    };
+
+    // Use requestAnimationFrame to prevent layout shifts during initial render
+    // On mobile, wait a tiny bit for page to settle, but not too long
+    if (isMobile && !isInitialized) {
+      // Very short delay just to let initial render complete
+      const timer = setTimeout(() => {
+        requestAnimationFrame(initAnimation);
+      }, 50);
+      return () => {
+        clearTimeout(timer);
+        if (trackRef.current) {
+          trackRef.current.style.animation = "none";
+        }
+      };
+    } else {
+      // Desktop or after initialization - start immediately
+      requestAnimationFrame(initAnimation);
+    }
 
     return () => {
-      track.style.animation = "none";
+      if (trackRef.current) {
+        trackRef.current.style.animation = "none";
+      }
     };
-  }, [products.length, isMobile]);
+  }, [products.length, isMobile, isInitialized]);
 
   // Pause/resume animation on hover or touch (mobile)
   useEffect(() => {
