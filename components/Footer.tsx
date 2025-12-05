@@ -22,8 +22,8 @@ export default function Footer() {
           <div className="footer-column">
             <h3>ORARET E PUNËS</h3>
             <ul className="footer-links">
-              <li>E Hënë - E Premte: 10:00 - 19:00</li>
-              <li>E Shtunë: 10:00 – 15:00</li>
+              <li>E Hënë - E Premte: 10:00 - 20:00</li>
+              <li>E Shtunë: 10:00 – 14:00</li>
               <li>E Dielë: Mbyllur</li>
             </ul>
           </div>

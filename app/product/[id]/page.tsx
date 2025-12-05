@@ -252,12 +252,14 @@ export default function ProductDetails({ params }: PageProps) {
                 />
                 <span>AVA STORE</span>
               </div>
-              <h1 className="product-detail-title">{product.name}</h1>
-
-              <div className="product-pricing">
-                <span className="product-current-price">
-                  {product.price || "N/A"}
-                </span>
+              
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem" }}>
+                <h1 className="product-detail-title">{product.name}</h1>
+                <div className="product-pricing">
+                  <span className="product-current-price">
+                    {product.price || "N/A"}
+                  </span>
+                </div>
               </div>
 
               <div className="product-description">
