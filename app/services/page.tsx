@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Image from "next/image";
+import "./services.css";
 
 export default function Services() {
   const services = [

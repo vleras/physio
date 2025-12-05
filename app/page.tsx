@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import ProductsSidebar from "@/components/ProductsSidebar";
 import HeroSlider2 from "@/components/HeroSlider2";
 import Image from "next/image";
+import "./home.css";
 
 export default function Home() {
   const professionalsImages = [

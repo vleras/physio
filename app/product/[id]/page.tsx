@@ -4,6 +4,7 @@ import { useState, useEffect, use, useRef } from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getProductById } from "@/lib/getProducts";
+import "./product-detail.css";
 
 interface PageProps {
   params: Promise<{

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { getProducts } from "@/lib/getProducts";
+import "./catalog.css";
 
 interface SupabaseProduct {
   id: number;
