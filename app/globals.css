@@ -3289,6 +3289,12 @@ body {
   .main-content-area {
     flex: 1;
     width: 100%;
+    display: contents;
+  }
+
+  .hero-section {
+    order: 1;
+    width: 100%;
   }
 
   .products-sidebar {
@@ -3297,6 +3303,12 @@ body {
     position: relative;
     top: 0;
     max-height: none;
+    order: 2;
+  }
+
+  .location-section {
+    order: 3;
+    width: 100%;
   }
 
   .hero-title {
