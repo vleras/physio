@@ -212,6 +212,25 @@
   }
 }
 
+/* Location Section Visibility - Desktop vs Mobile */
+.location-section-desktop {
+  display: block;
+}
+
+.location-section-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .location-section-desktop {
+    display: none;
+  }
+
+  .location-section-mobile {
+    display: block;
+  }
+}
+
 .location-info {
   background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   padding: 2.5rem;
