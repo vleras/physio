@@ -81,12 +81,19 @@ export default function ProductsSidebar() {
     fetchProducts();
   }, []);
 
-  // Set sidebar max-height to match from start to end of location section
+  // Set sidebar max-height to match from start to end of location section (desktop only)
   useEffect(() => {
     const sidebar = sidebarRef.current;
-    if (!sidebar) return;
+    if (!sidebar || isMobile) return;
 
     const updateHeight = () => {
+      // Skip height calculation on mobile
+      if (window.innerWidth <= 768) {
+        sidebar.style.maxHeight = "";
+        sidebar.style.height = "";
+        return;
+      }
+
       const mainContentArea = document.querySelector(
         ".main-content-area"
       ) as HTMLElement;
@@ -112,7 +119,7 @@ export default function ProductsSidebar() {
       window.removeEventListener("resize", updateHeight);
       clearTimeout(timeoutId);
     };
-  }, []);
+  }, [isMobile]);
 
   // CSS Animation-based continuous scrolling (like VerticalProductCarousel)
   useEffect(() => {
@@ -180,7 +187,10 @@ export default function ProductsSidebar() {
       {/* CAROUSEL-STYLE CONTENT AREA */}
       <div
         className="sidebar-products"
-        style={{ overflow: "hidden", height: "100%" }}
+        style={{
+          overflow: "hidden",
+          height: isMobile ? "auto" : "100%",
+        }}
       >
         {/* Track container for seamless looping */}
         <div
