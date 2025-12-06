@@ -637,9 +637,7 @@ body {
     will-change: transform;
   }
 
-  .sidebar-products .flex.flex-col,
-  .sidebar-products .flex.flex-row {
-    flex-direction: row !important;
+  .sidebar-products-track {
     width: max-content;
   }
 
@@ -772,6 +770,25 @@ body {
   max-height: 100%;
   margin: 0;
   padding: 1rem 0;
+}
+
+.sidebar-products-track {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+  touch-action: auto;
+}
+
+/* Pause animation on hover */
+.products-sidebar:hover .sidebar-products-track {
+  animation-play-state: paused;
+}
+
+@media (max-width: 768px) {
+  .sidebar-products-track {
+    flex-direction: row;
+    touch-action: pan-y pan-x;
+  }
 }
 
 .sidebar-product-item {
@@ -2911,7 +2928,6 @@ body {
 
   .content-layout {
     flex-direction: column;
-    order: 1;
   }
 
   .main-content-area {
@@ -2921,7 +2937,6 @@ body {
   }
 
   .hero-section {
-    order: 1;
     width: 100%;
   }
 
@@ -2931,17 +2946,9 @@ body {
     position: relative;
     top: 0;
     max-height: none;
-    order: 2;
   }
 
-  .professionals-section {
-    order: 2;
-  }
-
-  .teams-carousel-section {
-    order: 3;
-  }
-
+ 
   .location-section {
     order: 4;
     width: 100%;

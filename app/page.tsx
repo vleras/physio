@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
 import ProductsSidebar from "@/components/ProductsSidebar";
 import HeroSlider2 from "@/components/HeroSlider2";
 import Image from "next/image";
@@ -17,24 +18,18 @@ export default function Home() {
   ];
   const carouselRef = useRef<HTMLDivElement | null>(null);
 
-  const [teamsImages, setTeamsImages] = useState<string[]>([]);
-
-  // Fetch team logos dynamically
-  useEffect(() => {
-    const fetchTeamLogos = async () => {
-      try {
-        const response = await fetch("/api/teamlogos");
-        const data = await response.json();
-        if (data.images && Array.isArray(data.images)) {
-          setTeamsImages(data.images);
-        }
-      } catch (error) {
-        console.error("Error fetching team logos:", error);
+  // Fetch team logos using React Query
+  const { data: teamsImages = [] } = useQuery<string[]>({
+    queryKey: ["teamLogos"],
+    queryFn: async () => {
+      const response = await fetch("/api/teamlogos");
+      if (!response.ok) {
+        throw new Error("Failed to fetch team logos");
       }
-    };
-
-    fetchTeamLogos();
-  }, []);
+      const data = await response.json();
+      return data.images && Array.isArray(data.images) ? data.images : [];
+    },
+  });
 
   useEffect(() => {
     // Trigger animations on scroll
