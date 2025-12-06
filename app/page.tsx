@@ -5,6 +5,7 @@ import ProductsSidebar from "@/components/ProductsSidebar";
 import HeroSlider2 from "@/components/HeroSlider2";
 import ProfessionalsCarousel from "@/components/ProfessionalsCarousel";
 import TeamsCarousel from "@/components/TeamsCarousel";
+import LocationSection from "@/components/LocationSection";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import "./home.css";
 
@@ -17,11 +18,8 @@ const PROFESSIONALS_IMAGES: string[] = [
   "/images/professionals/professionals6.webp",
 ];
 
-const MAP_EMBED_URL =
-  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2934.5!2d21.1775131!3d42.6495972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDLCsDM4JzU4LjYiTiAyMcKwMTAnMzkuMSJF!5e0!3m2!1sen!2s!4v1736789123456!5m2!1sen!2s";
-
 export default function Home() {
-  // useScrollAnimation();
+  useScrollAnimation();
 
   const { data: teamsImages = [] } = useQuery<string[]>({
     queryKey: ["teamLogos"],
@@ -45,29 +43,6 @@ export default function Home() {
               <div className="hero-content"></div>
             </div>
           </section>
-
-          {/* Location/Map Section - Desktop Only */}
-          <section className="location-section location-section-desktop">
-            <div className="container">
-              <h2 className="section-title animate-on-scroll">Lokacioni Ynë</h2>
-              <p className="location-address animate-on-scroll">
-                Adresa: Rruga Valbona, Rruga C
-              </p>
-              <div className="location-content">
-                <div className="map-container animate-on-scroll">
-                  <iframe
-                    src={MAP_EMBED_URL}
-                    width="100%"
-                    height="400"
-                    style={{ border: 0 }}
-                    allowFullScreen={true}
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
         </div>
 
         {/* Products Sidebar */}
@@ -86,29 +61,10 @@ export default function Home() {
 
       {/* Teams Carousel Section - Full Width */}
       <TeamsCarousel images={teamsImages} />
-
-      {/* Location/Map Section - Mobile Only */}
-      {/* <section className="location-section location-section-mobile">
-        <div className="container">
-          <h2 className="section-title animate-on-scroll">Lokacioni Ynë</h2>
-          <p className="location-address animate-on-scroll">
-            Adresa: Rruga Valbona, Rruga C
-          </p>
-          <div className="location-content">
-            <div className="map-container animate-on-scroll">
-              <iframe
-                src={MAP_EMBED_URL}
-                width="100%"
-                height="400"
-                style={{ border: 0 }}
-                allowFullScreen={true}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-          </div>
-        </div>
-      </section> */}
+      {/* Location/Map Section - Desktop Only */}
+      <div style={{ display: "block" }}>
+        <LocationSection isMobile={false} />
+      </div>
     </main>
   );
 }

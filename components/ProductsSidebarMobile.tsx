@@ -1,7 +1,9 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
   CarouselContent,
@@ -27,6 +29,10 @@ interface ProductsSidebarMobileProps {
 export default function ProductsSidebarMobile({
   products,
 }: ProductsSidebarMobileProps) {
+  const autoplayPlugin = useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: false })
+  );
+
   if (products.length === 0) return null;
 
   return (
@@ -78,6 +84,7 @@ export default function ProductsSidebarMobile({
             align: "start",
             loop: true,
           }}
+          plugins={[autoplayPlugin.current]}
           style={{ width: "100%" }}
         >
           <CarouselContent style={{ marginLeft: "-0.5rem" }}>
