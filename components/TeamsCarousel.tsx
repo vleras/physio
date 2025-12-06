@@ -30,7 +30,7 @@ export default function TeamsCarousel({ images }: TeamsCarouselProps) {
             style={{
               display: "flex",
               width: `${trackWidth}px`,
-              animation: "teamsScroll 20s linear infinite",
+              animation: "teamsScroll 10s linear infinite",
             }}
           >
             {tripledImages.map((src, index) => (
