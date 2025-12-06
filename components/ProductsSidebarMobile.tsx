@@ -30,7 +30,7 @@ export default function ProductsSidebarMobile({
   products,
 }: ProductsSidebarMobileProps) {
   const autoplayPlugin = useRef(
-    Autoplay({ delay: 3000, stopOnInteraction: false })
+    Autoplay({ delay: 2000, stopOnInteraction: false })
   );
 
   if (products.length === 0) return null;
