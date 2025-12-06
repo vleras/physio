@@ -742,7 +742,11 @@ body {
 }
 
 .sidebar-cr7-number {
-  color: #3eb8b6;
+  height: 0.75em;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+  object-fit: contain;
 }
 
 .sidebar-header h2 {

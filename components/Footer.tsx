@@ -50,6 +50,7 @@ export default function Footer() {
                 href="mailto:vsoclinic@gmail.com"
                 className="social-link"
                 aria-label="Email"
+                title="Send email to vsoclinic@gmail.com"
               >
                 <svg
                   width="24"
