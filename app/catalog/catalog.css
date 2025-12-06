@@ -161,3 +161,60 @@
   }
 }
 
+/* Product Image Hover Slide Effect */
+.product-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.product-image-primary,
+.product-image-secondary {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+  will-change: transform;
+}
+
+.product-image-primary {
+  transform: translateX(0);
+  opacity: 1;
+  z-index: 1;
+}
+
+.product-image-secondary {
+  transform: translateX(100%);
+  opacity: 0;
+  z-index: 2;
+}
+
+/* Hover effect - slide primary out, secondary in */
+.product-card:hover .product-image-primary {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.product-card:hover .product-image-secondary {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Override the scale effect from globals.css for catalog page */
+.catalog-page .product-card:hover .product-card__image {
+  transform: none;
+}
+
+/* Fallback for products with only one image */
+.product-image-container:has(.product-image-primary:only-child) .product-image-primary {
+  position: relative;
+}
+
+.product-image-container:has(.product-image-primary:only-child) .product-image-primary:hover {
+  transform: none;
+}
+

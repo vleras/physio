@@ -141,19 +141,38 @@ export default function Catalog() {
                         aria-label={product.name}
                         tabIndex={-1}
                       >
-                        <div className="media media--height media--contain w-full h-full overflow-hidden">
-                          <Image
-                            src={
-                              product.images && product.images.length > 0
-                                ? product.images[0]
-                                : "/images/services/hero1.png"
-                            }
-                            alt={product.name}
-                            className="product-card__image"
-                            width={1000}
-                            height={1000}
-                            loading="lazy"
-                          />
+                        <div className="product-image-container media media--height media--contain w-full h-full overflow-hidden">
+                          {product.images && product.images.length > 0 ? (
+                            <>
+                              <Image
+                                src={product.images[0]}
+                                alt={product.name}
+                                className="product-card__image product-image-primary"
+                                width={1000}
+                                height={1000}
+                                loading="lazy"
+                              />
+                              {product.images.length > 1 && (
+                                <Image
+                                  src={product.images[1]}
+                                  alt={`${product.name} - Alternate view`}
+                                  className="product-card__image product-image-secondary"
+                                  width={1000}
+                                  height={1000}
+                                  loading="lazy"
+                                />
+                              )}
+                            </>
+                          ) : (
+                            <Image
+                              src="/images/services/hero1.png"
+                              alt={product.name}
+                              className="product-card__image product-image-primary"
+                              width={1000}
+                              height={1000}
+                              loading="lazy"
+                            />
+                          )}
                         </div>
                       </Link>
                     </div>
