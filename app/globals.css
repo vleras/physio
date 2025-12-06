@@ -2956,6 +2956,11 @@ body {
     width: 100%;
   }
 
+  .page-section .container {
+    width: 90%;
+    max-width: 90%;
+  }
+
   .hero-title {
     font-size: 2rem;
   }
