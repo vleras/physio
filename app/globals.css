@@ -2438,6 +2438,8 @@ body {
   .product-image-container {
     width: 100%;
     max-width: 100%;
+    max-height: 60vh;
+    aspect-ratio: 1 / 1;
   }
 
   .product-detail-layout {
@@ -2472,6 +2474,8 @@ body {
   .product-image-container {
     width: 100%;
     max-width: 100%;
+    max-height: 50vh;
+    aspect-ratio: 1 / 1;
   }
 
   .product-detail-section {
