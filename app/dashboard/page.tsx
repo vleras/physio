@@ -42,12 +42,12 @@ export default function Dashboard() {
   }, []);
 
   // Helper function to get page number for a product based on its index
-  const getProductPage = (index: number, itemsPerPage: number = 8) => {
+  const getProductPage = (index: number, itemsPerPage: number = 12) => {
     return Math.floor(index / itemsPerPage) + 1;
   };
 
   // Group products by page number
-  const groupProductsByPage = (itemsPerPage: number = 8) => {
+  const groupProductsByPage = (itemsPerPage: number = 12) => {
     const grouped: { [page: number]: Product[] } = {};
     products.forEach((product, index) => {
       const pageNumber = getProductPage(index, itemsPerPage);
@@ -359,7 +359,7 @@ export default function Dashboard() {
                     </tr>
                   ) : (
                     (() => {
-                      const itemsPerPage = 8;
+                      const itemsPerPage = 12;
                       const grouped = groupProductsByPage(itemsPerPage);
                       const pageNumbers = Object.keys(grouped)
                         .map(Number)
