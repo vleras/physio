@@ -76,6 +76,17 @@ export default function Footer() {
                 </svg>
               </a>
             </div>
+            <p
+              style={{ marginTop: "1rem", fontSize: "0.95rem", color: "#333" }}
+            >
+              Numri i telefonit:{" "}
+              <a
+                href="tel:+38349459111"
+                style={{ color: "#333", textDecoration: "none" }}
+              >
+                +383 49 459 111
+              </a>
+            </p>
           </div>
         </div>
       </div>
