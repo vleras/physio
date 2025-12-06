@@ -42,7 +42,6 @@ export default function ProductsSidebarMobile({
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "0.5rem",
             flexDirection: "column",
           }}
         >
