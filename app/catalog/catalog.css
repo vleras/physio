@@ -159,6 +159,37 @@
     width: 36px;
     height: 36px;
   }
+
+  /* Reduce product card size on mobile */
+  .catalog-container {
+    gap: 1rem;
+  }
+
+  .catalog-page .product-card {
+    min-height: 300px;
+  }
+
+  .catalog-page .product-card__content {
+    padding: 12px;
+  }
+
+  .catalog-page .product-card__title {
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  .catalog-page .product-card__media {
+    aspect-ratio: 1/1;
+  }
+
+  .catalog-page .price__regular {
+    font-size: 0.9rem;
+  }
+
+  .catalog-page .caption {
+    font-size: 0.7rem;
+    margin-bottom: 6px;
+  }
 }
 
 /* Product Image Hover Slide Effect */
