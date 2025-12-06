@@ -62,8 +62,15 @@ export default function ProductsSidebarMobile({
               priority
             />
           </div>
-          <div style={{ fontSize: "0.875rem", fontWeight: "500" }}>
-            by CR<span style={{ fontWeight: "700" }}>7</span>
+          <div className="sidebar-cr7">
+            by CR
+            <Image
+              src="/7.png"
+              alt="7"
+              width={20}
+              height={20}
+              className="sidebar-cr7-number"
+            />
           </div>
         </div>
         <h2
@@ -199,7 +206,7 @@ export default function ProductsSidebarMobile({
                         fontSize: "0.75rem",
                         fontWeight: "500",
                         color: "#000000",
-                        border: "1px solid #000000",
+                        border: "none",
                         borderRadius: "0.375rem",
                         padding: "0.375rem 0.75rem",
                         marginTop: "auto",
