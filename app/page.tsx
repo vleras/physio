@@ -16,8 +16,6 @@ export default function Home() {
     "/images/professionals/professionals6.webp",
   ];
   const carouselRef = useRef<HTMLDivElement | null>(null);
-  const isUserInteractingRef = useRef(false);
-  const interactionTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const [teamsImages, setTeamsImages] = useState<string[]>([]);
 
@@ -61,7 +59,6 @@ export default function Home() {
       animatedElements.forEach((el) => observer.unobserve(el));
     };
   }, []);
-
   // Infinite auto-scrolling carousel - optimized for smooth continuous scrolling
   useEffect(() => {
     const carousel = carouselRef.current;
@@ -73,32 +70,8 @@ export default function Home() {
 
     const scrollSpeed = 1.5; // Increased speed for smoother feel
 
-    // Handle user interaction for pausing auto-scroll
-    const handleUserInteraction = () => {
-      isUserInteractingRef.current = true;
-
-      // Clear any existing timer
-      if (interactionTimerRef.current) {
-        clearTimeout(interactionTimerRef.current);
-      }
-
-      // Set new timer to resume after 2 seconds of inactivity
-      const timer = setTimeout(() => {
-        isUserInteractingRef.current = false;
-      }, 2000);
-
-      interactionTimerRef.current = timer;
-    };
-
     const animate = (currentTime: number) => {
       if (!carousel) {
-        animationFrame = requestAnimationFrame(animate);
-        return;
-      }
-
-      // Pause animation if user is interacting
-      if (isUserInteractingRef.current) {
-        lastTime = currentTime;
         animationFrame = requestAnimationFrame(animate);
         return;
       }
@@ -125,66 +98,17 @@ export default function Home() {
       animationFrame = requestAnimationFrame(animate);
     };
 
-    // Add event listeners to detect user interaction
-    const handleTouchStart = () => {
-      handleUserInteraction();
-    };
-
-    const handleTouchEnd = () => {
-      // Touch end already handled by handleUserInteraction
-    };
-
-    const handleWheel = () => {
-      handleUserInteraction();
-    };
-
-    // Listen for user interactions
-    carousel.addEventListener("touchstart", handleTouchStart, {
-      passive: true,
-    });
-    carousel.addEventListener("touchend", handleTouchEnd, { passive: true });
-    carousel.addEventListener("wheel", handleWheel, { passive: true });
-
     animationFrame = requestAnimationFrame(animate);
 
     return () => {
       if (animationFrame) {
         cancelAnimationFrame(animationFrame);
       }
-
-      carousel.removeEventListener("touchstart", handleTouchStart);
-      carousel.removeEventListener("touchend", handleTouchEnd);
-      carousel.removeEventListener("wheel", handleWheel);
-
-      if (interactionTimerRef.current) {
-        clearTimeout(interactionTimerRef.current);
-      }
     };
   }, [professionalsImages.length]);
 
-  // Handle user interaction for main content (separate from carousel)
-  const handleMainInteraction = () => {
-    isUserInteractingRef.current = true;
-
-    // Clear any existing timer
-    if (interactionTimerRef.current) {
-      clearTimeout(interactionTimerRef.current);
-    }
-
-    // Set new timer to resume after 2 seconds of inactivity
-    const timer = setTimeout(() => {
-      isUserInteractingRef.current = false;
-    }, 2000);
-
-    interactionTimerRef.current = timer;
-  };
-
   return (
-    <main
-      className="main-content"
-      onTouchStart={handleMainInteraction}
-      onTouchMove={handleMainInteraction}
-    >
+    <main className="main-content">
       <div className="content-layout">
         <div className="main-content-area">
           <section className="hero-section">
