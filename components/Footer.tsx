@@ -29,7 +29,59 @@ export default function Footer() {
           </div>
           <div className="footer-column">
             <h3>KONTAKTO ME NE</h3>
-            <div className="social-links">
+            <p
+              style={{
+                marginTop: "1rem",
+                fontSize: "0.95rem",
+                color: "#333",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+              }}
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                style={{ color: "#333" }}
+              >
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+              </svg>
+              <a
+                href="tel:+38349459111"
+                style={{ color: "#333", textDecoration: "none" }}
+              >
+                +383 49 459 111
+              </a>
+            </p>
+            <p
+              style={{
+                marginTop: "0.5rem",
+                fontSize: "0.95rem",
+                color: "#333",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+              }}
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                style={{ color: "#333" }}
+              >
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+              </svg>
+              <a
+                href="mailto:vsoclinic@gmail.com"
+                style={{ color: "#333", textDecoration: "none" }}
+              >
+                vsoclinic@gmail.com
+              </a>
+            </p>
+            <div className="social-links" style={{ marginTop: "1rem" }}>
               <a
                 href="https://www.instagram.com/vsoclinic/"
                 target="_blank"
@@ -47,10 +99,11 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="mailto:vsoclinic@gmail.com"
+                href="https://www.tiktok.com/@vsoclinic?is_from_webapp=1&sender_device=pc"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="social-link"
-                aria-label="Email"
-                title="Send email to vsoclinic@gmail.com"
+                aria-label="TikTok"
               >
                 <svg
                   width="24"
@@ -58,35 +111,10 @@ export default function Footer() {
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
-                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-                </svg>
-              </a>
-              <a
-                href="tel:+38349459111"
-                className="social-link"
-                aria-label="Phone"
-              >
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
                 </svg>
               </a>
             </div>
-            <p
-              style={{ marginTop: "1rem", fontSize: "0.95rem", color: "#333" }}
-            >
-              Numri i telefonit:{" "}
-              <a
-                href="tel:+38349459111"
-                style={{ color: "#333", textDecoration: "none" }}
-              >
-                +383 49 459 111
-              </a>
-            </p>
           </div>
         </div>
       </div>

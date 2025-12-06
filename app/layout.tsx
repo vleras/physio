@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import QueryProvider from "@/components/QueryProvider";
+import MobileMessagingButton from "@/components/MobileMessagingButton";
 
 const inter = Inter({
   weight: ["400", "500", "600", "700"],
@@ -30,6 +31,7 @@ export default function RootLayout({
           <Header />
           {children}
           <Footer />
+          <MobileMessagingButton />
         </QueryProvider>
       </body>
     </html>

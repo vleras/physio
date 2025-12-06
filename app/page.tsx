@@ -1,7 +1,6 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useMediaQuery } from "react-responsive";
 import ProductsSidebar from "@/components/ProductsSidebar";
 import HeroSlider2 from "@/components/HeroSlider2";
 import ProfessionalsCarousel from "@/components/ProfessionalsCarousel";
@@ -21,7 +20,6 @@ const PROFESSIONALS_IMAGES: string[] = [
 
 export default function Home() {
   useScrollAnimation();
-  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   const { data: teamsImages = [] } = useQuery<string[]>({
     queryKey: ["teamLogos"],
@@ -47,7 +45,9 @@ export default function Home() {
           </section>
 
           {/* Location/Map Section - Desktop Only */}
-          {!isMobile && <LocationSection isMobile={false} />}
+          <div className="location-section-desktop">
+            <LocationSection isMobile={false} />
+          </div>
         </div>
 
         {/* Products Sidebar */}
@@ -68,7 +68,9 @@ export default function Home() {
       <TeamsCarousel images={teamsImages} />
 
       {/* Location/Map Section - Mobile Only */}
-      {isMobile && <LocationSection isMobile={true} />}
+      <div className="location-section-mobile">
+        <LocationSection isMobile={true} />
+      </div>
     </main>
   );
 }
