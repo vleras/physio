@@ -81,7 +81,7 @@ export default function Footer() {
                 vsoclinic@gmail.com
               </a>
             </p>
-            <div className="social-links" style={{ marginTop: "1rem" }}>
+            <div className="social-links">
               <a
                 href="https://www.instagram.com/vsoclinic/"
                 target="_blank"

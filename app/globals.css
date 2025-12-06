@@ -2907,6 +2907,7 @@ body {
   display: flex;
   gap: 1rem;
   justify-content: flex-start;
+  margin-top: 1rem;
 }
 
 .social-link {
@@ -2914,7 +2915,7 @@ body {
   transition: opacity 0.3s;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
 }
 
 .social-link:hover {
@@ -3074,10 +3075,12 @@ body {
     justify-content: flex-start;
     gap: 1.25rem;
     flex-wrap: wrap;
+    padding-left: 0;
+    padding-right: 0;
+    margin-top: 0 !important;
   }
 
   .social-link {
-    min-width: 44px;
     min-height: 44px;
   }
 
