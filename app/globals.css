@@ -1750,7 +1750,7 @@ body {
 
 .service-list__item h3 {
   margin: 0 0 0.5rem 0;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 600;
   color: #000;
   display: flex;
@@ -1761,14 +1761,14 @@ body {
 .service-number {
   color: #20b2aa;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
 .service-list__item p {
   margin: 0;
   color: #555;
   line-height: 1.7;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
 }
 
 /* Staggered animation for service list items */
@@ -1804,7 +1804,7 @@ body {
   }
 
   .service-list__item h3 {
-    font-size: 1.05rem;
+    font-size: 1.15rem;
   }
 
   /* Make images same width as content on mobile */
@@ -2957,8 +2957,8 @@ body {
   }
 
   .page-section .container {
-    width: 90%;
-    max-width: 90%;
+    width: 95%;
+    max-width: 95%;
   }
 
   .hero-title {
