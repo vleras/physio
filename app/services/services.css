@@ -514,3 +514,8 @@
   }
 }
 
+@media (max-width: 768px) {
+  .service-layout__content {
+    padding: 1rem;
+  }
+}
