@@ -20,7 +20,7 @@ export default function Catalog() {
   const [products, setProducts] = useState<SupabaseProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
+  const itemsPerPage = 12;
 
   useEffect(() => {
     async function fetchProducts() {
@@ -49,15 +49,23 @@ export default function Catalog() {
 
   const getPageNumbers = () => {
     const pages = [];
-    const maxVisible = 5;
+    const maxVisible = 3;
     
-    // Calculate the range of pages to show
-    let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
-    let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+    // Calculate the range of pages to show (always 3 pages)
+    let startPage = currentPage - 1;
+    let endPage = currentPage + 1;
 
-    // Adjust start page if we're near the end
-    if (endPage - startPage < maxVisible - 1) {
-      startPage = Math.max(1, endPage - maxVisible + 1);
+    // Adjust if we're at the beginning
+    if (currentPage === 1) {
+      startPage = 1;
+      endPage = Math.min(3, totalPages);
+    } else if (currentPage === 2) {
+      startPage = 1;
+      endPage = Math.min(3, totalPages);
+    } else if (currentPage >= totalPages - 1) {
+      // Adjust if we're near the end
+      endPage = totalPages;
+      startPage = Math.max(1, totalPages - 2);
     }
 
     // Generate consecutive page numbers
@@ -202,61 +210,17 @@ export default function Catalog() {
                   </button>
 
                   <div className="pagination-numbers">
-                    {(() => {
-                      const pageNumbers = getPageNumbers();
-                      const showFirstPage = pageNumbers[0] > 1;
-                      const showLastPage = pageNumbers[pageNumbers.length - 1] < totalPages;
-                      const showLeftEllipsis = pageNumbers[0] > 2;
-                      const showRightEllipsis = pageNumbers[pageNumbers.length - 1] < totalPages - 1;
-
-                      return (
-                        <>
-                          {showFirstPage && (
-                            <>
-                              <button
-                                className={`pagination-number ${
-                                  currentPage === 1 ? "active" : ""
-                                }`}
-                                onClick={() => handlePageChange(1)}
-                              >
-                                1
-                              </button>
-                              {showLeftEllipsis && (
-                                <span className="pagination-ellipsis">...</span>
-                              )}
-                            </>
-                          )}
-
-                          {pageNumbers.map((page) => (
-                            <button
-                              key={page}
-                              className={`pagination-number ${
-                                currentPage === page ? "active" : ""
-                              }`}
-                              onClick={() => handlePageChange(page)}
-                            >
-                              {page}
-                            </button>
-                          ))}
-
-                          {showLastPage && (
-                            <>
-                              {showRightEllipsis && (
-                                <span className="pagination-ellipsis">...</span>
-                              )}
-                              <button
-                                className={`pagination-number ${
-                                  currentPage === totalPages ? "active" : ""
-                                }`}
-                                onClick={() => handlePageChange(totalPages)}
-                              >
-                                {totalPages}
-                              </button>
-                            </>
-                          )}
-                        </>
-                      );
-                    })()}
+                    {getPageNumbers().map((page) => (
+                      <button
+                        key={page}
+                        className={`pagination-number ${
+                          currentPage === page ? "active" : ""
+                        }`}
+                        onClick={() => handlePageChange(page)}
+                      >
+                        {page}
+                      </button>
+                    ))}
                   </div>
 
                   <button
