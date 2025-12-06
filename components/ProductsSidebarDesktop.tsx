@@ -59,13 +59,37 @@ export default function ProductsSidebarDesktop({
       }
     };
 
-    updateHeight();
+    // Wait for location section to be available, then calculate
+    const checkAndUpdate = () => {
+      const locationSection = document.querySelector(".location-section");
+      if (locationSection) {
+        updateHeight();
+      } else {
+        // Retry if location section not found yet (for async rendering)
+        setTimeout(checkAndUpdate, 100);
+      }
+    };
+
+    checkAndUpdate();
+
+    // Recalculate on resize
     window.addEventListener("resize", updateHeight);
-    const timeoutId = setTimeout(updateHeight, 500);
+
+    // Recalculate after delays to account for async rendering and iframe loading
+    const timeoutId1 = setTimeout(updateHeight, 500);
+    const timeoutId2 = setTimeout(updateHeight, 1000);
+
+    // Also recalculate when images/content loads
+    const imageLoadHandler = () => {
+      setTimeout(updateHeight, 100);
+    };
+    window.addEventListener("load", imageLoadHandler);
 
     return () => {
       window.removeEventListener("resize", updateHeight);
-      clearTimeout(timeoutId);
+      window.removeEventListener("load", imageLoadHandler);
+      clearTimeout(timeoutId1);
+      clearTimeout(timeoutId2);
     };
   }, []);
 

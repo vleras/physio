@@ -27,7 +27,7 @@ export default function LocationSection({
   const titleStyle: React.CSSProperties = {
     fontSize: isMobile ? "1.75rem" : "2rem",
     color: "#000",
-    marginBottom: isMobile ? "0.75rem !important" : "1rem !important",
+    marginBottom: isMobile ? "0.75rem" : "1rem",
     textAlign: "center",
     fontWeight: 700,
   };
@@ -61,7 +61,7 @@ export default function LocationSection({
   };
 
   return (
-    <section style={sectionStyle}>
+    <section className="location-section" style={sectionStyle}>
       <div style={containerStyle}>
         <h2 style={titleStyle}>Lokacioni Ynë</h2>
         <p style={addressStyle}>Adresa: Rruga Valbona, Rruga C</p>
