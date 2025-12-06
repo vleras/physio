@@ -518,4 +518,10 @@
   .service-layout__content {
     padding: 1rem;
   }
+
+  /* Reduce spacing around page title on mobile */
+  .services-flow .page-title {
+    margin-top: 0.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
 }
