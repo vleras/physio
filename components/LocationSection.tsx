@@ -11,7 +11,7 @@ export default function LocationSection({
   isMobile = false,
 }: LocationSectionProps) {
   const sectionStyle: React.CSSProperties = {
-    padding: isMobile ? "1.5rem 0" : "3rem 0",
+    padding: isMobile ? "1.5rem 0 3rem 0" : "3rem 0",
     background: "#fff",
     width: "100%",
   };
