@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 const heroImages = [
-  "/vsohero.jpg",
+  "/vsonew1.jpg",
+  "/homepage3.jpg",
   "/images/services/hero3.jpg",
   "/images/services/hero4.jpg",
   "/images/services/hero5.jpg",
   "/images/services/hero6.jpg",
   "/images/services/needle.jpg",
   // "/images/hero10.jpg",
-  "/homepage3.jpg",
 ];
 
 export default function HeroSlider2() {
