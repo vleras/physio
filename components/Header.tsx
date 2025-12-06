@@ -45,7 +45,7 @@ export default function Header() {
         <div className="header-mobile-top">
           <Link href="/" className="logo" onClick={closeMenu}>
             <Image
-              src="/vso.jpg"
+              src="/logo.png"
               alt="VSO Clinic Logo"
               className="logo-image"
               width={40}
