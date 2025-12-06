@@ -594,3 +594,27 @@
   }
 }
 
+/* Fix mobile scrolling issues */
+@media (max-width: 768px) {
+  .professionals-grid {
+    -webkit-overflow-scrolling: touch !important;
+    overflow-x: auto !important;
+    touch-action: pan-y pan-x !important; /* Allow both vertical and horizontal */
+  }
+
+  /* Prevent iframe from capturing all touch events */
+  .map-container iframe {
+    pointer-events: auto;
+  }
+
+  /* Ensure main content scrolls */
+  .main-content {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
+
+/* Allow natural scrolling momentum */
+.professionals-grid {
+  scroll-behavior: auto !important;
+}
