@@ -2202,15 +2202,24 @@ body {
 
 .product-card__details {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: baseline;
   gap: 8px;
   width: 100%;
+  flex-wrap: wrap;
+}
+
+/* On very small screens, use column to prevent overlap */
+@media (max-width: 480px) {
+  .product-card__details {
+    flex-direction: column;
+  }
 }
 
 @media (min-width: 1024px) {
   .product-card__details {
     flex-direction: row;
+    flex-wrap: nowrap;
   }
 }
 
