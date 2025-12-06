@@ -130,7 +130,14 @@ export default function ProductsSidebarDesktop({
             />
           </div>
           <div className="sidebar-cr7">
-            by CR<span className="sidebar-cr7-number">7</span>
+            by CR
+            <Image
+              src="/7.png"
+              alt="7"
+              width={20}
+              height={20}
+              className="sidebar-cr7-number"
+            />
           </div>
         </div>
         <h2>Produktet</h2>
