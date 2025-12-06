@@ -75,7 +75,13 @@
   align-items: center;
   justify-content: center;
 }
-
+/* Tablet view - add top margin to prevent image going under title */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .product-image-section {
+    margin-top: 18rem;
+    padding-top: 10rem;
+  }
+}
 .product-image-container {
   position: relative;
   width: 90%;
