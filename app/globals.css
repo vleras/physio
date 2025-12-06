@@ -1813,8 +1813,8 @@ body {
 
   /* Add side padding to services page content on mobile */
   .services-flow .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    /* padding-left: 1rem;
+    padding-right: 1rem; */
   }
 }
 
