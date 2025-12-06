@@ -1,7 +1,12 @@
 /* Catalog Page Specific Styles */
 
 .catalog-page {
-  padding-top: 3rem;
+  padding-top: 1.5rem;
+}
+
+.catalog-page .page-section {
+  padding-top: 0;
+  padding-bottom: 2rem;
 }
 
 .catalog-filters {
@@ -202,6 +207,18 @@
 @media (max-width: 480px) {
   .catalog-page .product-card__details {
     flex-direction: row;
+  }
+}
+
+/* Increase logo size on desktop for catalog page */
+@media (min-width: 769px) {
+  .catalog-page .page-title img {
+    width: 100px !important;
+    height: 100px !important;
+  }
+
+  .catalog-page .page-title {
+    margin-bottom: 2rem !important;
   }
 }
 
