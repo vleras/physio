@@ -35,6 +35,7 @@ export default function ProductsSidebar() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isTouching, setIsTouching] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
 
   // Tripled products for seamless infinite scroll
@@ -155,44 +156,120 @@ export default function ProductsSidebar() {
     if (products.length === 0 || !trackRef.current) return;
 
     const track = trackRef.current;
-    const duration = 20;
+    const duration = 20; // Total animation duration in seconds
 
-    // On mobile, DON'T set any animation at all
-    if (isMobile) {
-      track.style.animation = "none";
-      return;
-    }
-
-    // Only on desktop: set the vertical animation
+    // On mobile, wait for initialization to prevent scroll jumps
     const initAnimation = () => {
+      // Clean up any existing animations
       track.style.animation = "none";
+      // Force reflow
       void track.offsetHeight;
-      track.style.animation = `scroll-down ${duration}s linear infinite`;
+
+      // Apply the CSS animation based on screen size
+      // Mobile: horizontal scroll (scroll-left), Desktop: vertical scroll (scroll-down)
+      const animationName = isMobile ? "scroll-left" : "scroll-down";
+      track.style.animation = `${animationName} ${duration}s linear infinite`;
     };
 
-    requestAnimationFrame(initAnimation);
+    // Use requestAnimationFrame to prevent layout shifts during initial render
+    // On mobile, wait a tiny bit for page to settle, but not too long
+    if (isMobile && !isInitialized) {
+      // Very short delay just to let initial render complete
+      const timer = setTimeout(() => {
+        requestAnimationFrame(initAnimation);
+      }, 50);
+      return () => {
+        clearTimeout(timer);
+        if (trackRef.current) {
+          trackRef.current.style.animation = "none";
+        }
+      };
+    } else {
+      // Desktop or after initialization - start immediately
+      requestAnimationFrame(initAnimation);
+    }
 
     return () => {
       if (trackRef.current) {
         trackRef.current.style.animation = "none";
       }
     };
-  }, [products.length, isMobile]);
+  }, [products.length, isMobile, isInitialized]);
 
-  // Pause/resume animation on hover (desktop only)
+  // Pause/resume animation on hover or touch (mobile)
   useEffect(() => {
-    if (!trackRef.current || isMobile) return;
+    if (!trackRef.current) return;
 
     const track = trackRef.current;
 
-    if (isHovered) {
+    if (isHovered || isTouching) {
       // Pause the animation smoothly
       track.style.animationPlayState = "paused";
     } else {
       // Resume the animation smoothly
       track.style.animationPlayState = "running";
     }
-  }, [isHovered, isMobile]);
+  }, [isHovered, isTouching]);
+
+  // Handle touch events on mobile to pause animation and allow page scroll
+  useEffect(() => {
+    if (!isMobile || !sidebarRef.current) return;
+
+    const sidebar = sidebarRef.current;
+    let touchStartY = 0;
+    let touchStartX = 0;
+    let isVerticalScroll = false;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+      touchStartX = e.touches[0].clientX;
+      isVerticalScroll = false;
+      setIsTouching(true);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!touchStartY || !touchStartX) return;
+
+      const touchY = e.touches[0].clientY;
+      const touchX = e.touches[0].clientX;
+      const deltaY = Math.abs(touchY - touchStartY);
+      const deltaX = Math.abs(touchX - touchStartX);
+
+      // Determine if this is primarily a vertical scroll
+      if (deltaY > deltaX && deltaY > 10) {
+        isVerticalScroll = true;
+        // Allow default behavior for vertical scrolling (page scroll)
+        return;
+      }
+
+      // For horizontal scrolling within sidebar, prevent default to allow horizontal scroll
+      if (deltaX > deltaY && deltaX > 10) {
+        isVerticalScroll = false;
+      }
+    };
+
+    const handleTouchEnd = () => {
+      // Small delay before resuming to ensure smooth transition
+      setTimeout(() => {
+        setIsTouching(false);
+      }, 100);
+      touchStartY = 0;
+      touchStartX = 0;
+      isVerticalScroll = false;
+    };
+
+    sidebar.addEventListener("touchstart", handleTouchStart, { passive: true });
+    sidebar.addEventListener("touchmove", handleTouchMove, { passive: true });
+    sidebar.addEventListener("touchend", handleTouchEnd, { passive: true });
+    sidebar.addEventListener("touchcancel", handleTouchEnd, { passive: true });
+
+    return () => {
+      sidebar.removeEventListener("touchstart", handleTouchStart);
+      sidebar.removeEventListener("touchmove", handleTouchMove);
+      sidebar.removeEventListener("touchend", handleTouchEnd);
+      sidebar.removeEventListener("touchcancel", handleTouchEnd);
+    };
+  }, [isMobile]);
 
   return (
     <aside
@@ -224,7 +301,7 @@ export default function ProductsSidebar() {
       <div
         className="sidebar-products"
         style={{
-          overflow: isMobile ? undefined : "hidden",
+          overflow: "hidden",
           height: isMobile ? "auto" : "100%",
         }}
       >

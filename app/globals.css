@@ -622,27 +622,25 @@ body {
 
   .sidebar-products {
     flex-direction: row;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
+    overflow-x: hidden;
+    overflow-y: visible;
     padding: 1rem 0;
     height: auto;
     min-height: 420px;
     flex: 0 0 auto;
-    /* Use native browser scrolling instead of CSS animation */
-    -webkit-overflow-scrolling: touch !important;
-    scroll-behavior: smooth;
-    animation: none !important; /* DISABLE THE ANIMATION */
-    /* Allow both horizontal and vertical scrolling */
+    /* Allow both horizontal and vertical, but vertical scroll passes through to page */
     touch-action: pan-y pan-x;
     overscroll-behavior-x: contain;
     overscroll-behavior-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Ensure touch events can pass through for vertical scrolling */
+    will-change: transform;
   }
 
   .sidebar-products .flex.flex-col,
   .sidebar-products .flex.flex-row {
     flex-direction: row !important;
     width: max-content;
-    animation: none !important; /* DISABLE THE ANIMATION */
   }
 
   .sidebar-product-item {
@@ -774,13 +772,6 @@ body {
   max-height: 100%;
   margin: 0;
   padding: 1rem 0;
-}
-
-/* DESKTOP - Keep the vertical animation */
-@media (min-width: 769px) {
-  .sidebar-products > div {
-    animation: scroll-down 20s linear infinite;
-  }
 }
 
 .sidebar-product-item {
