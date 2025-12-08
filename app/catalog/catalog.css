@@ -187,6 +187,11 @@
     aspect-ratio: 1/1;
   }
 
+  .catalog-page .product-image-primary,
+  .catalog-page .product-image-secondary {
+    transform: scale(1.15);
+  }
+
   .catalog-page .price__regular {
     font-size: 0.9rem;
   }
