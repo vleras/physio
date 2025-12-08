@@ -1149,7 +1149,7 @@ body {
 }
 
 .catalog-title-text {
-  font-size: 1.8rem !important;
+  font-size: 1.6rem !important;
   display: inline-flex;
   align-items: baseline;
   /* gap: 0.15rem; */
@@ -2994,6 +2994,7 @@ body {
   .page-title {
     font-size: 2rem;
     margin-bottom: 1.5rem;
+    margin-top: 0;
   }
 
   .catalog-logo {
