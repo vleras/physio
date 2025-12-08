@@ -115,8 +115,26 @@ export default function ProductsSidebarDesktop({
     };
   }, [products.length]);
 
+  // Pause on hover (desktop only)
+  const handleMouseEnter = () => {
+    if (window.innerWidth > 768 && trackRef.current) {
+      trackRef.current.style.animationPlayState = "paused";
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (window.innerWidth > 768 && trackRef.current) {
+      trackRef.current.style.animationPlayState = "running";
+    }
+  };
+
   return (
-    <aside className="products-sidebar" ref={sidebarRef}>
+    <aside 
+      className="products-sidebar" 
+      ref={sidebarRef}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <div className="sidebar-header">
         <div className="sidebar-logo-container">
           <div className="sidebar-logo">
