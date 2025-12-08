@@ -281,6 +281,10 @@ export default function ProductsSidebarMobile({
       >
         <Link
           href="/catalog"
+          scroll={true}
+          onClick={() => {
+            window.scrollTo(0, 0);
+          }}
           style={{
             display: "flex",
             alignItems: "center",

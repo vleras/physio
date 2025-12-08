@@ -23,6 +23,9 @@ export default function Catalog() {
   const itemsPerPage = 12;
 
   useEffect(() => {
+    // Scroll to top when catalog page loads
+    window.scrollTo(0, 0);
+
     async function fetchProducts() {
       try {
         const data = await getProducts();
@@ -50,7 +53,7 @@ export default function Catalog() {
   const getPageNumbers = () => {
     const pages = [];
     const maxVisible = 3;
-    
+
     // Calculate the range of pages to show (always 3 pages)
     let startPage = currentPage - 1;
     let endPage = currentPage + 1;
@@ -72,7 +75,7 @@ export default function Catalog() {
     for (let i = startPage; i <= endPage; i++) {
       pages.push(i);
     }
-    
+
     return pages;
   };
 
@@ -102,7 +105,7 @@ export default function Catalog() {
                   width={24}
                   height={24}
                   className="catalog-title-number"
-                  style={{ display: "inline-block", verticalAlign: "baseline", marginLeft: "0.15rem" }}
+                  style={{ display: "inline-block", verticalAlign: "baseline" }}
                 />
               </span>
               <Image
@@ -111,7 +114,11 @@ export default function Catalog() {
                 width={80}
                 height={40}
                 className="catalog-title-cr7-mobile"
-                style={{ display: "inline-block", verticalAlign: "baseline", marginLeft: "0.15rem" }}
+                style={{
+                  display: "inline-block",
+                  verticalAlign: "baseline",
+                  marginLeft: "0.15rem",
+                }}
               />
             </span>
           </h1>

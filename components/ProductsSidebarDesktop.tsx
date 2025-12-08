@@ -206,7 +206,14 @@ export default function ProductsSidebarDesktop({
       </div>
 
       <div className="sidebar-see-more">
-        <Link href="/catalog" className="sidebar-see-more-button">
+        <Link 
+          href="/catalog" 
+          className="sidebar-see-more-button"
+          scroll={true}
+          onClick={() => {
+            window.scrollTo(0, 0);
+          }}
+        >
           Shiko Më Shumë
           <svg
             width="16"
