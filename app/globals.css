@@ -1142,6 +1142,27 @@ body {
   transform: translateY(0) scale(1);
 }
 
+.catalog-logo {
+  width: 120px !important;
+  height: 120px !important;
+  object-fit: contain;
+}
+
+.catalog-title-text {
+  font-size: 1.8rem !important;
+  display: inline-flex;
+  align-items: baseline;
+  /* gap: 0.15rem; */
+  line-height: 1;
+}
+
+.catalog-title-number {
+  height: 0.75em;
+  width: auto;
+  object-fit: contain;
+  vertical-align: baseline;
+}
+
 .content-wrapper {
   background: white;
   padding: 2rem;
@@ -2972,6 +2993,20 @@ body {
 
   .page-title {
     font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .catalog-logo {
+    width: 100px !important;
+    height: 100px !important;
+  }
+
+  .catalog-title-text {
+    font-size: 1rem !important;
+  }
+
+  .catalog-title-number {
+    height: 0.75em;
   }
 
   .services-grid {

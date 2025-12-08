@@ -81,17 +81,28 @@ export default function Catalog() {
       <section className="page-section">
         <div className="container">
           <h1
-            className="page-title"
+            className="page-title catalog-page-title"
             style={{ display: "flex", alignItems: "center", gap: "12px" }}
           >
             <Image
               src="/avalogo.svg"
               alt="AVA Logo"
-              width={80}
-              height={80}
+              width={120}
+              height={120}
               style={{ display: "inline-block" }}
+              className="catalog-logo"
             />
-            AVACR7
+            <span className="catalog-title-text">
+              AVACR
+              <Image
+                src="/7.png"
+                alt="7"
+                width={24}
+                height={24}
+                className="catalog-title-number"
+                style={{ display: "inline-block", verticalAlign: "baseline", marginLeft: "0.15rem" }}
+              />
+            </span>
           </h1>
           {loading ? (
             <div style={{ padding: "2rem", textAlign: "center" }}>

@@ -300,6 +300,16 @@
   margin-bottom: 0.25rem;
 }
 
+.product-breadcrumb-logo {
+  width: 80px !important;
+  height: 56px !important;
+  object-fit: contain;
+}
+
+.product-breadcrumb-text {
+  font-size: 0.65rem !important;
+}
+
 .product-detail-title {
   font-size: 2rem;
   font-weight: 700;
@@ -323,6 +333,15 @@
 
   .product-breadcrumb {
     font-size: 0.7rem;
+  }
+
+  .product-breadcrumb-logo {
+    width: 80px !important;
+    height: 56px !important;
+  }
+
+  .product-breadcrumb-text {
+    font-size: 0.6rem !important;
   }
 
   .product-specs h3 {

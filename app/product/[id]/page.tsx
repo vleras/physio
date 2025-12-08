@@ -247,11 +247,12 @@ export default function ProductDetails({ params }: PageProps) {
                 <Image
                   src="/images/services/avalogo.svg"
                   alt="AVA Logo"
-                  width={40}
-                  height={40}
+                  width={80}
+                  height={56}
                   style={{ display: "inline-block" }}
+                  className="product-breadcrumb-logo"
                 />
-                <span>AVA STORE</span>
+                <span className="product-breadcrumb-text">AVA STORE</span>
               </div>
               
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem" }}>

@@ -213,8 +213,7 @@
 /* Increase logo size on desktop for catalog page */
 @media (min-width: 769px) {
   .catalog-page .page-title img {
-    width: 100px !important;
-    height: 100px !important;
+    /* width: 100px !important; */
   }
 
   .catalog-page .page-title {
@@ -291,11 +290,12 @@
 }
 
 /* Fallback for products with only one image */
-.product-image-container:has(.product-image-primary:only-child) .product-image-primary {
+.product-image-container:has(.product-image-primary:only-child)
+  .product-image-primary {
   position: relative;
 }
 
-.product-image-container:has(.product-image-primary:only-child) .product-image-primary:hover {
+.product-image-container:has(.product-image-primary:only-child)
+  .product-image-primary:hover {
   transform: none;
 }
-
