@@ -3154,27 +3154,13 @@ body {
     height: 24px;
   }
 
-  /* Mobile: Increase logo size and make BY CR smaller and centered */
-  .products-sidebar-mobile .sidebar-logo-image {
-    width: 150px !important;
-    height: 105px !important;
-  }
-
-  .products-sidebar-mobile .sidebar-cr7 {
-    font-size: 0.875rem !important;
-    font-family: "Instrument Sans", sans-serif !important;
-    color: #171717 !important;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    /* margin-top: 0.5rem; */
-    width: 100%;
-  }
-
-  .products-sidebar-mobile .sidebar-cr7-number {
-    height: 0.65em !important;
+  /* Mobile: Use avacr7.png image instead of logo and BY CR7 */
+  .products-sidebar-mobile .sidebar-logo-image-mobile {
+    width: auto !important;
+    height: auto !important;
+    max-width: 200px;
+    max-height: 100px;
+    object-fit: contain;
   }
 
   /* Hide "ID", "Çmimi", and "Numri i imazheve" columns on mobile in dashboard table */

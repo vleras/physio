@@ -53,22 +53,12 @@ export default function ProductsSidebarMobile({
             }}
           >
             <Image
-              src="/avalogo.svg"
-              alt="AVA Logo"
-              width={100}
-              height={70}
-              className="sidebar-logo-image"
+              src="/avacr7.png"
+              alt="AVACR7"
+              width={200}
+              height={100}
+              className="sidebar-logo-image-mobile"
               priority
-            />
-          </div>
-          <div className="sidebar-cr7">
-            BY CR
-            <Image
-              src="/7.png"
-              alt="7"
-              width={20}
-              height={20}
-              className="sidebar-cr7-number"
             />
           </div>
         </div>
