@@ -93,13 +93,24 @@ export default function Catalog() {
               className="catalog-logo"
             />
             <span className="catalog-title-text">
-              AVACR
+              <span className="catalog-title-ava">AVA</span>
+              <span className="catalog-title-cr7-desktop">
+                CR
+                <Image
+                  src="/7.png"
+                  alt="7"
+                  width={24}
+                  height={24}
+                  className="catalog-title-number"
+                  style={{ display: "inline-block", verticalAlign: "baseline", marginLeft: "0.15rem" }}
+                />
+              </span>
               <Image
-                src="/7.png"
-                alt="7"
-                width={24}
-                height={24}
-                className="catalog-title-number"
+                src="/cr7.jpg"
+                alt="CR7"
+                width={80}
+                height={40}
+                className="catalog-title-cr7-mobile"
                 style={{ display: "inline-block", verticalAlign: "baseline", marginLeft: "0.15rem" }}
               />
             </span>
