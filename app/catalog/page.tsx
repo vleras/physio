@@ -218,12 +218,17 @@ export default function Catalog() {
                             {product.name}
                           </Link>
                         </p>
-                        <div className="price">
+                        <div className="price price-desktop">
                           <span className="price__regular whitespace-nowrap">
                             {product.price || "N/A"}
                           </span>
                         </div>
                       </div>
+                    </div>
+                    <div className="price price-mobile">
+                      <span className="price__regular whitespace-nowrap">
+                        {product.price || "N/A"}
+                      </span>
                     </div>
                   </div>
                 ))}

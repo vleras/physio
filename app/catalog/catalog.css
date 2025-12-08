@@ -173,6 +173,8 @@
 
   .catalog-page .product-card {
     min-height: 300px;
+    display: flex;
+    flex-direction: column;
   }
 
   .catalog-page .product-card__content {
@@ -207,6 +209,18 @@
   .catalog-page .product-card__details {
     flex-direction: row;
   }
+
+  /* Hide desktop price, show mobile price below card */
+  .catalog-page .price-desktop {
+    display: none;
+  }
+
+  .catalog-page .price-mobile {
+    display: flex;
+    align-items: center;
+    padding: 0.15rem 12px 0.75rem 12px;
+    margin-top: 0;
+  }
 }
 
 /* Override the column direction for very small screens too */
@@ -224,6 +238,15 @@
 
   .catalog-page .page-title {
     margin-bottom: 2rem !important;
+  }
+
+  /* Hide mobile price, show desktop price */
+  .catalog-page .price-mobile {
+    display: none;
+  }
+
+  .catalog-page .price-desktop {
+    display: flex;
   }
 }
 
