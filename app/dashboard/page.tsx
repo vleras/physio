@@ -36,6 +36,7 @@ export default function Dashboard() {
   const [dragOverPageNumber, setDragOverPageNumber] = useState<number | null>(
     null
   );
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     fetchProducts();
@@ -113,11 +114,16 @@ export default function Dashboard() {
     setDraggedProductId(null);
     setDragOverProductId(null);
     setDragOverPageNumber(null);
+    // Small delay to prevent click event after drag
+    setTimeout(() => {
+      setIsDragging(false);
+    }, 100);
   };
 
   // Product row drag handlers
   const handleProductDragStart = (e: React.DragEvent, productId: number) => {
     setDraggedProductId(productId);
+    setIsDragging(true);
     e.dataTransfer.effectAllowed = "move";
     e.dataTransfer.setData("text/plain", productId.toString());
   };
@@ -145,6 +151,7 @@ export default function Dashboard() {
 
     if (!draggedProductId || draggedProductId === dropProductId) {
       setDraggedProductId(null);
+      setIsDragging(false);
       return;
     }
 
@@ -182,7 +189,22 @@ export default function Dashboard() {
       );
       // Reload products to get the correct order from database
       fetchProducts();
+    } finally {
+      setIsDragging(false);
     }
+  };
+
+  // Handle row click to navigate to edit page
+  const handleRowClick = (e: React.MouseEvent, product: Product) => {
+    // Don't navigate if clicking on action buttons or if we just finished dragging
+    if (
+      isDragging ||
+      (e.target as HTMLElement).closest("button") ||
+      (e.target as HTMLElement).closest(".btn-modern")
+    ) {
+      return;
+    }
+    startEdit(product);
   };
 
   const handlePageHeaderDragOver = (e: React.DragEvent, pageNumber: number) => {
@@ -217,6 +239,7 @@ export default function Dashboard() {
 
     if (draggedIndex === -1) {
       setDraggedProductId(null);
+      setIsDragging(false);
       return;
     }
 
@@ -251,6 +274,8 @@ export default function Dashboard() {
       );
       // Reload products to get the correct order from database
       fetchProducts();
+    } finally {
+      setIsDragging(false);
     }
   };
 
@@ -454,12 +479,15 @@ export default function Dashboard() {
                             onDragLeave={handleProductDragLeave}
                             onDrop={(e) => handleProductDrop(e, product.id)}
                             onDragEnd={handleDragEnd}
+                            onClick={(e) => handleRowClick(e, product)}
                             style={{
                               borderBottom: "1px solid #dee2e6",
                               cursor:
                                 draggedProductId === product.id
                                   ? "grabbing"
-                                  : "grab",
+                                  : isDragging
+                                  ? "grab"
+                                  : "pointer",
                               opacity:
                                 draggedProductId === product.id ? 0.5 : 1,
                               backgroundColor:
@@ -469,6 +497,16 @@ export default function Dashboard() {
                                   ? "rgba(62, 184, 182, 0.05)"
                                   : "transparent",
                               transition: "all 0.2s ease",
+                            }}
+                            onMouseEnter={(e) => {
+                              if (!draggedProductId && !isDragging) {
+                                e.currentTarget.style.backgroundColor = "rgba(0, 0, 0, 0.02)";
+                              }
+                            }}
+                            onMouseLeave={(e) => {
+                              if (!draggedProductId && !isDragging) {
+                                e.currentTarget.style.backgroundColor = "transparent";
+                              }
                             }}
                           >
                             <td style={{ padding: "1rem" }}>{globalIndex + 1}</td>
@@ -515,10 +553,16 @@ export default function Dashboard() {
                             <td style={{ padding: "1rem" }}>
                               {product.images?.length || 0}
                             </td>
-                            <td style={{ padding: "1rem" }}>
+                            <td 
+                              style={{ padding: "1rem" }}
+                              onClick={(e) => e.stopPropagation()}
+                            >
                               <div style={{ display: "flex", gap: "0.5rem" }}>
                                 <button
-                                  onClick={() => startEdit(product)}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    startEdit(product);
+                                  }}
                                   className="btn-modern btn-edit"
                                   type="button"
                                 >
@@ -539,9 +583,10 @@ export default function Dashboard() {
                                   Ndrysho
                                 </button>
                                 <button
-                                  onClick={() =>
-                                    confirmDelete(product.id, product.name)
-                                  }
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    confirmDelete(product.id, product.name);
+                                  }}
                                   className="btn-modern btn-delete"
                                 >
                                   <svg
