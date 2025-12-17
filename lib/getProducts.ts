@@ -14,16 +14,37 @@ export async function getProducts(): Promise<Product[]> {
   const { data, error } = await supabase
     .from("Products")
     .select(
-      "id, name, price, description_1, description_2, description_3, images"
-    )
-    .order("id", { ascending: true });
+      "id, name, price, description_1, description_2, description_3, images, display_order"
+    );
 
   if (error) {
     console.error("Error fetching products:", error);
     return [];
   }
 
-  return (data || []) as Product[];
+  if (!data || data.length === 0) {
+    return [];
+  }
+
+  // Sort products: first by display_order (nulls last), then by id
+  const sorted = [...data].sort((a, b) => {
+    // If both have display_order, sort by it
+    if (a.display_order != null && b.display_order != null) {
+      return a.display_order - b.display_order;
+    }
+    // If only a has display_order, it comes first
+    if (a.display_order != null && b.display_order == null) {
+      return -1;
+    }
+    // If only b has display_order, it comes first
+    if (a.display_order == null && b.display_order != null) {
+      return 1;
+    }
+    // If both are null, sort by id
+    return a.id - b.id;
+  });
+
+  return sorted as Product[];
 }
 
 export async function getProductById(id: number): Promise<Product | null> {

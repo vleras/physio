@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { getAllProducts, deleteProduct } from "@/lib/productAdmin";
+import { getAllProducts, deleteProduct, updateProductOrder } from "@/lib/productAdmin";
 
 interface Product {
   id: number;
@@ -166,8 +166,23 @@ export default function Dashboard() {
     setProducts(newProducts);
     setDraggedProductId(null);
 
-    // Show notification
-    showNotification("Produktet u riorganizuan!", "success");
+    // Save order to database
+    try {
+      const productOrders = newProducts.map((product, index) => ({
+        id: product.id,
+        display_order: index + 1,
+      }));
+      await updateProductOrder(productOrders);
+      showNotification("Produktet u riorganizuan dhe u ruajtën!", "success");
+    } catch (error: any) {
+      console.error("Error saving product order:", error);
+      showNotification(
+        "Produktet u riorganizuan, por ka pasur një gabim në ruajtje: " + error.message,
+        "error"
+      );
+      // Reload products to get the correct order from database
+      fetchProducts();
+    }
   };
 
   const handlePageHeaderDragOver = (e: React.DragEvent, pageNumber: number) => {
@@ -217,11 +232,26 @@ export default function Dashboard() {
     setProducts(newProducts);
     setDraggedProductId(null);
 
-    // Show notification
-    showNotification(
-      `Produkti u zhvendos në fillim të faqes ${pageNumber}!`,
-      "success"
-    );
+    // Save order to database
+    try {
+      const productOrders = newProducts.map((product, index) => ({
+        id: product.id,
+        display_order: index + 1,
+      }));
+      await updateProductOrder(productOrders);
+      showNotification(
+        `Produkti u zhvendos në fillim të faqes ${pageNumber} dhe u ruajt!`,
+        "success"
+      );
+    } catch (error: any) {
+      console.error("Error saving product order:", error);
+      showNotification(
+        `Produkti u zhvendos, por ka pasur një gabim në ruajtje: ${error.message}`,
+        "error"
+      );
+      // Reload products to get the correct order from database
+      fetchProducts();
+    }
   };
 
   return (
