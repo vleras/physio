@@ -3202,6 +3202,12 @@ body {
     display: none;
   }
 
+  /* Make "Shto Produktin" button smaller on mobile */
+  .btn-modern.btn-primary {
+    font-size: 0.8rem !important;
+    padding: 0.6rem 1rem !important;
+  }
+
   /* Fix action buttons on mobile to prevent horizontal scrolling */
   table tbody tr td:last-child {
     padding: 0.75rem 0.5rem;
@@ -3274,8 +3280,8 @@ body {
 
   .btn-modern.btn-primary {
     width: 100%;
-    font-size: 0.85rem !important;
-    padding: 0.6rem 1rem !important;
+    font-size: 0.75rem !important;
+    padding: 0.5rem 0.75rem !important;
   }
 
   /* Make table more compact */
