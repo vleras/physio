@@ -15,7 +15,7 @@ export default function Footer() {
                 <Link href="/services">Shërbimet tona</Link>
               </li>
               <li>
-                <Link href="/catalog">Katalogu i Produkteve</Link>
+                <Link href="/produktet">Katalogu i Produkteve</Link>
               </li>
             </ul>
           </div>

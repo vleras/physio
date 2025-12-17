@@ -207,7 +207,7 @@ export default function ProductsSidebarDesktop({
 
       <div className="sidebar-see-more">
         <Link 
-          href="/catalog" 
+          href="/produktet" 
           className="sidebar-see-more-button"
           scroll={true}
           onClick={() => {

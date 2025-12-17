@@ -82,8 +82,8 @@ export default function Header() {
             Shërbimet
           </Link>
           <Link
-            href="/catalog"
-            className={`nav-link ${pathname === "/catalog" ? "active" : ""}`}
+            href="/produktet"
+            className={`nav-link ${pathname === "/produktet" ? "active" : ""}`}
             onClick={closeMenu}
           >
             Produktet

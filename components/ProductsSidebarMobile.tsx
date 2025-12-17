@@ -290,7 +290,7 @@ export default function ProductsSidebarMobile({
         }}
       >
         <Link
-          href="/catalog"
+          href="/produktet"
           scroll={true}
           onClick={() => {
             window.scrollTo(0, 0);
