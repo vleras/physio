@@ -3258,6 +3258,145 @@ body {
   }
 }
 
+/* Extra small mobile devices (under 405px) */
+@media (max-width: 405px) {
+  /* Make header and button stack vertically */
+  .main-content .container > div:first-child {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 1rem !important;
+  }
+
+  .main-content h1.Paneli {
+    font-size: 1.1rem !important;
+    margin-bottom: 0 !important;
+  }
+
+  .btn-modern.btn-primary {
+    width: 100%;
+    font-size: 0.85rem !important;
+    padding: 0.6rem 1rem !important;
+  }
+
+  /* Make table more compact */
+  table {
+    font-size: 0.8rem;
+  }
+
+  table thead th {
+    padding: 0.5rem 0.4rem !important;
+    font-size: 0.75rem !important;
+    font-weight: 600;
+  }
+
+  table tbody td {
+    padding: 0.5rem 0.4rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* Hide ID column on very small screens */
+  table thead th:first-child,
+  table tbody td:first-child {
+    display: none;
+  }
+
+  /* Hide "Numri i imazheve" column on very small screens */
+  table thead th:nth-child(5),
+  table tbody td:nth-child(5) {
+    display: none;
+  }
+
+  /* Make product images smaller */
+  table tbody td:nth-child(2) {
+    padding: 0.4rem !important;
+  }
+
+  table tbody td:nth-child(2) > div {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+
+  table tbody td:nth-child(2) > div[style*="width: 60px"] {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  /* Make product name column more compact */
+  table tbody td:nth-child(3) {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.8rem !important;
+    padding: 0.5rem 0.3rem !important;
+  }
+
+  /* Make price column more compact */
+  table tbody td:nth-child(4) {
+    font-size: 0.75rem !important;
+    padding: 0.5rem 0.3rem !important;
+    white-space: nowrap;
+  }
+
+  /* Make actions column fit better */
+  table tbody td:last-child {
+    padding: 0.4rem !important;
+    min-width: 0;
+    width: auto;
+  }
+
+  table tbody td:last-child > div {
+    flex-direction: column;
+    gap: 0.4rem !important;
+    width: 100%;
+    min-width: 0;
+  }
+
+  table tbody td:last-child .btn-modern {
+    width: 100%;
+    padding: 0.4rem 0.5rem !important;
+    font-size: 0.7rem !important;
+    min-width: 0;
+  }
+
+  table tbody td:last-child .btn-modern svg {
+    width: 12px !important;
+    height: 12px !important;
+    margin-right: 0.2rem !important;
+  }
+
+  /* Make page header more compact */
+  table tbody tr td[colspan] {
+    padding: 0.6rem 0.5rem !important;
+    font-size: 0.85rem !important;
+  }
+
+  /* Reduce container padding even more */
+  .main-content .container[style*="padding"] {
+    padding: 0.75rem !important;
+  }
+
+  /* Make table wrapper have less padding */
+  .main-content div[style*="overflowX"] {
+    margin: 0 -0.75rem;
+  }
+
+  /* Ensure table doesn't overflow */
+  table {
+    min-width: 100%;
+    table-layout: auto;
+  }
+
+  /* Make sure action buttons text fits */
+  .btn-modern {
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.2;
+  }
+}
+
 /* Products Slider Styles */
 .products-slider-wrapper {
   position: relative;
