@@ -72,7 +72,7 @@ export default function LogoCarousels({
   title = "Our Partners",
   description = "Trusted by leading organizations",
   buttonText = "Contact Us",
-  buttonLink = "/services",
+  buttonLink = "/sherbimet",
 }: LogoCarouselProps) {
   const [logos, setLogos] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);

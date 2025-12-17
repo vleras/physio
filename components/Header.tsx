@@ -75,8 +75,8 @@ export default function Header() {
             Ballina
           </Link>
           <Link
-            href="/services"
-            className={`nav-link ${pathname === "/services" ? "active" : ""}`}
+            href="/sherbimet"
+            className={`nav-link ${pathname === "/sherbimet" ? "active" : ""}`}
             onClick={closeMenu}
           >
             Shërbimet

@@ -12,7 +12,7 @@ export default function Footer() {
                 <Link href="/">Ballina</Link>
               </li>
               <li>
-                <Link href="/services">Shërbimet tona</Link>
+                <Link href="/sherbimet">Shërbimet tona</Link>
               </li>
               <li>
                 <Link href="/produktet">Katalogu i Produkteve</Link>
