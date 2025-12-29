@@ -167,10 +167,11 @@ export default function ProductsSidebarDesktop({
         <div ref={trackRef} className="sidebar-products-track">
           {/* DUPLICATE CONTENT FOR SEAMLESS LOOPING */}
           {tripledProducts.map((product, index) => (
-            <div
+            <Link
               key={`${product.id}-${index}`}
+              href={`/product/${product.id}`}
               className="sidebar-product-item shrink-0"
-              style={{ opacity: 1 }}
+              style={{ opacity: 1, textDecoration: "none", display: "flex" }}
             >
               <div className="sidebar-product-image">
                 <Image
@@ -193,14 +194,11 @@ export default function ProductsSidebarDesktop({
                     product.description_3 ||
                     ""}
                 </div>
-                <Link
-                  href={`/product/${product.id}`}
-                  className="sidebar-product-link"
-                >
+                <span className="sidebar-product-link">
                   Shiko Detajet
-                </Link>
+                </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

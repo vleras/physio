@@ -103,7 +103,8 @@ export default function ProductsSidebarMobile({
                   minWidth: "calc(50% - 0.25rem)",
                 }}
               >
-                <div
+                <Link
+                  href={`/product/${product.id}`}
                   style={{
                     backgroundColor: "#ffffff",
                     borderRadius: "0.5rem",
@@ -114,6 +115,9 @@ export default function ProductsSidebarMobile({
                     display: "flex",
                     flexDirection: "column",
                     transition: "box-shadow 0.3s ease",
+                    textDecoration: "none",
+                    color: "inherit",
+                    cursor: "pointer",
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.boxShadow =
@@ -196,8 +200,7 @@ export default function ProductsSidebarMobile({
                         product.description_3 ||
                         ""}
                     </p>
-                    <Link
-                      href={`/product/${product.id}`}
+                    <span
                       style={{
                         display: "inline-flex",
                         alignItems: "center",
@@ -213,11 +216,9 @@ export default function ProductsSidebarMobile({
                         transition: "all 0.3s ease",
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = "#000000";
-                        e.currentTarget.style.color = "#ffffff";
+                        e.currentTarget.style.color = "#000000";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = "transparent";
                         e.currentTarget.style.color = "#000000";
                       }}
                     >
@@ -239,9 +240,9 @@ export default function ProductsSidebarMobile({
                           d="M9 5l7 7-7 7"
                         />
                       </svg>
-                    </Link>
+                    </span>
                   </div>
-                </div>
+                </Link>
               </CarouselItem>
             ))}
           </CarouselContent>
