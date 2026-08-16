@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { type Locale } from "@/lib/getProducts";
 import { useProducts } from "@/hooks/useProducts";
 import IonIcon from "@/components/IonIcon";
@@ -12,6 +12,7 @@ import "./catalog.css";
 export default function Catalog() {
   const locale = useLocale() as Locale;
   const t = useTranslations("products");
+  const router = useRouter();
   const { data: products = [], isLoading: loading } = useProducts(locale);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
@@ -111,16 +112,20 @@ export default function Catalog() {
             <>
               <div className="catalog-container">
                 {currentProducts.map((product) => (
-                  <div key={product.id} className="product-card">
+                  <div
+                    key={product.id}
+                    className="product-card"
+                    onClick={() => router.push(`/product/${product.id}`)}
+                    style={{ cursor: "pointer" }}
+                  >
                     <div className="product-card__media relative h-auto">
                       <button
                         type="button"
                         className="quick-view__button"
                         aria-label={t("quickView", { name: product.name })}
                         onClick={(e) => {
-                          e.preventDefault();
                           e.stopPropagation();
-                          // Quick view functionality can be added here
+                          router.push(`/product/${product.id}`);
                         }}
                       >
                         <IonIcon name="eye-outline" size={16} className="icon icon-eye icon-sm" />
