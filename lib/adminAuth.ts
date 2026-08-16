@@ -12,7 +12,7 @@ async function sha256(text: string): Promise<string> {
     .join("");
 }
 
-const SECRET_KEY = process.env.NEXT_PUBLIC_SUPABASE_URL || "vso-clinic-secret-key";
+const SECRET_KEY = process.env.ADMIN_SECRET_KEY || "vso-clinic-default-secret-change-me";
 
 export async function hashPassword(password: string): Promise<string> {
   const salt = await sha256(SECRET_KEY);
@@ -21,7 +21,8 @@ export async function hashPassword(password: string): Promise<string> {
 
 export async function verifyPassword(password: string): Promise<boolean> {
   const hashed = await hashPassword(password);
-  const defaultPassword = process.env.ADMIN_PASSWORD || "admin123";
+  const defaultPassword = process.env.ADMIN_PASSWORD;
+  if (!defaultPassword) throw new Error("ADMIN_PASSWORD environment variable is not set");
 
   const { data, error } = await supabase
     .from("admin_config")

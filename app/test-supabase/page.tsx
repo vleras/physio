@@ -1,6 +1,8 @@
 import { supabase } from "@/lib/supabase";
 import Image from "next/image";
 
+export const dynamic = "force-dynamic";
+
 export default async function TestSupabase() {
   // Try explicit column selection matching the actual table structure
   const { data, error } = await supabase
