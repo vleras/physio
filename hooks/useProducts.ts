@@ -29,7 +29,17 @@ export function useProduct(id: number, locale: Locale) {
 export function useAdminProducts() {
   return useQuery({
     queryKey: ["adminProducts"],
-    queryFn: getAllProducts,
+    queryFn: async () => {
+      const data = await getAllProducts();
+      return data as Array<{
+        id: number;
+        name: string;
+        price: string;
+        images?: string[];
+        display_order?: number;
+        translations?: unknown[];
+      }>;
+    },
   });
 }
 

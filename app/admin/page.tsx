@@ -44,10 +44,10 @@ export default function Dashboard() {
   const itemsPerPage = 12;
 
   useEffect(() => {
-    const fetchedIds = fetchedProducts.map(p => p.id).join(",");
-    const currentIds = products.map(p => p.id).join(",");
+    const fetchedIds = fetchedProducts.map((p: Product) => p.id).join(",");
+    const currentIds = products.map((p: Product) => p.id).join(",");
     if (fetchedIds !== currentIds || fetchedProducts.length !== products.length) {
-      setProducts(fetchedProducts);
+      setProducts(fetchedProducts as Product[]);
     }
   }, [fetchedProducts]);
 
