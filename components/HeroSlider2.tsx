@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
+import IonIcon from "./IonIcon";
 
 const heroImages = [
   "/vsonew1.jpg",
@@ -15,6 +17,7 @@ const heroImages = [
 ];
 
 export default function HeroSlider2() {
+  const t = useTranslations("common");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
@@ -61,9 +64,10 @@ export default function HeroSlider2() {
               src={image}
               alt={`Hero slide ${index + 1}`}
               fill
+              sizes="100vw"
               style={{ objectFit: "cover" }}
               priority={index === 0}
-              quality={90}
+              quality={75}
             />
           </div>
         ))}
@@ -73,38 +77,16 @@ export default function HeroSlider2() {
       <button
         className="hero-slider-arrow hero-slider-arrow-left"
         onClick={prevSlide}
-        aria-label="Slide e mëparshme"
+        aria-label={t("previousSlide")}
       >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M15 18l-6-6 6-6" />
-        </svg>
+        <IonIcon name="chevron-back-outline" size={24} />
       </button>
       <button
         className="hero-slider-arrow hero-slider-arrow-right"
         onClick={nextSlide}
-        aria-label="Slide e ardhshme"
+        aria-label={t("nextSlide")}
       >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M9 18l6-6-6-6" />
-        </svg>
+        <IonIcon name="chevron-forward-outline" size={24} />
       </button>
 
       {/* Dots Indicator */}
@@ -116,7 +98,7 @@ export default function HeroSlider2() {
               index === currentIndex ? "active" : ""
             }`}
             onClick={() => goToSlide(index)}
-            aria-label={`Shko te slide ${index + 1}`}
+            aria-label={t("goToSlide", { number: index + 1 })}
           />
         ))}
       </div>

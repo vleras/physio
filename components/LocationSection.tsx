@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 interface LocationSectionProps {
   isMobile?: boolean;
 }
@@ -10,6 +12,7 @@ const MAP_EMBED_URL =
 export default function LocationSection({
   isMobile = false,
 }: LocationSectionProps) {
+  const t = useTranslations("home");
   const sectionStyle: React.CSSProperties = {
     padding: isMobile ? "1.5rem 0 3rem 0" : "3rem 0",
     background: "#fff",
@@ -63,8 +66,8 @@ export default function LocationSection({
   return (
     <section className="location-section" style={sectionStyle}>
       <div style={containerStyle}>
-        <h2 style={titleStyle}>Lokacioni Ynë</h2>
-        <p style={addressStyle}>Adresa: Rruga Valbona, Rruga C</p>
+        <h2 style={titleStyle}>{t("locationTitle")}</h2>
+        <p style={addressStyle}>{t("locationAddress")}</p>
         <div style={contentStyle}>
           <div style={mapContainerStyle}>
             <iframe

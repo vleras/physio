@@ -1,0 +1,117 @@
+{
+  "nav": {
+    "home": "Home",
+    "products": "Products"
+  },
+  "footer": {
+    "quickLinks": "Quick Links",
+    "homeLink": "Home",
+    "productsLink": "Product Catalog",
+    "workingHours": "Working Hours",
+    "hoursWeekdays": "Monday - Friday: 10:00 - 20:00",
+    "hoursSaturday": "Saturday: 10:00 – 14:00",
+    "hoursSunday": "Sunday: Closed",
+    "contactUs": "Contact Us",
+    "connect": "Connect",
+    "copyright": "© Copyright 2026. VSO Clinic All Rights Reserved.",
+    "poweredBy": "Powered By vsoclinic.com"
+  },
+  "language": {
+    "label": "Language",
+    "sq": "SQ",
+    "en": "EN",
+    "mk": "MK"
+  },
+  "meta": {
+    "title": "VSO Clinic",
+    "description": "VSO Clinic - Professional physiotherapy and rehabilitation services"
+  },
+  "sidebar": {
+    "products": "Products",
+    "viewDetails": "View Details",
+    "seeMore": "See More"
+  },
+  "home": {
+    "professionalsTitle": "Professionals who trust us",
+    "locationTitle": "Our Location",
+    "locationAddress": "Address: Rruga Valbona, Rruga C"
+  },
+  "products": {
+    "loadingProducts": "Loading products...",
+    "loadingProduct": "Loading product...",
+    "noProductsFound": "No products found.",
+    "vendor": "Vendor:",
+    "view": "View",
+    "quickView": "Quick view {name}",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "previousImage": "Previous image",
+    "nextImage": "Next image",
+    "goToImage": "Go to image {number}",
+    "whatsappMessage": "Hi! I'm interested in purchasing: {name} ({price})"
+  },
+  "common": {
+    "previousSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "goToSlide": "Go to slide {number}",
+    "whatsappMessage": "Hi! I'd like to learn more about your services.",
+    "messageUs": "Message us"
+  },
+  "admin": {
+    "enterPassword": "Enter password",
+    "password": "Password",
+    "login": "Login",
+    "loggingIn": "Logging in...",
+    "logout": "Logout",
+    "verifying": "Verifying...",
+    "invalidPassword": "Invalid password",
+    "connectionError": "Connection error",
+    "changePassword": "Change Password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmNewPassword": "Confirm new password",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "passwordMinLength": "Password must be at least 6 characters",
+    "passwordChangedSuccess": "Password changed successfully",
+    "error": "Error",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "save": "Save"
+  },
+  "services": {
+    "pageTitle": "Services",
+    "imageAlt": "Our Services",
+    "womensHealth": {
+      "title": "Women's Health",
+      "description": "Pelvic floor physiotherapy for strengthening muscles after childbirth, surgery, menopause, or other factors."
+    },
+    "postSurgery": {
+      "title": "Post-Surgery Physiotherapy",
+      "description": "Supports healing and restores function after surgeries such as knee, spine, hip, shoulder, wrist, and ankle."
+    },
+    "tmj": {
+      "title": "TMJ Disorder Treatment",
+      "description": "Reduces jaw pain and improves movement with exercises, massage, and heat/cold therapy."
+    },
+    "vertigo": {
+      "title": "Vertigo Treatment",
+      "description": "Personalized exercises to improve balance, stability, and reduce dizziness."
+    },
+    "sports": {
+      "title": "Sports Physiotherapy",
+      "description": "Rehabilitation for a safe return to sport and prevention of future injuries."
+    },
+    "acupuncture": {
+      "title": "Acupuncture & Dry Needling",
+      "description": "Treats physical conditions, releases trigger points, and restores muscle function with fine needle techniques."
+    },
+    "spine": {
+      "title": "Spinal Physiotherapy",
+      "description": "Diagnoses and treats spinal movement problems with mobility exercises and targeted treatments."
+    },
+    "chiropractic": {
+      "title": "Chiropractic",
+      "description": "Spinal manipulation and related treatments to reduce back, neck, and head pain and mechanical musculoskeletal problems."
+    }
+  }
+}

@@ -11,8 +11,8 @@ import {
   CarouselPrevious,
 } from "@/components/carousel";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
+import IonIcon from "@/components/IonIcon";
 
 interface LogoCarouselProps {
   title?: string;
@@ -33,7 +33,7 @@ const LogoCarousel = ({ logos }: { logos: string[] }) => {
           }}
           plugins={[
             Autoplay({
-              delay: 2000,
+              delay: 4000,
             }),
           ]}
           className="w-full max-w-6xl mx-auto"
@@ -72,7 +72,7 @@ export default function LogoCarousels({
   title = "Our Partners",
   description = "Trusted by leading organizations",
   buttonText = "Contact Us",
-  buttonLink = "/sherbimet",
+  buttonLink = "/",
 }: LogoCarouselProps) {
   const [logos, setLogos] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -120,11 +120,9 @@ export default function LogoCarousels({
           size="lg"
         >
           <span className="pl-3">{buttonText}</span>
-          <ArrowRight
-            size={30}
-            className="rounded-full p-2 bg-white"
-            color="black"
-          />
+          <span className="rounded-full p-2 bg-white inline-flex">
+            <IonIcon name="arrow-forward-outline" size={14} color="black" />
+          </span>
         </Button>
       </Link>
     </div>

@@ -1,15 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getProducts, type Product } from "@/lib/getProducts";
+import { useLocale } from "next-intl";
+import { getProducts, type Product, type Locale } from "@/lib/getProducts";
 import Image from "next/image";
 
 export default function ProductList() {
+  const locale = useLocale() as Locale;
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    getProducts().then(setProducts);
-  }, []);
+    getProducts(locale).then(setProducts);
+  }, [locale]);
 
   return (
     <div>

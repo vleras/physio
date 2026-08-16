@@ -1,24 +1,21 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
 import Image from "next/image";
+import LanguageSwitcher from "./LanguageSwitcher";
+import IonIcon from "./IonIcon";
 
 export default function Header() {
   const pathname = usePathname();
+  const t = useTranslations("nav");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
 
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
-
-  // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -48,23 +45,33 @@ export default function Header() {
               src="/logo.png"
               alt="VSO Clinic Logo"
               className="logo-image"
-              width={40}
-              height={40}
+              width={52}
+              height={52}
             />
             <span className="logo-text">VSO Clinic</span>
           </Link>
-          <button
-            className="menu-toggle"
-            onClick={toggleMenu}
-            aria-label="Toggle menu"
-            aria-expanded={isMenuOpen}
-          >
-            <span className={`hamburger ${isMenuOpen ? "active" : ""}`}>
-              <span></span>
-              <span></span>
-              <span></span>
-            </span>
-          </button>
+          <div className="header-mobile-actions">
+            <a
+              href="tel:+38349459111"
+              className="mobile-phone-btn"
+              aria-label="Call us"
+            >
+              <IonIcon name="call-outline" size={20} />
+            </a>
+            <LanguageSwitcher />
+            <button
+              className="menu-toggle"
+              onClick={toggleMenu}
+              aria-label="Toggle menu"
+              aria-expanded={isMenuOpen}
+            >
+              <span className={`hamburger ${isMenuOpen ? "active" : ""}`}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </button>
+          </div>
         </div>
         <nav className={`nav ${isMenuOpen ? "nav-open" : ""}`}>
           <Link
@@ -72,21 +79,14 @@ export default function Header() {
             className={`nav-link ${pathname === "/" ? "active" : ""}`}
             onClick={closeMenu}
           >
-            Ballina
+            {t("home")}
           </Link>
           <Link
-            href="/sherbimet"
-            className={`nav-link ${pathname === "/sherbimet" ? "active" : ""}`}
+            href="/products"
+            className={`nav-link ${pathname === "/products" || pathname.startsWith("/product/") ? "active" : ""}`}
             onClick={closeMenu}
           >
-            Shërbimet
-          </Link>
-          <Link
-            href="/produktet"
-            className={`nav-link ${pathname === "/produktet" ? "active" : ""}`}
-            onClick={closeMenu}
-          >
-            Produktet
+            {t("products")}
           </Link>
         </nav>
         <div className="header-contact">
@@ -95,11 +95,10 @@ export default function Header() {
             className="header-contact-item"
             title="Call us"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
-            </svg>
+            <IonIcon name="call-outline" size={18} />
             <span className="phone-text">+383 49 459 111</span>
           </a>
+          <LanguageSwitcher />
         </div>
       </div>
     </header>

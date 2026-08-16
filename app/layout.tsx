@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import QueryProvider from "@/components/QueryProvider";
 import MobileMessagingButton from "@/components/MobileMessagingButton";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   weight: ["400", "500", "600", "700"],
@@ -31,20 +34,31 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang={locale} className={inter.variable}>
       <body suppressHydrationWarning>
-        <QueryProvider>
-          <Header />
-          {children}
-          <Footer />
-          <MobileMessagingButton />
-        </QueryProvider>
+        <Script
+          type="module"
+          src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js"
+          strategy="afterInteractive"
+        />
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <QueryProvider>
+            <Header />
+            {children}
+            <Footer />
+            <MobileMessagingButton />
+            <Toaster position="top-center" richColors closeButton />
+          </QueryProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

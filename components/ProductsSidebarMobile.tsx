@@ -1,8 +1,10 @@
 "use client";
 
 import { useRef } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
+import IonIcon from "./IonIcon";
+import { useTranslations } from "next-intl";
 import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
@@ -29,6 +31,7 @@ interface ProductsSidebarMobileProps {
 export default function ProductsSidebarMobile({
   products,
 }: ProductsSidebarMobileProps) {
+  const t = useTranslations("sidebar");
   const autoplayPlugin = useRef(
     Autoplay({ delay: 2000, stopOnInteraction: false })
   );
@@ -38,6 +41,15 @@ export default function ProductsSidebarMobile({
   return (
     <aside className="products-sidebar-mobile" style={{ width: "100%" }}>
       <div className="sidebar-header" style={{ padding: "1rem" }}>
+        <h2
+          style={{
+            fontSize: "1.25rem",
+            fontWeight: "600",
+            marginBottom: "0.5rem",
+          }}
+        >
+          {t("products")}
+        </h2>
         <div
           style={{
             display: "flex",
@@ -72,15 +84,6 @@ export default function ProductsSidebarMobile({
             />
           </div>
         </div>
-        <h2
-          style={{
-            fontSize: "1.25rem",
-            fontWeight: "600",
-            marginTop: "0.5rem",
-          }}
-        >
-          Produktet
-        </h2>
       </div>
 
       {/* Carousel with navigation buttons */}
@@ -104,7 +107,7 @@ export default function ProductsSidebarMobile({
                 }}
               >
                 <Link
-                  href={`/product/${product.id}`}
+                  href={{ pathname: "/product/[id]", params: { id: String(product.id) } }}
                   style={{
                     backgroundColor: "#ffffff",
                     borderRadius: "0.5rem",
@@ -155,7 +158,7 @@ export default function ProductsSidebarMobile({
                         alt={product.name}
                         fill
                         style={{ objectFit: "cover" }}
-                        sizes="100vw"
+                        sizes="(max-width: 768px) 45vw, 200px"
                       />
                     </div>
                   </div>
@@ -222,24 +225,8 @@ export default function ProductsSidebarMobile({
                         e.currentTarget.style.color = "#000000";
                       }}
                     >
-                      Shiko Detajet
-                      <svg
-                        style={{
-                          marginLeft: "0.5rem",
-                          width: "1rem",
-                          height: "1rem",
-                        }}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
+                      {t("viewDetails")}
+                      <IonIcon name="chevron-forward-outline" size={16} />
                     </span>
                   </div>
                 </Link>
@@ -291,7 +278,7 @@ export default function ProductsSidebarMobile({
         }}
       >
         <Link
-          href="/produktet"
+          href="/products"
           scroll={true}
           onClick={() => {
             window.scrollTo(0, 0);
@@ -324,17 +311,8 @@ export default function ProductsSidebarMobile({
               "0 4px 6px -1px rgba(0, 0, 0, 0.1)";
           }}
         >
-          Shiko Më Shumë
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
+          {t("seeMore")}
+          <IonIcon name="arrow-forward-outline" size={16} />
         </Link>
       </div>
     </aside>

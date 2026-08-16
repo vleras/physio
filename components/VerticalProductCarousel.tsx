@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 interface Product {
   id: number;
@@ -129,7 +129,7 @@ export default function VerticalProductCarousel({
                     {product.price}
                   </p>
                   <Link
-                    href={`/product/${product.id}`}
+                    href={{ pathname: "/product/[id]", params: { id: String(product.id) } }}
                     className="text-xs text-blue-600 hover:text-blue-800 font-medium"
                   >
                     Shiko Detajet →

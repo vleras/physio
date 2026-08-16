@@ -1,0 +1,117 @@
+{
+  "nav": {
+    "home": "Ballina",
+    "products": "Produktet"
+  },
+  "footer": {
+    "quickLinks": "Linqe të Shpejta",
+    "homeLink": "Ballina",
+    "productsLink": "Katalogu i Produkteve",
+    "workingHours": "Oraret e Punës",
+    "hoursWeekdays": "E Hënë - E Premte: 10:00 - 20:00",
+    "hoursSaturday": "E Shtunë: 10:00 – 14:00",
+    "hoursSunday": "E Dielë: Mbyllur",
+    "contactUs": "Na Kontaktoni",
+    "connect": "Na Ndiqni",
+    "copyright": "© E drejta e autorit 2026. VSO Clinic Të gjitha të drejtat e rezervuara.",
+    "poweredBy": "Powered By vsoclinic.com"
+  },
+  "language": {
+    "label": "Gjuha",
+    "sq": "SQ",
+    "en": "EN",
+    "mk": "MK"
+  },
+  "meta": {
+    "title": "VSO Clinic",
+    "description": "VSO Clinic - Shërbime profesionale të fizioterapisë dhe rehabilitimit"
+  },
+  "sidebar": {
+    "products": "Produktet",
+    "viewDetails": "Shiko Detajet",
+    "seeMore": "Shiko Më Shumë"
+  },
+  "home": {
+    "professionalsTitle": "Profesionistët që na besojnë",
+    "locationTitle": "Lokacioni Ynë",
+    "locationAddress": "Adresa: Rruga Valbona, Rruga C"
+  },
+  "products": {
+    "loadingProducts": "Duke ngarkuar produktet...",
+    "loadingProduct": "Duke ngarkuar produktin...",
+    "noProductsFound": "Nuk u gjetën produkte.",
+    "vendor": "Prodhuesi:",
+    "view": "Shiko",
+    "quickView": "Shikim i shpejtë {name}",
+    "previousPage": "Faqja e mëparshme",
+    "nextPage": "Faqja tjetër",
+    "previousImage": "Foto e mëparshme",
+    "nextImage": "Foto tjetër",
+    "goToImage": "Shko te foto {number}",
+    "whatsappMessage": "Përshëndetje! Jam i interesuar të blej: {name} ({price})"
+  },
+  "common": {
+    "previousSlide": "Slide e mëparshme",
+    "nextSlide": "Slide e ardhshme",
+    "goToSlide": "Shko te slide {number}",
+    "whatsappMessage": "Përshëndetje! Dëshiroj të di më shumë për shërbimet tuaja.",
+    "messageUs": "Na shkruani"
+  },
+  "admin": {
+    "enterPassword": "Shkruani fjalëkalimin",
+    "password": "Fjalëkalimi",
+    "login": "Hyr",
+    "loggingIn": "Duke hyrë...",
+    "logout": "Dil",
+    "verifying": "Duke verifikuar...",
+    "invalidPassword": "Fjalëkalim i gabuar",
+    "connectionError": "Gabim në lidhje",
+    "changePassword": "Ndrysho Fjalëkalimin",
+    "currentPassword": "Fjalëkalimi aktual",
+    "newPassword": "Fjalëkalimi i ri",
+    "confirmNewPassword": "Konfirmo fjalëkalimin e ri",
+    "passwordsDoNotMatch": "Fjalëkalimet nuk përputhen",
+    "passwordMinLength": "Fjalëkalimi duhet të ketë së paku 6 karaktere",
+    "passwordChangedSuccess": "Fjalëkalimi u ndryshua me sukses",
+    "error": "Gabim",
+    "cancel": "Anulo",
+    "saving": "Duke ruajtur...",
+    "save": "Ruaj"
+  },
+  "services": {
+    "pageTitle": "Shërbimet",
+    "imageAlt": "Shërbimet tona",
+    "womensHealth": {
+      "title": "Shëndeti i Grave",
+      "description": "Fizioterapi e dyshemesë pelvike për forcimin e muskujve pas lindjes, operacionit, menopauzës ose faktorëve të tjerë."
+    },
+    "postSurgery": {
+      "title": "Fizioterapi Pas Operacionit",
+      "description": "Mbështet shërimin dhe riktheon funksionin pas operacioneve si gjuri, shpina, kofsha, shpatulla, kyçi i dorës dhe kyçi i këmbës."
+    },
+    "tmj": {
+      "title": "Trajtim i Çrregullimit të TMJ",
+      "description": "Zvogëlon dhimbjen e nofullës dhe përmirëson lëvizjen me ushtrime, masazh dhe terapi me nxehtësi/ftohtësi."
+    },
+    "vertigo": {
+      "title": "Trajtim i Vertigos",
+      "description": "Ushtrime të personalizuara për të përmirësuar ekuilibrin, stabilitetin dhe zvogëluar marramendjen."
+    },
+    "sports": {
+      "title": "Fizioterapi Sportive",
+      "description": "Rehabilitim për t'u kthyer në mënyrë të sigurt në sport dhe parandalimin e dëmtimeve të ardhshme."
+    },
+    "acupuncture": {
+      "title": "Akupunturë & Dry Needling",
+      "description": "Trajton gjendjet fizike, liron pikat e shkaktimit dhe riktheon funksionin e muskujve me teknika me gjilpëra të holla."
+    },
+    "spine": {
+      "title": "Fizioterapi e Shtyllës Kurrizore",
+      "description": "Diagnostikon dhe trajton problemet e lëvizjes së shtyllës kurrizore me ushtrime lëvizjeje dhe trajtime të synuara."
+    },
+    "chiropractic": {
+      "title": "Kiropraktikë",
+      "description": "Manipulim i shtyllës kurrizore dhe trajtime të lidhura për të reduktuar dhimbjen e shpinës, qafës, kokës dhe problemet mekanike muskuloskeletale."
+    }
+  }
+}

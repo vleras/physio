@@ -17,12 +17,14 @@
 // };
 
 // module.exports = nextConfig;
+const createNextIntlPlugin = require("next-intl/plugin");
+const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    unoptimized: true, // 👈 ADD THIS LINE
-
+    unoptimized: process.env.NODE_ENV === 'development',
     remotePatterns: [
       {
         protocol: "https",
@@ -35,6 +37,34 @@ const nextConfig = {
   // Optimize for production
   compress: true,
   poweredByHeader: false,
+  async redirects() {
+    return [
+      { source: "/produktet", destination: "/products", permanent: true },
+      { source: "/sherbimet", destination: "/services", permanent: true },
+      { source: "/proizvodi", destination: "/products", permanent: true },
+      { source: "/proizvod/:id", destination: "/product/:id", permanent: true },
+      {
+        source: "/:locale(en|mk|sq)/produktet",
+        destination: "/products",
+        permanent: true,
+      },
+      {
+        source: "/:locale(en|mk|sq)/sherbimet",
+        destination: "/services",
+        permanent: true,
+      },
+      {
+        source: "/:locale(en|mk|sq)/proizvodi",
+        destination: "/products",
+        permanent: true,
+      },
+      {
+        source: "/:locale(en|mk|sq)/proizvod/:id",
+        destination: "/product/:id",
+        permanent: true,
+      },
+    ];
+  },
 };
 
-module.exports = nextConfig;
+module.exports = withNextIntl(nextConfig);

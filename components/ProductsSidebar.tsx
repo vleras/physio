@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { getProducts } from "@/lib/getProducts";
+import { useLocale } from "next-intl";
+import { getProducts, DEFAULT_LOCALE, type Locale } from "@/lib/getProducts";
 import ProductsSidebarMobile from "./ProductsSidebarMobile";
 import ProductsSidebarDesktop from "./ProductsSidebarDesktop";
 
@@ -29,25 +30,29 @@ const ALLOWED_SIDEBAR_PRODUCTS = [
 ];
 
 export default function ProductsSidebar() {
+  const locale = useLocale() as Locale;
   const [products, setProducts] = useState<SupabaseProduct[]>([]);
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const data = await getProducts();
+        // Fetch in Albanian for whitelist matching, then in current locale for display.
+        // The whitelist names are Albanian brand names — resolve IDs via sq, then swap in translated rows.
+        const [canonicalRows, localizedRows] = await Promise.all([
+          getProducts(DEFAULT_LOCALE),
+          getProducts(locale),
+        ]);
+        const localizedById = new Map(localizedRows.map((p) => [p.id, p]));
 
-        // Filter and sort products according to whitelist order
         const filteredProducts = ALLOWED_SIDEBAR_PRODUCTS.map((allowedName) => {
-          // Find product by name (case-insensitive match)
-          return data.find(
+          const canonical = canonicalRows.find(
             (product) =>
               product.name.toLowerCase().trim() ===
               allowedName.toLowerCase().trim()
           );
-        }).filter(
-          (product): product is SupabaseProduct => product !== undefined
-        );
+          return canonical ? localizedById.get(canonical.id) : undefined;
+        }).filter((p): p is SupabaseProduct => p !== undefined);
 
         setProducts(filteredProducts);
       } catch (error) {
@@ -55,7 +60,7 @@ export default function ProductsSidebar() {
       }
     }
     fetchProducts();
-  }, []);
+  }, [locale]);
 
   return (
     <>

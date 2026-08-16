@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
+import IonIcon from "./IonIcon";
+import { useTranslations } from "next-intl";
 
 interface SupabaseProduct {
   id: number;
@@ -21,6 +23,7 @@ interface ProductsSidebarDesktopProps {
 export default function ProductsSidebarDesktop({
   products,
 }: ProductsSidebarDesktopProps) {
+  const t = useTranslations("sidebar");
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
 
@@ -158,7 +161,7 @@ export default function ProductsSidebarDesktop({
             />
           </div>
         </div>
-        <h2>Produktet</h2>
+        <h2>{t("products")}</h2>
       </div>
 
       {/* CAROUSEL-STYLE CONTENT AREA */}
@@ -169,7 +172,7 @@ export default function ProductsSidebarDesktop({
           {tripledProducts.map((product, index) => (
             <Link
               key={`${product.id}-${index}`}
-              href={`/product/${product.id}`}
+              href={{ pathname: "/product/[id]", params: { id: String(product.id) } }}
               className="sidebar-product-item shrink-0"
               style={{ opacity: 1, textDecoration: "none", display: "flex" }}
             >
@@ -195,7 +198,7 @@ export default function ProductsSidebarDesktop({
                     ""}
                 </div>
                 <span className="sidebar-product-link">
-                  Shiko Detajet
+                  {t("viewDetails")}
                 </span>
               </div>
             </Link>
@@ -205,24 +208,15 @@ export default function ProductsSidebarDesktop({
 
       <div className="sidebar-see-more">
         <Link 
-          href="/produktet" 
+          href="/products" 
           className="sidebar-see-more-button"
           scroll={true}
           onClick={() => {
             window.scrollTo(0, 0);
           }}
         >
-          Shiko Më Shumë
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
+          {t("seeMore")}
+          <IonIcon name="arrow-forward-outline" size={16} />
         </Link>
       </div>
     </aside>
