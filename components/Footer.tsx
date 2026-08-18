@@ -47,9 +47,9 @@ export default async function Footer() {
             <h3 className="footer-v2-heading">{t("contactUs")}</h3>
             <ul className="footer-v2-list">
               <li>
-                <a href="tel:+38349459111" className="footer-v2-contact-link">
+                <a href="tel:+38971562521" className="footer-v2-contact-link">
                   <IonIcon name="call-outline" size={16} />
-                  +383 49 459 111
+                  +389 71 562 521
                 </a>
               </li>
               <li>

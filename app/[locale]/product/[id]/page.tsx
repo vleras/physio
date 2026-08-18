@@ -227,7 +227,7 @@ export default function ProductDetails({ params }: PageProps) {
 
               <div className="contact-buttons">
                 <a
-                  href={`https://wa.me/38349459111?text=${encodeURIComponent(
+                  href={`https://wa.me/38971562521?text=${encodeURIComponent(
                     message
                   )}`}
                   className="contact-btn contact-btn-whatsapp"

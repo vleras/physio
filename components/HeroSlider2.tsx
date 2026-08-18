@@ -6,14 +6,12 @@ import { useTranslations } from "next-intl";
 import IonIcon from "./IonIcon";
 
 const heroImages = [
-  "/vsonew1.jpg",
   "/homepage3.jpg",
   "/images/services/hero3.jpg",
   "/images/services/hero4.jpg",
   "/images/services/hero5.jpg",
   "/images/services/hero6.jpg",
   "/images/services/needle.jpg",
-  // "/images/hero10.jpg",
 ];
 
 export default function HeroSlider2() {

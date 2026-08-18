@@ -5,7 +5,7 @@ import IonIcon from "./IonIcon";
 
 export default function MobileMessagingButton() {
   const t = useTranslations("common");
-  const phoneNumber = "38349459111";
+  const phoneNumber = "38971562521";
   const message = t("whatsappMessage");
 
   return (

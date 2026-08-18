@@ -52,7 +52,7 @@ export default function Header() {
           </Link>
           <div className="header-mobile-actions">
             <a
-              href="tel:+38349459111"
+              href="tel:+38971562521"
               className="mobile-phone-btn"
               aria-label="Call us"
             >
@@ -91,12 +91,12 @@ export default function Header() {
         </nav>
         <div className="header-contact">
           <a
-            href="tel:+38349459111"
+            href="tel:+38971562521"
             className="header-contact-item"
             title="Call us"
           >
             <IonIcon name="call-outline" size={18} />
-            <span className="phone-text">+383 49 459 111</span>
+            <span className="phone-text">+389 71 562 521</span>
           </a>
           <LanguageSwitcher />
         </div>

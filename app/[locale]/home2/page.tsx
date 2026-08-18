@@ -210,7 +210,7 @@ export default function Home2() {
               </div>
               <div className="contact-item">
                 <IonIcon name="call-outline" size={20} />
-                <span>+383 49 459 111</span>
+                <span>+389 71 562 521</span>
               </div>
             </div>
           </div>
