@@ -115,7 +115,12 @@ export default function Catalog() {
                   <div
                     key={product.id}
                     className="product-card"
-                    onClick={() => router.push(`/product/${product.id}`)}
+                    onClick={() =>
+                      router.push({
+                        pathname: "/product/[id]",
+                        params: { id: String(product.id) },
+                      })
+                    }
                     style={{ cursor: "pointer" }}
                   >
                     <div className="product-card__media relative h-auto">
@@ -125,7 +130,10 @@ export default function Catalog() {
                         aria-label={t("quickView", { name: product.name })}
                         onClick={(e) => {
                           e.stopPropagation();
-                          router.push(`/product/${product.id}`);
+                          router.push({
+                            pathname: "/product/[id]",
+                            params: { id: String(product.id) },
+                          });
                         }}
                       >
                         <IonIcon name="eye-outline" size={16} className="icon icon-eye icon-sm" />
