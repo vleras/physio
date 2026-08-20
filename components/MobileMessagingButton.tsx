@@ -1,16 +1,18 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import IonIcon from "./IonIcon";
+import { getContactPhone } from "@/lib/phone";
 
 export default function MobileMessagingButton() {
   const t = useTranslations("common");
-  const phoneNumber = "38971562521";
+  const locale = useLocale();
+  const phone = getContactPhone(locale);
   const message = t("whatsappMessage");
 
   return (
     <a
-      href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`}
+      href={`https://wa.me/${phone.whatsapp}?text=${encodeURIComponent(message)}`}
       target="_blank"
       rel="noopener noreferrer"
       className="mobile-messaging-btn"

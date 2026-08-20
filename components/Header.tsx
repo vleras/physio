@@ -1,14 +1,17 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import Image from "next/image";
 import LanguageSwitcher from "./LanguageSwitcher";
 import IonIcon from "./IonIcon";
+import { getContactPhone } from "@/lib/phone";
 
 export default function Header() {
   const pathname = usePathname();
+  const locale = useLocale();
+  const phone = getContactPhone(locale);
   const t = useTranslations("nav");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
@@ -52,7 +55,7 @@ export default function Header() {
           </Link>
           <div className="header-mobile-actions">
             <a
-              href="tel:+38971562521"
+              href={`tel:${phone.tel}`}
               className="mobile-phone-btn"
               aria-label="Call us"
             >
@@ -91,12 +94,12 @@ export default function Header() {
         </nav>
         <div className="header-contact">
           <a
-            href="tel:+38971562521"
+            href={`tel:${phone.tel}`}
             className="header-contact-item"
             title="Call us"
           >
             <IonIcon name="call-outline" size={18} />
-            <span className="phone-text">+389 71 562 521</span>
+            <span className="phone-text">{phone.display}</span>
           </a>
           <LanguageSwitcher />
         </div>

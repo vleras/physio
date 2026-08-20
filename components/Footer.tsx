@@ -1,10 +1,13 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import IonIcon from "./IonIcon";
+import { getContactPhone } from "@/lib/phone";
 
 export default async function Footer() {
   const t = await getTranslations("footer");
+  const locale = await getLocale();
+  const phone = getContactPhone(locale);
   return (
     <footer className="footer-v2">
       <div className="footer-v2-inner">
@@ -47,9 +50,9 @@ export default async function Footer() {
             <h3 className="footer-v2-heading">{t("contactUs")}</h3>
             <ul className="footer-v2-list">
               <li>
-                <a href="tel:+38971562521" className="footer-v2-contact-link">
+                <a href={`tel:${phone.tel}`} className="footer-v2-contact-link">
                   <IonIcon name="call-outline" size={16} />
-                  +389 71 562 521
+                  {phone.display}
                 </a>
               </li>
               <li>

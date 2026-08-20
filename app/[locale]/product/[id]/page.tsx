@@ -7,6 +7,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { type Locale } from "@/lib/getProducts";
 import { useProduct } from "@/hooks/useProducts";
 import IonIcon from "@/components/IonIcon";
+import { getContactPhone } from "@/lib/phone";
 import "./product-detail.css";
 
 interface PageProps {
@@ -18,6 +19,7 @@ interface PageProps {
 export default function ProductDetails({ params }: PageProps) {
   const { id } = use(params);
   const locale = useLocale() as Locale;
+  const phone = getContactPhone(locale);
   const t = useTranslations("products");
   const productId = parseInt(id);
   const { data: product, isLoading: loading } = useProduct(productId, locale);
@@ -227,7 +229,7 @@ export default function ProductDetails({ params }: PageProps) {
 
               <div className="contact-buttons">
                 <a
-                  href={`https://wa.me/38971562521?text=${encodeURIComponent(
+                  href={`https://wa.me/${phone.whatsapp}?text=${encodeURIComponent(
                     message
                   )}`}
                   className="contact-btn contact-btn-whatsapp"

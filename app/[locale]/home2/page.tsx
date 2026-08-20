@@ -4,10 +4,14 @@ import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { productsData, Product } from "@/data/products";
+import { useLocale } from "next-intl";
 import HeroSlider2 from "@/components/HeroSlider2";
 import IonIcon from "@/components/IonIcon";
+import { getContactPhone } from "@/lib/phone";
 
 export default function Home2() {
+  const locale = useLocale();
+  const phone = getContactPhone(locale);
   const [products, setProducts] = useState<Product[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -210,7 +214,7 @@ export default function Home2() {
               </div>
               <div className="contact-item">
                 <IonIcon name="call-outline" size={20} />
-                <span>+389 71 562 521</span>
+                <span>{phone.display}</span>
               </div>
             </div>
           </div>
