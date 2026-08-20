@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl";
 import IonIcon from "./IonIcon";
 
 const heroImages = [
-  "/homepage3.jpg",
   "/images/services/hero3.jpg",
   "/images/services/hero4.jpg",
   "/images/services/hero5.jpg",
