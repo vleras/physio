@@ -10,7 +10,6 @@ const heroImages = [
   "/images/Recovery-Boots.png",
   "/images/IMG_0457.png", // avaboots
   "/images/Light_Heat_Cold.png",
-  "/images/Ledboots.png", // ledboots
   "/images/HOME_Exercise.png",
   "/images/Pro_Physio_2.png",
   "/images/All_Products.png",
