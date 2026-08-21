@@ -45,7 +45,7 @@ export default function ProductsSidebarMobile({
           style={{
             fontSize: "1.25rem",
             fontWeight: "600",
-            marginBottom: "0.5rem",
+            marginBottom: "0.15rem",
           }}
         >
           {t("products")}
@@ -87,7 +87,7 @@ export default function ProductsSidebarMobile({
       </div>
 
       {/* Carousel with navigation buttons */}
-      <div style={{ position: "relative", padding: "0 1rem 1rem" }}>
+      <div style={{ position: "relative", padding: "0 1rem 0.25rem" }}>
         <Carousel
           opts={{
             align: "start",
@@ -242,8 +242,8 @@ export default function ProductsSidebarMobile({
       {/* See More Button */}
       <div
         style={{
-          padding: "0.5rem 1rem 1rem",
-          borderTop: "1px solid #e5e7eb",
+          padding: "1.25rem 1rem 1rem",
+          borderTop: "none",
         }}
       >
         <Link
