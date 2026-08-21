@@ -102,17 +102,18 @@ export default function ProductsSidebarMobile({
                 key={product.id}
                 style={{
                   paddingLeft: "0.5rem",
-                  flexBasis: "calc(50% - 0.25rem)",
-                  minWidth: "calc(50% - 0.25rem)",
+                  flexBasis: "58%",
+                  minWidth: "58%",
                 }}
               >
                 <Link
                   href={{ pathname: "/product/[id]", params: { id: String(product.id) } }}
+                  className="mobile-product-card"
                   style={{
                     backgroundColor: "#ffffff",
-                    borderRadius: "0.5rem",
+                    borderRadius: "0.75rem",
                     border: "1px solid #e5e7eb",
-                    padding: "0.75rem",
+                    overflow: "hidden",
                     boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
                     height: "100%",
                     display: "flex",
@@ -121,6 +122,7 @@ export default function ProductsSidebarMobile({
                     textDecoration: "none",
                     color: "inherit",
                     cursor: "pointer",
+                    padding: 0,
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.boxShadow =
@@ -131,11 +133,10 @@ export default function ProductsSidebarMobile({
                       "0 1px 2px 0 rgba(0, 0, 0, 0.05)";
                   }}
                 >
-                  {/* Product Image */}
+                  {/* Product Image — taller portrait like avacr7 */}
                   <div
                     style={{
                       flexShrink: 0,
-                      marginBottom: "0.5rem",
                       width: "100%",
                     }}
                   >
@@ -143,10 +144,9 @@ export default function ProductsSidebarMobile({
                       style={{
                         position: "relative",
                         width: "100%",
-                        height: "150px",
-                        borderRadius: "0.5rem",
+                        height: "200px",
                         overflow: "hidden",
-                        backgroundColor: "#f9fafb",
+                        backgroundColor: "#f3f4f6",
                       }}
                     >
                       <Image
@@ -163,19 +163,22 @@ export default function ProductsSidebarMobile({
                     </div>
                   </div>
 
-                  {/* Product Content */}
+                  {/* Title + price only */}
                   <div
                     style={{
                       display: "flex",
                       flexDirection: "column",
-                      flexGrow: 1,
+                      gap: "0.2rem",
+                      padding: "0.55rem 0.65rem 0.75rem",
+                      backgroundColor: "#ffffff",
                     }}
                   >
                     <h3
                       style={{
-                        fontWeight: "600",
-                        fontSize: "0.875rem",
-                        marginBottom: "0.375rem",
+                        fontWeight: "700",
+                        fontSize: "0.85rem",
+                        margin: 0,
+                        color: "#111111",
                         display: "-webkit-box",
                         WebkitLineClamp: 2,
                         WebkitBoxOrient: "vertical",
@@ -187,47 +190,15 @@ export default function ProductsSidebarMobile({
                     </h3>
                     <p
                       style={{
-                        fontSize: "0.75rem",
-                        color: "#4b5563",
-                        marginBottom: "0.5rem",
-                        display: "-webkit-box",
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: "vertical",
-                        overflow: "hidden",
-                        flexGrow: 1,
-                        lineHeight: "1.25",
-                      }}
-                    >
-                      {product.description_1 ||
-                        product.description_2 ||
-                        product.description_3 ||
-                        ""}
-                    </p>
-                    <span
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "flex-start",
-                        fontSize: "0.75rem",
+                        margin: 0,
+                        fontSize: "0.8rem",
                         fontWeight: "500",
-                        color: "#000000",
-                        border: "none",
-                        borderRadius: "0.375rem",
-                        padding: "0.375rem 0.75rem 0.375rem 0",
-                        marginTop: "auto",
-                        textDecoration: "none",
-                        transition: "all 0.3s ease",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.color = "#000000";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.color = "#000000";
+                        color: "#111111",
+                        lineHeight: "1.3",
                       }}
                     >
-                      {t("viewDetails")}
-                      <IonIcon name="chevron-forward-outline" size={16} />
-                    </span>
+                      {product.price || "N/A"}
+                    </p>
                   </div>
                 </Link>
               </CarouselItem>
