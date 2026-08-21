@@ -111,26 +111,24 @@ export default function ProductsSidebarMobile({
                   className="mobile-product-card"
                   style={{
                     backgroundColor: "#ffffff",
-                    borderRadius: "0.75rem",
-                    border: "1px solid #e5e7eb",
+                    borderRadius: "0",
+                    border: "none",
                     overflow: "hidden",
-                    boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+                    boxShadow: "none",
                     height: "100%",
                     display: "flex",
                     flexDirection: "column",
-                    transition: "box-shadow 0.3s ease",
+                    transition: "opacity 0.3s ease",
                     textDecoration: "none",
                     color: "inherit",
                     cursor: "pointer",
                     padding: 0,
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow =
-                      "0 4px 6px -1px rgba(0, 0, 0, 0.1)";
+                    e.currentTarget.style.opacity = "0.92";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow =
-                      "0 1px 2px 0 rgba(0, 0, 0, 0.05)";
+                    e.currentTarget.style.opacity = "1";
                   }}
                 >
                   {/* Product Image — taller portrait like avacr7 */}
@@ -170,7 +168,7 @@ export default function ProductsSidebarMobile({
                       flexDirection: "column",
                       gap: "0.2rem",
                       padding: "0.55rem 0.65rem 0.75rem",
-                      backgroundColor: "#ffffff",
+                      backgroundColor: "#f3f3f3",
                     }}
                   >
                     <h3
