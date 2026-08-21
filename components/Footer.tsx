@@ -113,11 +113,6 @@ export default async function Footer() {
           <p className="footer-v2-copyright">{t("copyright")}</p>
           <p className="footer-v2-powered">{t("poweredBy")}</p>
         </div>
-
-        {/* Large watermark text */}
-        <div className="footer-v2-watermark" aria-hidden="true">
-          VSO Clinic
-        </div>
       </div>
     </footer>
   );

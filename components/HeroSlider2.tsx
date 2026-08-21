@@ -6,11 +6,11 @@ import { useTranslations } from "next-intl";
 import IonIcon from "./IonIcon";
 
 const heroImages = [
-  "/images/services/hero3.jpg",
-  "/images/services/hero4.jpg",
-  "/images/services/hero5.jpg",
-  "/images/services/hero6.jpg",
-  "/images/services/needle.jpg",
+  "/images/Ledboots.png",
+  "/images/Light_Heat_Cold.png",
+  "/images/Recovery-Boots.png",
+  "/images/HOME_Exercise.png",
+  "/images/Pro_Physio_2.png",
 ];
 
 export default function HeroSlider2() {
