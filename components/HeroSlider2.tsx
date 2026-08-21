@@ -11,6 +11,7 @@ const heroImages = [
   "/images/HOME_Exercise.png",
   "/images/Ledboots.png",
   "/images/Pro_Physio_2.png",
+  "/images/All_Products.png",
 ];
 
 export default function HeroSlider2() {
