@@ -168,7 +168,7 @@ export default function ProductsSidebarMobile({
                       flexDirection: "column",
                       gap: "0.2rem",
                       padding: "0.55rem 0.65rem 0.75rem",
-                      backgroundColor: "#f3f3f3",
+                      backgroundColor: "#f8f8f8",
                     }}
                   >
                     <h3
