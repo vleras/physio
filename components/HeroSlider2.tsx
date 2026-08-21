@@ -6,10 +6,10 @@ import { useTranslations } from "next-intl";
 import IonIcon from "./IonIcon";
 
 const heroImages = [
-  "/images/Ledboots.png",
-  "/images/Light_Heat_Cold.png",
   "/images/Recovery-Boots.png",
+  "/images/Light_Heat_Cold.png",
   "/images/HOME_Exercise.png",
+  "/images/Ledboots.png",
   "/images/Pro_Physio_2.png",
 ];
 
