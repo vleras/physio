@@ -643,6 +643,46 @@
   min-width: 120px;
 }
 
+.buy-now-wrap {
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 100%;
+}
+
+.buy-now-wrap .contact-btn-buy {
+  width: 100%;
+}
+
+.contact-btn-buy {
+  background: #111;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+.contact-btn-buy:hover:not(:disabled) {
+  background: #333;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.contact-btn-buy:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.buy-now-error {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #b42318;
+  line-height: 1.35;
+}
+
 .contact-btn-whatsapp {
   background: #25d366;
   color: #fff;

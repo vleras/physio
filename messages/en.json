@@ -48,7 +48,20 @@
     "previousImage": "Previous image",
     "nextImage": "Next image",
     "goToImage": "Go to image {number}",
-    "whatsappMessage": "Hi! I'm interested in purchasing: {name} ({price})"
+    "whatsappMessage": "Hi! I'm interested in purchasing: {name} ({price})",
+    "buyNow": "Buy now",
+    "buying": "Redirecting…",
+    "buyError": "Checkout failed. Please try again.",
+    "buyUnavailable": "Online checkout is unavailable for this price. Contact us on WhatsApp."
+  },
+  "checkout": {
+    "successTitle": "Payment successful",
+    "successBody": "Thank you for your order. You will receive a confirmation email from Stripe shortly. We’ll follow up about delivery.",
+    "cancelTitle": "Payment cancelled",
+    "cancelBody": "No charge was made. You can return to the product and try again anytime.",
+    "tryAgain": "Back to product",
+    "backToProducts": "Browse products",
+    "backHome": "Home"
   },
   "common": {
     "previousSlide": "Previous slide",

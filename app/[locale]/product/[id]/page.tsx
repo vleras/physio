@@ -7,6 +7,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { type Locale } from "@/lib/getProducts";
 import { useProduct } from "@/hooks/useProducts";
 import IonIcon from "@/components/IonIcon";
+import BuyNowButton from "@/components/BuyNowButton";
 import { getContactPhone } from "@/lib/phone";
 import "./product-detail.css";
 
@@ -299,6 +300,7 @@ export default function ProductDetails({ params }: PageProps) {
               </div>
 
               <div className="contact-buttons">
+                <BuyNowButton productId={product.id} price={product.price} />
                 <a
                   href={`https://wa.me/${phone.whatsapp}?text=${encodeURIComponent(
                     message

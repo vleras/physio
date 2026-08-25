@@ -48,7 +48,20 @@
     "previousImage": "Foto e mëparshme",
     "nextImage": "Foto tjetër",
     "goToImage": "Shko te foto {number}",
-    "whatsappMessage": "Përshëndetje! Jam i interesuar të blej: {name} ({price})"
+    "whatsappMessage": "Përshëndetje! Jam i interesuar të blej: {name} ({price})",
+    "buyNow": "Bli tani",
+    "buying": "Duke ridrejtuar…",
+    "buyError": "Pagesa dështoi. Ju lutemi provoni përsëri.",
+    "buyUnavailable": "Pagesa online nuk është e disponueshme për këtë çmim. Na kontaktoni në WhatsApp."
+  },
+  "checkout": {
+    "successTitle": "Pagesa u krye me sukses",
+    "successBody": "Faleminderit për porosinë. Do të merrni një email konfirmimi nga Stripe. Ne do t’ju kontaktojmë për dorëzimin.",
+    "cancelTitle": "Pagesa u anulua",
+    "cancelBody": "Nuk u bë asnjë pagesë. Mund të ktheheni te produkti dhe të provoni përsëri.",
+    "tryAgain": "Kthehu te produkti",
+    "backToProducts": "Shiko produktet",
+    "backHome": "Kryefaqja"
   },
   "common": {
     "previousSlide": "Slide e mëparshme",
