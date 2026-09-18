@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { usePathname as useNextPathname } from "next/navigation";
 import { Link, usePathname } from "@/i18n/navigation";
 import Image from "next/image";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -10,6 +11,8 @@ import { getContactPhone } from "@/lib/phone";
 
 export default function Header() {
   const pathname = usePathname();
+  const nextPathname = useNextPathname();
+  const isAdmin = nextPathname.startsWith("/admin");
   const locale = useLocale();
   const phone = getContactPhone(locale);
   const t = useTranslations("nav");
@@ -54,13 +57,15 @@ export default function Header() {
             <span className="logo-text">VSO Clinic</span>
           </Link>
           <div className="header-mobile-actions">
-            <a
-              href={`tel:${phone.tel}`}
-              className="mobile-phone-btn"
-              aria-label="Call us"
-            >
-              <IonIcon name="call-outline" size={20} />
-            </a>
+            {!isAdmin ? (
+              <a
+                href={`tel:${phone.tel}`}
+                className="mobile-phone-btn"
+                aria-label="Call us"
+              >
+                <IonIcon name="call-outline" size={20} />
+              </a>
+            ) : null}
             <LanguageSwitcher />
             <button
               className="menu-toggle"
@@ -84,23 +89,35 @@ export default function Header() {
           >
             {t("home")}
           </Link>
-          <Link
-            href="/products"
-            className={`nav-link ${pathname === "/products" || pathname.startsWith("/product/") ? "active" : ""}`}
-            onClick={closeMenu}
+          <a
+            href="https://avacr7.com/collections/all"
+            className="nav-link"
+            onClick={(e) => {
+              closeMenu();
+              e.preventDefault();
+              window.open(
+                "https://avacr7.com/collections/all",
+                "_blank",
+                "noopener,noreferrer"
+              );
+            }}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             {t("products")}
-          </Link>
+          </a>
         </nav>
         <div className="header-contact">
-          <a
-            href={`tel:${phone.tel}`}
-            className="header-contact-item"
-            title="Call us"
-          >
-            <IonIcon name="call-outline" size={18} />
-            <span className="phone-text">{phone.display}</span>
-          </a>
+          {!isAdmin ? (
+            <a
+              href={`tel:${phone.tel}`}
+              className="header-contact-item"
+              title="Call us"
+            >
+              <IonIcon name="call-outline" size={18} />
+              <span className="phone-text">{phone.display}</span>
+            </a>
+          ) : null}
           <LanguageSwitcher />
         </div>
       </div>

@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import IonIcon from "./IonIcon";
 import { useTranslations } from "next-intl";
+import { avacr7ProductUrl } from "@/lib/avacr7";
 
 interface SupabaseProduct {
   id: number;
@@ -25,7 +25,16 @@ export default function ProductsSidebarDesktop({
 }: ProductsSidebarDesktopProps) {
   const t = useTranslations("sidebar");
   const sidebarRef = useRef<HTMLDivElement | null>(null);
+  const productsRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
+
+  const isDragging = useRef(false);
+  const pendingPointer = useRef(false);
+  const didDrag = useRef(false);
+  const dragStartY = useRef(0);
+  const dragStartScroll = useRef(0);
+  const autoPaused = useRef(false);
+  const rafId = useRef<number | null>(null);
 
   // Tripled products for seamless infinite scroll
   const tripledProducts =
@@ -62,27 +71,19 @@ export default function ProductsSidebarDesktop({
       }
     };
 
-    // Wait for location section to be available, then calculate
     const checkAndUpdate = () => {
       const locationSection = document.querySelector(".location-section");
       if (locationSection) {
         updateHeight();
       } else {
-        // Retry if location section not found yet (for async rendering)
         setTimeout(checkAndUpdate, 100);
       }
     };
 
     checkAndUpdate();
-
-    // Recalculate on resize
     window.addEventListener("resize", updateHeight);
-
-    // Recalculate after delays to account for async rendering and iframe loading
     const timeoutId1 = setTimeout(updateHeight, 500);
     const timeoutId2 = setTimeout(updateHeight, 1000);
-
-    // Also recalculate when images/content loads
     const imageLoadHandler = () => {
       setTimeout(updateHeight, 100);
     };
@@ -96,47 +97,103 @@ export default function ProductsSidebarDesktop({
     };
   }, []);
 
-  // CSS Animation-based continuous scrolling
+  // Slow auto-scroll top → bottom + infinite loop (paused while dragging / hovering)
   useEffect(() => {
-    if (products.length === 0 || !trackRef.current) return;
+    if (products.length === 0) return;
+    const el = productsRef.current;
+    if (!el) return;
 
-    const track = trackRef.current;
-    const duration = 20;
+    // Start in the middle copy so we can keep scrolling "down" forever
+    const syncStart = () => {
+      const loopAt = el.scrollHeight / 3;
+      if (loopAt > 0) el.scrollTop = loopAt;
+    };
+    requestAnimationFrame(syncStart);
 
-    const initAnimation = () => {
-      track.style.animation = "none";
-      void track.offsetHeight; // Force reflow
-      track.style.animation = `scroll-down ${duration}s linear infinite`;
+    const tick = () => {
+      if (!autoPaused.current && !isDragging.current && window.innerWidth > 768) {
+        const loopAt = el.scrollHeight / 3;
+        el.scrollTop -= 0.45;
+        if (loopAt > 0 && el.scrollTop <= loopAt * 0.5) {
+          el.scrollTop += loopAt;
+        }
+      }
+      rafId.current = requestAnimationFrame(tick);
     };
 
-    requestAnimationFrame(initAnimation);
-
+    rafId.current = requestAnimationFrame(tick);
     return () => {
-      if (trackRef.current) {
-        trackRef.current.style.animation = "none";
-      }
+      if (rafId.current != null) cancelAnimationFrame(rafId.current);
     };
   }, [products.length]);
 
-  // Pause on hover (desktop only)
-  const handleMouseEnter = () => {
-    if (window.innerWidth > 768 && trackRef.current) {
-      trackRef.current.style.animationPlayState = "paused";
-    }
+  const pauseAuto = () => {
+    autoPaused.current = true;
   };
 
-  const handleMouseLeave = () => {
-    if (window.innerWidth > 768 && trackRef.current) {
-      trackRef.current.style.animationPlayState = "running";
+  const resumeAuto = () => {
+    if (!isDragging.current) autoPaused.current = false;
+  };
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (window.innerWidth <= 768) return;
+    if (e.button !== 0) return;
+    const el = productsRef.current;
+    if (!el) return;
+
+    // Don't capture yet — wait for real movement so clicks still work
+    pendingPointer.current = true;
+    isDragging.current = false;
+    didDrag.current = false;
+    dragStartY.current = e.clientY;
+    dragStartScroll.current = el.scrollTop;
+  };
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!pendingPointer.current && !isDragging.current) return;
+    const el = productsRef.current;
+    if (!el) return;
+
+    const delta = e.clientY - dragStartY.current;
+
+    if (!isDragging.current) {
+      if (Math.abs(delta) < 6) return;
+      isDragging.current = true;
+      didDrag.current = true;
+      autoPaused.current = true;
+      el.classList.add("is-dragging");
+      el.setPointerCapture(e.pointerId);
+    }
+
+    el.scrollTop = dragStartScroll.current - delta;
+  };
+
+  const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = productsRef.current;
+    const wasDragging = isDragging.current;
+    pendingPointer.current = false;
+    isDragging.current = false;
+    el?.classList.remove("is-dragging");
+
+    if (wasDragging) {
+      try {
+        el?.releasePointerCapture(e.pointerId);
+      } catch {
+        // ignore
+      }
+    }
+
+    if (!el?.matches(":hover")) {
+      autoPaused.current = false;
     }
   };
 
   return (
-    <aside 
-      className="products-sidebar" 
+    <aside
+      className="products-sidebar"
       ref={sidebarRef}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={pauseAuto}
+      onMouseLeave={resumeAuto}
     >
       <div className="sidebar-header">
         <div className="sidebar-logo-container">
@@ -164,17 +221,33 @@ export default function ProductsSidebarDesktop({
         <h2>{t("products")}</h2>
       </div>
 
-      {/* CAROUSEL-STYLE CONTENT AREA */}
-      <div className="sidebar-products">
-        {/* Track container for seamless looping */}
+      <div
+        className="sidebar-products"
+        ref={productsRef}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+      >
         <div ref={trackRef} className="sidebar-products-track">
-          {/* DUPLICATE CONTENT FOR SEAMLESS LOOPING */}
           {tripledProducts.map((product, index) => (
-            <Link
+            <a
               key={`${product.id}-${index}`}
-              href={{ pathname: "/product/[id]", params: { id: String(product.id) } }}
+              href={avacr7ProductUrl(product.name)}
               className="sidebar-product-item shrink-0"
               style={{ opacity: 1, textDecoration: "none", display: "flex" }}
+              draggable={false}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => {
+                // Only block navigation after a real drag
+                if (didDrag.current) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  didDrag.current = false;
+                }
+              }}
+              onDragStart={(e) => e.preventDefault()}
             >
               <div className="sidebar-product-image">
                 <Image
@@ -187,6 +260,7 @@ export default function ProductsSidebarDesktop({
                   width={130}
                   height={130}
                   loading="lazy"
+                  draggable={false}
                 />
               </div>
               <div className="sidebar-product-content">
@@ -201,23 +275,21 @@ export default function ProductsSidebarDesktop({
                   {t("viewDetails")}
                 </span>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>
 
       <div className="sidebar-see-more">
-        <Link 
-          href="/products" 
+        <a
+          href="https://avacr7.com/collections/all"
           className="sidebar-see-more-button"
-          scroll={true}
-          onClick={() => {
-            window.scrollTo(0, 0);
-          }}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           {t("seeMore")}
           <IonIcon name="arrow-forward-outline" size={16} />
-        </Link>
+        </a>
       </div>
     </aside>
   );

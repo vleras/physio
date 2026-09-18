@@ -1,7 +1,8 @@
 {
   "nav": {
     "home": "Home",
-    "products": "Products"
+    "products": "Products",
+    "cart": "Cart"
   },
   "footer": {
     "quickLinks": "Quick Links",
@@ -50,13 +51,48 @@
     "goToImage": "Go to image {number}",
     "whatsappMessage": "Hi! I'm interested in purchasing: {name} ({price})",
     "buyNow": "Buy now",
+    "viewOnStore": "Buy on AVA",
     "buying": "Redirecting…",
     "buyError": "Checkout failed. Please try again.",
-    "buyUnavailable": "Online checkout is unavailable for this price. Contact us on WhatsApp."
+    "buyUnavailable": "Online checkout is unavailable for this price. Contact us on WhatsApp.",
+    "quantity": "Quantity",
+    "increaseQuantity": "Increase quantity",
+    "decreaseQuantity": "Decrease quantity",
+    "addToCart": "Add to cart",
+    "addedToCart": "Added"
+  },
+  "cart": {
+    "title": "Cart",
+    "recentlyViewed": "Recently viewed",
+    "close": "Close cart",
+    "empty": "Your cart is empty.",
+    "recentEmpty": "No recently viewed products yet.",
+    "browseProducts": "Browse products",
+    "oneSize": "One size",
+    "remove": "Remove",
+    "increase": "Increase quantity",
+    "decrease": "Decrease quantity",
+    "youMayAlsoLike": "You may also like",
+    "previous": "Previous",
+    "next": "Next",
+    "add": "Add",
+    "orderNote": "Order note",
+    "orderNotePlaceholder": "Add a note for your order…",
+    "shipping": "Shipping",
+    "shippingInfo": "Shipping is calculated at checkout based on your delivery address.",
+    "taxNote": "Tax included and shipping calculated at checkout.",
+    "subtotal": "Subtotal",
+    "currencyCode": "EUR",
+    "checkout": "Check out",
+    "checkingOut": "Redirecting…",
+    "viewCart": "View cart",
+    "checkoutError": "Checkout failed. Please try again.",
+    "pageTitle": "Your cart",
+    "continueShopping": "Continue shopping"
   },
   "checkout": {
     "successTitle": "Payment successful",
-    "successBody": "Thank you for your order. You will receive a confirmation email from Stripe shortly. We’ll follow up about delivery.",
+    "successBody": "Thank you for your order. A confirmation email is on its way — we’ll follow up about delivery.",
     "cancelTitle": "Payment cancelled",
     "cancelBody": "No charge was made. You can return to the product and try again anytime.",
     "tryAgain": "Back to product",

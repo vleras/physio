@@ -11,6 +11,9 @@ export const routing = defineRouting({
     "/product/[id]": "/product/[id]",
     "/services": "/services",
     "/home2": "/home2",
+    "/cart": "/cart",
+    "/checkout/success": "/checkout/success",
+    "/checkout/cancel": "/checkout/cancel",
   },
 });
 

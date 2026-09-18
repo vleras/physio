@@ -1,7 +1,8 @@
 {
   "nav": {
     "home": "Ballina",
-    "products": "Produktet"
+    "products": "Produktet",
+    "cart": "Shporta"
   },
   "footer": {
     "quickLinks": "Linqe të Shpejta",
@@ -50,13 +51,48 @@
     "goToImage": "Shko te foto {number}",
     "whatsappMessage": "Përshëndetje! Jam i interesuar të blej: {name} ({price})",
     "buyNow": "Bli tani",
+    "viewOnStore": "Bli te AVA",
     "buying": "Duke ridrejtuar…",
     "buyError": "Pagesa dështoi. Ju lutemi provoni përsëri.",
-    "buyUnavailable": "Pagesa online nuk është e disponueshme për këtë çmim. Na kontaktoni në WhatsApp."
+    "buyUnavailable": "Pagesa online nuk është e disponueshme për këtë çmim. Na kontaktoni në WhatsApp.",
+    "quantity": "Sasia",
+    "increaseQuantity": "Rrit sasinë",
+    "decreaseQuantity": "Ul sasinë",
+    "addToCart": "Shto në shportë",
+    "addedToCart": "U shtua"
+  },
+  "cart": {
+    "title": "Shporta",
+    "recentlyViewed": "Parë së fundi",
+    "close": "Mbyll shportën",
+    "empty": "Shporta juaj është bosh.",
+    "recentEmpty": "Nuk ka produkte të para së fundi.",
+    "browseProducts": "Shiko produktet",
+    "oneSize": "Një madhësi",
+    "remove": "Hiq",
+    "increase": "Rrit sasinë",
+    "decrease": "Ul sasinë",
+    "youMayAlsoLike": "Mund t’ju pëlqejë edhe",
+    "previous": "Mëparshme",
+    "next": "Tjetër",
+    "add": "Shto",
+    "orderNote": "Shënim porosie",
+    "orderNotePlaceholder": "Shtoni një shënim për porosinë…",
+    "shipping": "Transporti",
+    "shippingInfo": "Transporti llogaritet në pagesë sipas adresës suaj.",
+    "taxNote": "Taksa e përfshirë; transporti llogaritet në pagesë.",
+    "subtotal": "Nëntotali",
+    "currencyCode": "EUR",
+    "checkout": "Paguaj",
+    "checkingOut": "Duke ridrejtuar…",
+    "viewCart": "Shiko shportën",
+    "checkoutError": "Pagesa dështoi. Ju lutemi provoni përsëri.",
+    "pageTitle": "Shporta juaj",
+    "continueShopping": "Vazhdo blerjen"
   },
   "checkout": {
     "successTitle": "Pagesa u krye me sukses",
-    "successBody": "Faleminderit për porosinë. Do të merrni një email konfirmimi nga Stripe. Ne do t’ju kontaktojmë për dorëzimin.",
+    "successBody": "Faleminderit për porosinë. Do të merrni një email konfirmimi — ne do t’ju kontaktojmë për dorëzimin.",
     "cancelTitle": "Pagesa u anulua",
     "cancelBody": "Nuk u bë asnjë pagesë. Mund të ktheheni te produkti dhe të provoni përsëri.",
     "tryAgain": "Kthehu te produkti",

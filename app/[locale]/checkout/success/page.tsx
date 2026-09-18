@@ -17,11 +17,15 @@ export default function CheckoutSuccessPage() {
           </div>
           <h1>{t("successTitle")}</h1>
           <p>{t("successBody")}</p>
+
           <div className="checkout-result-actions">
             <Link href="/products" className="checkout-result-btn">
               {t("backToProducts")}
             </Link>
-            <Link href="/" className="checkout-result-btn checkout-result-btn--ghost">
+            <Link
+              href="/"
+              className="checkout-result-btn checkout-result-btn--ghost"
+            >
               {t("backHome")}
             </Link>
           </div>

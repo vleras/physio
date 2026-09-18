@@ -7,8 +7,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { type Locale } from "@/lib/getProducts";
 import { useProduct } from "@/hooks/useProducts";
 import IonIcon from "@/components/IonIcon";
-import BuyNowButton from "@/components/BuyNowButton";
 import { getContactPhone } from "@/lib/phone";
+import { avacr7ProductUrl } from "@/lib/avacr7";
 import "./product-detail.css";
 
 interface PageProps {
@@ -300,7 +300,23 @@ export default function ProductDetails({ params }: PageProps) {
               </div>
 
               <div className="contact-buttons">
-                <BuyNowButton productId={product.id} price={product.price} />
+                <a
+                  href={avacr7ProductUrl(product.name)}
+                  className="contact-btn contact-btn-cart"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.open(
+                      avacr7ProductUrl(product.name),
+                      "_blank",
+                      "noopener,noreferrer"
+                    );
+                  }}
+                >
+                  <IonIcon name="bag-handle-outline" size={18} />
+                  {t("viewOnStore")}
+                </a>
                 <a
                   href={`https://wa.me/${phone.whatsapp}?text=${encodeURIComponent(
                     message

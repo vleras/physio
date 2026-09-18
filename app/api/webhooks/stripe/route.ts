@@ -1,52 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
-import { supabaseAdmin } from "@/lib/supabaseAdmin";
+import { syncOrderFromCheckoutSession } from "@/lib/stripeOrders";
 
 export const runtime = "nodejs";
-
-async function markOrderPaid(session: Stripe.Checkout.Session) {
-  const orderId = session.metadata?.order_id;
-  if (!orderId) {
-    console.error("Stripe session missing order_id metadata:", session.id);
-    return;
-  }
-
-  const paymentIntentId =
-    typeof session.payment_intent === "string"
-      ? session.payment_intent
-      : session.payment_intent?.id ?? null;
-
-  const { error } = await supabaseAdmin
-    .from("orders")
-    .update({
-      status: "paid",
-      customer_email: session.customer_details?.email ?? session.customer_email,
-      customer_name: session.customer_details?.name ?? null,
-      stripe_checkout_session_id: session.id,
-      stripe_payment_intent_id: paymentIntentId,
-    })
-    .eq("id", orderId);
-
-  if (error) {
-    console.error("Failed to mark order paid:", error);
-  }
-}
-
-async function markOrderExpired(session: Stripe.Checkout.Session) {
-  const orderId = session.metadata?.order_id;
-  if (!orderId) return;
-
-  const { error } = await supabaseAdmin
-    .from("orders")
-    .update({ status: "expired" })
-    .eq("id", orderId)
-    .eq("status", "pending");
-
-  if (error) {
-    console.error("Failed to mark order expired:", error);
-  }
-}
 
 export async function POST(request: NextRequest) {
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -81,13 +38,13 @@ export async function POST(request: NextRequest) {
       case "checkout.session.completed": {
         const session = event.data.object as Stripe.Checkout.Session;
         if (session.payment_status === "paid") {
-          await markOrderPaid(session);
+          await syncOrderFromCheckoutSession(session);
         }
         break;
       }
       case "checkout.session.expired": {
         const session = event.data.object as Stripe.Checkout.Session;
-        await markOrderExpired(session);
+        await syncOrderFromCheckoutSession(session);
         break;
       }
       default:
@@ -95,7 +52,10 @@ export async function POST(request: NextRequest) {
     }
   } catch (error) {
     console.error("Stripe webhook handler error:", error);
-    return NextResponse.json({ error: "Webhook handler failed." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Webhook handler failed." },
+      { status: 500 }
+    );
   }
 
   return NextResponse.json({ received: true });

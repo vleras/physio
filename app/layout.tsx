@@ -52,11 +52,11 @@ export default async function RootLayout({
         />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <QueryProvider>
-            <Header />
-            {children}
-            <Footer />
-            <MobileMessagingButton />
-            <Toaster position="top-center" richColors closeButton />
+              <Header />
+              {children}
+              <Footer />
+              <MobileMessagingButton />
+              <Toaster position="top-center" richColors closeButton />
           </QueryProvider>
         </NextIntlClientProvider>
       </body>

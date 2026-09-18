@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useAdminProducts, useDeleteProduct, useUpdateProductOrder } from "@/hooks/useProducts";
 import IonIcon from "@/components/IonIcon";
-import AdminToolbar from "@/components/AdminToolbar";
+import AdminNav from "@/components/AdminNav";
 import {
   Table,
   TableBody,
@@ -163,11 +163,11 @@ export default function Dashboard() {
 
   return (
     <main className="main-content">
-      <div className="container" style={{ padding: "2rem", maxWidth: "1000px", margin: "0 auto" }}>
+      <div className="container mx-auto max-w-[1000px] px-4 py-6 sm:px-8 sm:py-8">
         <div className="flex items-center justify-between flex-wrap gap-2 mb-4">
           <h1 className="text-xl font-bold">Paneli i Administrimit</h1>
-          <AdminToolbar />
         </div>
+        <AdminNav />
         <div className="mb-4">
           <Button onClick={() => router.push("/admin/create")} className="gap-1.5">
             <IonIcon name="add-outline" size={18} />
@@ -182,7 +182,77 @@ export default function Dashboard() {
           </div>
         ) : (
           <>
-          <div className="rounded-lg border border-border bg-white">
+          {/* Mobile: stacked cards — no horizontal scroll */}
+          <div className="space-y-3 md:hidden">
+            {products.length === 0 ? (
+              <div className="rounded-xl border border-dashed border-black/15 bg-white px-4 py-12 text-center text-neutral-500">
+                Nuk u gjetën produkte
+              </div>
+            ) : (
+              currentProducts.map((product, index) => (
+                <article
+                  key={product.id}
+                  className="overflow-hidden rounded-xl border border-black/10 bg-white"
+                >
+                  <button
+                    type="button"
+                    onClick={() => startEdit(product)}
+                    className="flex w-full items-center gap-3 px-3.5 py-3 text-left"
+                  >
+                    <span className="w-5 shrink-0 text-sm text-neutral-400">
+                      {startIndex + index + 1}
+                    </span>
+                    {product.images && product.images.length > 0 ? (
+                      <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md bg-neutral-100">
+                        <Image
+                          src={product.images[0]}
+                          alt={product.name}
+                          fill
+                          style={{ objectFit: "cover" }}
+                        />
+                      </div>
+                    ) : (
+                      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-md bg-neutral-100 text-[10px] text-neutral-400">
+                        Pa Imazh
+                      </div>
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <div className="truncate text-sm font-semibold text-neutral-900">
+                        {product.name}
+                      </div>
+                      <div className="mt-0.5 text-sm text-neutral-600">
+                        {product.price}
+                      </div>
+                    </div>
+                    <IonIcon name="chevron-forward-outline" size={18} />
+                  </button>
+                  <div className="grid grid-cols-2 gap-2 border-t border-black/5 px-3.5 py-2.5">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => startEdit(product)}
+                      className="w-full gap-1"
+                    >
+                      <IonIcon name="create-outline" size={14} />
+                      Ndrysho
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => confirmDelete(product.id, product.name)}
+                      className="w-full gap-1"
+                    >
+                      <IonIcon name="trash-outline" size={14} />
+                      Fshi
+                    </Button>
+                  </div>
+                </article>
+              ))
+            )}
+          </div>
+
+          {/* Desktop: table */}
+          <div className="hidden rounded-lg border border-border bg-white md:block">
             <Table>
               <TableHeader>
                 <TableRow className="bg-muted/50 hover:bg-muted/50">
@@ -272,11 +342,11 @@ export default function Dashboard() {
           </div>
 
           {totalPages > 1 && (
-            <div className="flex items-center justify-between mt-4">
+            <div className="flex flex-col gap-3 mt-4 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-sm text-muted-foreground">
                 {startIndex + 1}–{Math.min(startIndex + itemsPerPage, products.length)} nga {products.length} produkte
               </p>
-              <div className="flex items-center gap-1">
+              <div className="flex flex-wrap items-center gap-1">
                 <Button
                   variant="outline"
                   size="sm"
