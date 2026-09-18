@@ -318,8 +318,7 @@ body {
   }
 
   .logo-text {
-    font-size: 1.3rem;
-    white-space: nowrap;
+    display: none;
   }
 
   .menu-toggle {
@@ -450,9 +449,7 @@ body {
   }
 
   .logo-text {
-    font-size: 1.1rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    display: none;
   }
 
   .logo-image {
@@ -532,7 +529,7 @@ body {
 }
 
 .logo-text {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
 .nav {
