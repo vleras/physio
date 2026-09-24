@@ -1,12 +1,27 @@
 "use client";
 
-import Link from "next/link";
+import { useEffect } from "react";
+import { Link } from "@/i18n/navigation";
+import { useCart } from "@/components/CartProvider";
 import { useTranslations } from "next-intl";
 import IonIcon from "@/components/IonIcon";
 import "./checkout-result.css";
 
 export default function CheckoutSuccessPage() {
   const t = useTranslations("checkout");
+  const { clearCart } = useCart();
+
+  useEffect(() => {
+    const sessionId = new URLSearchParams(window.location.search).get("session_id");
+    if (!sessionId) return;
+    let cancelled = false;
+    fetch(`/api/checkout/session?session_id=${encodeURIComponent(sessionId)}`)
+      .then((response) => {
+        if (response.ok && !cancelled) clearCart();
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, [clearCart]);
 
   return (
     <main className="main-content">

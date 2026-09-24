@@ -5,7 +5,7 @@ import Image from "next/image";
 import IonIcon from "./IonIcon";
 import { useTranslations } from "next-intl";
 import Autoplay from "embla-carousel-autoplay";
-import { avacr7ProductUrl } from "@/lib/avacr7";
+import { Link } from "@/i18n/navigation";
 import {
   Carousel,
   CarouselContent,
@@ -106,19 +106,9 @@ export default function ProductsSidebarMobile({
                   minWidth: "58%",
                 }}
               >
-                <a
-                  href={avacr7ProductUrl(product.name)}
+                <Link
+                  href={{ pathname: "/product/[id]", params: { id: product.id } }}
                   className="mobile-product-card"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    window.open(
-                      avacr7ProductUrl(product.name),
-                      "_blank",
-                      "noopener,noreferrer"
-                    );
-                  }}
                   style={{
                     backgroundColor: "#ffffff",
                     borderRadius: "0",
@@ -208,7 +198,7 @@ export default function ProductsSidebarMobile({
                       {product.price || "N/A"}
                     </p>
                   </div>
-                </a>
+                </Link>
               </CarouselItem>
             ))}
           </CarouselContent>
@@ -256,10 +246,8 @@ export default function ProductsSidebarMobile({
           borderTop: "none",
         }}
       >
-        <a
-          href="https://avacr7.com/collections/all"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href="/products"
           style={{
             display: "flex",
             alignItems: "center",
@@ -274,15 +262,6 @@ export default function ProductsSidebarMobile({
             textDecoration: "none",
             boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
             transition: "all 0.3s ease",
-          }}
-          onClick={(e) => {
-            // Break out of preview iframes / embedded browsers
-            e.preventDefault();
-            window.open(
-              "https://avacr7.com/collections/all",
-              "_blank",
-              "noopener,noreferrer"
-            );
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.background =
@@ -299,7 +278,7 @@ export default function ProductsSidebarMobile({
         >
           {t("seeMore")}
           <IonIcon name="arrow-forward-outline" size={16} />
-        </a>
+        </Link>
       </div>
     </aside>
   );

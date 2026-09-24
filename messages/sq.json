@@ -62,6 +62,8 @@
     "addedToCart": "U shtua"
   },
   "cart": {
+    "whatsappConfirm": "Ju lutem konfirmoni disponueshmërinë, koston e transportit dhe mënyrën e pagesës.",
+    "whatsappIntro": "Përshëndetje! Dëshiroj të porosis produktet e mëposhtme:",
     "title": "Shporta",
     "recentlyViewed": "Parë së fundi",
     "close": "Mbyll shportën",
@@ -79,11 +81,11 @@
     "orderNote": "Shënim porosie",
     "orderNotePlaceholder": "Shtoni një shënim për porosinë…",
     "shipping": "Transporti",
-    "shippingInfo": "Transporti llogaritet në pagesë sipas adresës suaj.",
-    "taxNote": "Taksa e përfshirë; transporti llogaritet në pagesë.",
+    "shippingInfo": "Kostoja e transportit konfirmohet në WhatsApp.",
+    "taxNote": "Transporti dhe mënyra e pagesës konfirmohen në WhatsApp.",
     "subtotal": "Nëntotali",
     "currencyCode": "EUR",
-    "checkout": "Paguaj",
+    "checkout": "Porosit në WhatsApp",
     "checkingOut": "Duke ridrejtuar…",
     "viewCart": "Shiko shportën",
     "checkoutError": "Pagesa dështoi. Ju lutemi provoni përsëri.",

@@ -5,6 +5,8 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 import Header from "@/components/Header";
+import { CartProvider } from "@/components/CartProvider";
+import CartDrawer from "@/components/CartDrawer";
 import Footer from "@/components/Footer";
 import QueryProvider from "@/components/QueryProvider";
 import MobileMessagingButton from "@/components/MobileMessagingButton";
@@ -52,11 +54,14 @@ export default async function RootLayout({
         />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <QueryProvider>
+            <CartProvider>
               <Header />
               {children}
               <Footer />
               <MobileMessagingButton />
               <Toaster position="top-center" richColors closeButton />
+              <CartDrawer />
+            </CartProvider>
           </QueryProvider>
         </NextIntlClientProvider>
       </body>

@@ -453,3 +453,8 @@
     max-width: 100%;
   }
 }
+
+.cart-page { padding: 2rem 1rem; }
+.cart-page .cart-drawer-panel { position: relative; width: min(800px, 100%); height: auto; margin: 0 auto; animation: none; border-radius: 12px; overflow: hidden; }
+.cart-order-note { display: grid; gap: .5rem; margin-bottom: 1rem; font-size: .875rem; }
+.cart-order-note textarea { width: 100%; padding: .75rem; border: 1px solid #ddd; border-radius: 6px; resize: vertical; }

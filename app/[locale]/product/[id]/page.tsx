@@ -8,7 +8,7 @@ import { type Locale } from "@/lib/getProducts";
 import { useProduct } from "@/hooks/useProducts";
 import IonIcon from "@/components/IonIcon";
 import { getContactPhone } from "@/lib/phone";
-import { avacr7ProductUrl } from "@/lib/avacr7";
+import AddToCartButton from "@/components/AddToCartButton";
 import "./product-detail.css";
 
 interface PageProps {
@@ -300,23 +300,7 @@ export default function ProductDetails({ params }: PageProps) {
               </div>
 
               <div className="contact-buttons">
-                <a
-                  href={avacr7ProductUrl(product.name)}
-                  className="contact-btn contact-btn-cart"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    window.open(
-                      avacr7ProductUrl(product.name),
-                      "_blank",
-                      "noopener,noreferrer"
-                    );
-                  }}
-                >
-                  <IonIcon name="bag-handle-outline" size={18} />
-                  {t("viewOnStore")}
-                </a>
+                <AddToCartButton productId={product.id} name={product.name} price={product.price} image={product.images?.[0]} />
                 <a
                   href={`https://wa.me/${phone.whatsapp}?text=${encodeURIComponent(
                     message

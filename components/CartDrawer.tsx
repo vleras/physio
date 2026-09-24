@@ -4,18 +4,19 @@ import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { toast } from "sonner";
 import IonIcon from "@/components/IonIcon";
 import { useCart } from "@/components/CartProvider";
 import { formatEur } from "@/lib/cart";
+import { getContactPhone } from "@/lib/phone";
 import { useProducts } from "@/hooks/useProducts";
 import { type Locale } from "@/lib/getProducts";
 import { parsePriceToCents } from "@/lib/parsePrice";
 import "./cart-drawer.css";
 
-export default function CartDrawer() {
+export default function CartDrawer({ page = false }: { page?: boolean }) {
   const t = useTranslations("cart");
   const locale = useLocale() as Locale;
+  const phone = getContactPhone(locale);
   const {
     items,
     isOpen,
@@ -25,10 +26,10 @@ export default function CartDrawer() {
     removeItem,
     setQuantity,
     addItem,
-    clearCart,
+    note,
+    setNote,
   } = useCart();
   const { data: products = [] } = useProducts(locale);
-  const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [suggestIndex, setSuggestIndex] = useState(0);
 
   const suggestions = useMemo(() => {
@@ -44,34 +45,20 @@ export default function CartDrawer() {
 
   const suggestion = suggestions[suggestIndex] ?? null;
 
-  const handleCheckout = async () => {
-    if (!items.length || checkoutLoading) return;
-    setCheckoutLoading(true);
-    try {
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          locale,
-          items: items.map((item) => ({
-            productId: item.productId,
-            quantity: item.quantity,
-          })),
-        }),
-      });
-      const data = (await res.json()) as { url?: string; error?: string };
-      if (!res.ok || !data.url) {
-        toast.error(data.error || t("checkoutError"));
-        return;
-      }
-      clearCart();
-      closeCart();
-      window.location.href = data.url;
-    } catch {
-      toast.error(t("checkoutError"));
-    } finally {
-      setCheckoutLoading(false);
-    }
+  const handleCheckout = () => {
+    if (!items.length) return;
+    const message = [
+      t("whatsappIntro"),
+      "",
+      ...items.map((item, index) => {
+        const name = products.find((product) => product.id === item.productId)?.name || item.name;
+        return `${index + 1}. ${name} × ${item.quantity}`;
+      }),
+      ...(note.trim() ? ["", `${t("orderNote")}: ${note.trim()}`] : []),
+      "",
+      t("whatsappConfirm"),
+    ].join("\n");
+    window.location.href = `https://wa.me/${phone.whatsapp}?text=${encodeURIComponent(message)}`;
   };
 
   const addSuggestion = () => {
@@ -88,16 +75,16 @@ export default function CartDrawer() {
     });
   };
 
-  if (!isOpen) return null;
+  if (!page && !isOpen) return null;
 
   return (
-    <div className="cart-drawer-root" role="dialog" aria-modal="true" aria-label={t("title")}>
-      <button
+    <div className={page ? "cart-page" : "cart-drawer-root"} role={page ? undefined : "dialog"} aria-modal={page ? undefined : true} aria-label={t("title")}>
+      {!page && <button
         type="button"
         className="cart-drawer-backdrop"
         aria-label={t("close")}
         onClick={closeCart}
-      />
+      />}
       <aside className="cart-drawer-panel">
         <div className="cart-drawer-header">
           <h2 className="cart-drawer-title">
@@ -106,14 +93,14 @@ export default function CartDrawer() {
               <sup className="cart-drawer-count">{itemCount}</sup>
             ) : null}
           </h2>
-          <button
+          {!page && <button
             type="button"
             className="cart-drawer-close"
             onClick={closeCart}
             aria-label={t("close")}
           >
             ×
-          </button>
+          </button>}
         </div>
 
         <div className="cart-drawer-body">
@@ -231,6 +218,10 @@ export default function CartDrawer() {
         </div>
 
         <div className="cart-drawer-footer">
+          <label className="cart-order-note">
+            {t("orderNote")}
+            <textarea value={note} maxLength={500} onChange={(event) => setNote(event.target.value)} placeholder={t("orderNotePlaceholder")} />
+          </label>
           <div className="cart-subtotal-row">
             <p className="cart-tax-note">{t("taxNote")}</p>
             <div className="cart-subtotal">
@@ -244,18 +235,18 @@ export default function CartDrawer() {
             <button
               type="button"
               className="cart-checkout-btn"
-              disabled={!items.length || checkoutLoading}
+              disabled={!items.length}
               onClick={handleCheckout}
             >
-              <IonIcon name="lock-closed-outline" size={16} />
-              {checkoutLoading ? t("checkingOut") : t("checkout")}
+              <IonIcon name="logo-whatsapp" size={16} />
+              {t("checkout")}
             </button>
             <Link
-              href="/cart"
+              href={page ? "/products" : "/cart"}
               className="cart-view-btn"
               onClick={closeCart}
             >
-              {t("viewCart")}
+              {t(page ? "continueShopping" : "viewCart")}
             </Link>
           </div>
         </div>

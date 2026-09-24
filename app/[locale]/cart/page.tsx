@@ -1,6 +1,5 @@
-import { redirect } from "next/navigation";
+import CartDrawer from "@/components/CartDrawer";
 
-/** Cart checkout flow is disabled for now — send shoppers to AVACR7. */
 export default function CartPage() {
-  redirect("https://avacr7.com/collections/all");
+  return <main className="main-content"><CartDrawer page /></main>;
 }

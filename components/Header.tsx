@@ -5,11 +5,13 @@ import { useLocale, useTranslations } from "next-intl";
 import { usePathname as useNextPathname } from "next/navigation";
 import { Link, usePathname } from "@/i18n/navigation";
 import Image from "next/image";
+import { useCart } from "./CartProvider";
 import LanguageSwitcher from "./LanguageSwitcher";
 import IonIcon from "./IonIcon";
 import { getContactPhone } from "@/lib/phone";
 
 export default function Header() {
+  const { itemCount, openCart } = useCart();
   const pathname = usePathname();
   const nextPathname = useNextPathname();
   const isAdmin = nextPathname.startsWith("/admin");
@@ -66,6 +68,10 @@ export default function Header() {
                 <IonIcon name="call-outline" size={20} />
               </a>
             ) : null}
+            {!isAdmin && <button type="button" className="header-cart-btn" onClick={() => { closeMenu(); openCart(); }} aria-label={t("cart")}>
+              <IonIcon name="bag-handle-outline" size={22} />
+              {itemCount > 0 && <span className="header-cart-badge">{itemCount}</span>}
+            </button>}
             <LanguageSwitcher />
             <button
               className="menu-toggle"
@@ -89,23 +95,9 @@ export default function Header() {
           >
             {t("home")}
           </Link>
-          <a
-            href="https://avacr7.com/collections/all"
-            className="nav-link"
-            onClick={(e) => {
-              closeMenu();
-              e.preventDefault();
-              window.open(
-                "https://avacr7.com/collections/all",
-                "_blank",
-                "noopener,noreferrer"
-              );
-            }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <Link href="/products" className={`nav-link ${pathname === "/products" ? "active" : ""}`} onClick={closeMenu}>
             {t("products")}
-          </a>
+          </Link>
         </nav>
         <div className="header-contact">
           {!isAdmin ? (
@@ -118,7 +110,11 @@ export default function Header() {
               <span className="phone-text">{phone.display}</span>
             </a>
           ) : null}
-          <LanguageSwitcher />
+          {!isAdmin && <button type="button" className="header-cart-btn" onClick={() => { closeMenu(); openCart(); }} aria-label={t("cart")}>
+              <IonIcon name="bag-handle-outline" size={22} />
+              {itemCount > 0 && <span className="header-cart-badge">{itemCount}</span>}
+            </button>}
+            <LanguageSwitcher />
         </div>
       </div>
     </header>

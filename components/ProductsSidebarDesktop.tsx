@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import IonIcon from "./IonIcon";
 import { useTranslations } from "next-intl";
-import { avacr7ProductUrl } from "@/lib/avacr7";
+import { Link } from "@/i18n/navigation";
 
 interface SupabaseProduct {
   id: number;
@@ -231,14 +231,12 @@ export default function ProductsSidebarDesktop({
       >
         <div ref={trackRef} className="sidebar-products-track">
           {tripledProducts.map((product, index) => (
-            <a
+            <Link
               key={`${product.id}-${index}`}
-              href={avacr7ProductUrl(product.name)}
+              href={{ pathname: "/product/[id]", params: { id: product.id } }}
               className="sidebar-product-item shrink-0"
               style={{ opacity: 1, textDecoration: "none", display: "flex" }}
               draggable={false}
-              target="_blank"
-              rel="noopener noreferrer"
               onClick={(e) => {
                 // Only block navigation after a real drag
                 if (didDrag.current) {
@@ -275,21 +273,19 @@ export default function ProductsSidebarDesktop({
                   {t("viewDetails")}
                 </span>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
 
       <div className="sidebar-see-more">
-        <a
-          href="https://avacr7.com/collections/all"
+        <Link
+          href="/products"
           className="sidebar-see-more-button"
-          target="_blank"
-          rel="noopener noreferrer"
         >
           {t("seeMore")}
           <IonIcon name="arrow-forward-outline" size={16} />
-        </a>
+        </Link>
       </div>
     </aside>
   );
