@@ -103,8 +103,8 @@ export default function ProductsSidebarMobile({
                 key={product.id}
                 style={{
                   paddingLeft: "0.5rem",
-                  flexBasis: "58%",
-                  minWidth: "58%",
+                  flexBasis: "70%",
+                  minWidth: "70%",
                 }}
               >
                 <div
@@ -133,9 +133,10 @@ export default function ProductsSidebarMobile({
                   }}
                 >
                   <Link className="product-card-hit-area" href={{ pathname: "/product/[id]", params: { id: product.id } }} aria-label={product.name} />
-                  {/* Product Image — taller portrait like avacr7 */}
+                  {/* Product photo */}
                   <div
                     style={{
+                      position: "relative",
                       flexShrink: 0,
                       width: "100%",
                     }}
@@ -157,20 +158,20 @@ export default function ProductsSidebarMobile({
                         }
                         alt={product.name}
                         fill
-                        style={{ objectFit: "cover" }}
-                        sizes="(max-width: 768px) 45vw, 200px"
+                        style={{ objectFit: "contain" }}
+                        sizes="(max-width: 768px) 70vw, 400px"
                       />
-                      <ProductCartButton product={product} />
                     </div>
                   </div>
 
-                  {/* Title + price only */}
+                  {/* Product details and cart action */}
                   <div
+                    className="product-cart-details"
                     style={{
                       display: "flex",
                       flexDirection: "column",
-                      gap: "0.4rem",
-                      padding: "0.55rem 0.65rem 0.75rem",
+                      gap: "2px",
+                      padding: "0.55rem 3.5rem 0.75rem 0.65rem",
                       backgroundColor: "#fafafa",
                     }}
                   >
@@ -200,6 +201,7 @@ export default function ProductsSidebarMobile({
                     >
                       {product.price || "N/A"}
                     </p>
+                    <ProductCartButton product={product} />
                   </div>
                 </div>
               </CarouselItem>

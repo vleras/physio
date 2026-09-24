@@ -261,9 +261,8 @@ export default function ProductsSidebarDesktop({
                   loading="lazy"
                   draggable={false}
                 />
-                <ProductCartButton product={product} />
               </div>
-              <div className="sidebar-product-content">
+              <div className="sidebar-product-content product-cart-details" style={{ paddingRight: "50px" }}>
                 <div className="sidebar-product-name">{product.name}</div>
                 <div className="sidebar-product-description">
                   {product.description_1 ||
@@ -274,6 +273,7 @@ export default function ProductsSidebarDesktop({
                 <span className="sidebar-product-link">
                   {t("viewDetails")}
                 </span>
+                <ProductCartButton product={product} />
               </div>
             </div>
           ))}

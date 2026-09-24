@@ -1,8 +1,9 @@
-/* Direct add-to-cart controls on product photos. */
+/* Cart actions beside product details. */
 .product-card-hit-area { position: absolute; inset: 0; z-index: 1; }
 .product-card-hit-area:focus-visible { outline: 2px solid #111; outline-offset: -2px; }
 .product-image-cart-button {
-  position: absolute; bottom: 10px; right: 10px; z-index: 2;
+  position: absolute; top: 50%; right: 6px; z-index: 2;
+  transform: translateY(-50%);
   display: flex; align-items: center; justify-content: center;
   width: 44px; height: 44px; padding: 0; border: 0; border-radius: 0;
   background: transparent; color: #000; cursor: pointer;
@@ -11,3 +12,5 @@
 .product-image-cart-button:hover { opacity: .7; }
 .product-image-cart-button:focus-visible { outline: 2px solid #000; outline-offset: -4px; }
 .product-image-cart-button:disabled { opacity: .45; cursor: not-allowed; }
+
+.product-cart-details { position: relative; min-height: 44px; min-width: 0; }

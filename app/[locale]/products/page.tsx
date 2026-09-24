@@ -180,19 +180,9 @@ export default function Catalog() {
                           )}
                         </div>
                       </Link>
-                      <ProductCartButton product={product} />
                     </div>
+                    <div className="product-cart-details" style={{ paddingRight: "50px" }}>
                     <div className="product-card__content grow flex flex-col justify-start text-left">
-                      <div className="product-card__top w-full">
-                        <span className="sr-only">{t("vendor")}</span>
-                        <Link
-                          className="caption reversed-link uppercase leading-none tracking-widest"
-                          href={{ pathname: "/product/[id]", params: { id: String(product.id) } }}
-                          title="AVA STORE"
-                        >
-                          AVA STORE
-                        </Link>
-                      </div>
                       <div className="product-card__details">
                         <p className="grow">
                           <Link
@@ -213,6 +203,8 @@ export default function Catalog() {
                       <span className="price__regular whitespace-nowrap">
                         {product.price || "N/A"}
                       </span>
+                    </div>
+                    <ProductCartButton product={product} />
                     </div>
                   </div>
                 ))}
