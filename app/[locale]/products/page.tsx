@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import ProductCartButton from "@/components/ProductCartButton";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { type Locale } from "@/lib/getProducts";
@@ -179,6 +180,7 @@ export default function Catalog() {
                           )}
                         </div>
                       </Link>
+                      <ProductCartButton product={product} />
                     </div>
                     <div className="product-card__content grow flex flex-col justify-start text-left">
                       <div className="product-card__top w-full">

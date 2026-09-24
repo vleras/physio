@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname as useNextPathname } from "next/navigation";
 import { Link, usePathname } from "@/i18n/navigation";
-import Image from "next/image";
+import ClinicLogo from "./ClinicLogo";
 import { useCart } from "./CartProvider";
 import LanguageSwitcher from "./LanguageSwitcher";
 import IonIcon from "./IonIcon";
@@ -49,14 +49,7 @@ export default function Header() {
       <div className="container">
         <div className="header-mobile-top">
           <Link href="/" className="logo" onClick={closeMenu}>
-            <Image
-              src="/logo.png"
-              alt="VSO Clinic Logo"
-              className="logo-image"
-              width={52}
-              height={52}
-            />
-            <span className="logo-text">VSO Clinic</span>
+            <ClinicLogo />
           </Link>
           <div className="header-mobile-actions">
             {!isAdmin ? (

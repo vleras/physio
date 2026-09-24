@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
+import ProductCartButton from "@/components/ProductCartButton";
 import IonIcon from "./IonIcon";
 import { useTranslations } from "next-intl";
 import Autoplay from "embla-carousel-autoplay";
@@ -106,10 +107,10 @@ export default function ProductsSidebarMobile({
                   minWidth: "58%",
                 }}
               >
-                <Link
-                  href={{ pathname: "/product/[id]", params: { id: product.id } }}
+                <div
                   className="mobile-product-card"
                   style={{
+                    position: "relative",
                     backgroundColor: "#ffffff",
                     borderRadius: "0",
                     border: "none",
@@ -131,6 +132,7 @@ export default function ProductsSidebarMobile({
                     e.currentTarget.style.opacity = "1";
                   }}
                 >
+                  <Link className="product-card-hit-area" href={{ pathname: "/product/[id]", params: { id: product.id } }} aria-label={product.name} />
                   {/* Product Image — taller portrait like avacr7 */}
                   <div
                     style={{
@@ -158,6 +160,7 @@ export default function ProductsSidebarMobile({
                         style={{ objectFit: "cover" }}
                         sizes="(max-width: 768px) 45vw, 200px"
                       />
+                      <ProductCartButton product={product} />
                     </div>
                   </div>
 
@@ -198,7 +201,7 @@ export default function ProductsSidebarMobile({
                       {product.price || "N/A"}
                     </p>
                   </div>
-                </Link>
+                </div>
               </CarouselItem>
             ))}
           </CarouselContent>

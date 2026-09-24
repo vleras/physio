@@ -1,6 +1,6 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import Image from "next/image";
+import ClinicLogo from "./ClinicLogo";
 import IonIcon from "./IonIcon";
 import { getContactPhone } from "@/lib/phone";
 
@@ -16,13 +16,7 @@ export default async function Footer() {
           {/* Logo */}
           <div className="footer-v2-brand">
             <Link href="/" className="footer-v2-logo-link">
-              <Image
-                src="/logo.png"
-                alt="VSO Clinic"
-                width={80}
-                height={80}
-                className="footer-v2-logo-img"
-              />
+              <ClinicLogo footer />
             </Link>
           </div>
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import ProductCartButton from "@/components/ProductCartButton";
 import IonIcon from "./IonIcon";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -231,11 +232,10 @@ export default function ProductsSidebarDesktop({
       >
         <div ref={trackRef} className="sidebar-products-track">
           {tripledProducts.map((product, index) => (
-            <Link
+            <div
               key={`${product.id}-${index}`}
-              href={{ pathname: "/product/[id]", params: { id: product.id } }}
               className="sidebar-product-item shrink-0"
-              style={{ opacity: 1, textDecoration: "none", display: "flex" }}
+              style={{ position: "relative", opacity: 1, textDecoration: "none", display: "flex" }}
               draggable={false}
               onClick={(e) => {
                 // Only block navigation after a real drag
@@ -247,7 +247,8 @@ export default function ProductsSidebarDesktop({
               }}
               onDragStart={(e) => e.preventDefault()}
             >
-              <div className="sidebar-product-image">
+              <Link className="product-card-hit-area" href={{ pathname: "/product/[id]", params: { id: product.id } }} aria-label={product.name} draggable={false} />
+              <div className="sidebar-product-image" style={{ position: "relative" }}>
                 <Image
                   src={
                     product.images && product.images.length > 0
@@ -260,6 +261,7 @@ export default function ProductsSidebarDesktop({
                   loading="lazy"
                   draggable={false}
                 />
+                <ProductCartButton product={product} />
               </div>
               <div className="sidebar-product-content">
                 <div className="sidebar-product-name">{product.name}</div>
@@ -273,7 +275,7 @@ export default function ProductsSidebarDesktop({
                   {t("viewDetails")}
                 </span>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>

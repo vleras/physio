@@ -1,0 +1,23 @@
+.clinic-logo {
+  display: block;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.clinic-logo--footer { width: 90px; height: 90px; }
+.clinic-logo .clinic-logo-artwork {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* Frame the supplied artwork without its large outer white margins. */
+  transform: scale(1.65);
+}
+
+@media (max-width: 768px) {
+  .header .clinic-logo {
+    width: 48px;
+    height: 48px;
+  }
+}
