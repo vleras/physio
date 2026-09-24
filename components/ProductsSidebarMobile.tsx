@@ -103,8 +103,8 @@ export default function ProductsSidebarMobile({
                 key={product.id}
                 style={{
                   paddingLeft: "0.5rem",
-                  flexBasis: "70%",
-                  minWidth: "70%",
+                  flexBasis: "58%",
+                  minWidth: "58%",
                 }}
               >
                 <div
@@ -147,7 +147,7 @@ export default function ProductsSidebarMobile({
                         width: "100%",
                         height: "200px",
                         overflow: "hidden",
-                        backgroundColor: "#f3f4f6",
+                        backgroundColor: "#ffffff",
                       }}
                     >
                       <Image
@@ -158,8 +158,8 @@ export default function ProductsSidebarMobile({
                         }
                         alt={product.name}
                         fill
-                        style={{ objectFit: "contain" }}
-                        sizes="(max-width: 768px) 70vw, 400px"
+                        style={{ objectFit: "cover" }}
+                        sizes="(max-width: 768px) 58vw, 400px"
                       />
                     </div>
                   </div>

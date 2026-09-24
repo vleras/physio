@@ -111,12 +111,22 @@ export default function ProductsSidebarDesktop({
     };
     requestAnimationFrame(syncStart);
 
-    const tick = () => {
+    let previousTime: number | null = null;
+    let pendingDistance = 0;
+    const tick = (time: number) => {
+      const elapsed = previousTime == null ? 0 : Math.min(time - previousTime, 50);
+      previousTime = time;
       if (!autoPaused.current && !isDragging.current && window.innerWidth > 768) {
         const loopAt = el.scrollHeight / 3;
-        el.scrollTop -= 0.45;
-        if (loopAt > 0 && el.scrollTop <= loopAt * 0.5) {
-          el.scrollTop += loopAt;
+        // Retain fractional movement: browsers may round scrollTop writes.
+        pendingDistance += elapsed * 0.027;
+        const pixels = Math.floor(pendingDistance);
+        if (pixels > 0) {
+          pendingDistance -= pixels;
+          el.scrollTop -= pixels;
+          if (loopAt > 0 && el.scrollTop <= loopAt * 0.5) {
+            el.scrollTop += loopAt;
+          }
         }
       }
       rafId.current = requestAnimationFrame(tick);
