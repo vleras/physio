@@ -12,6 +12,7 @@ export const routing = defineRouting({
     "/services": "/services",
     "/home2": "/home2",
     "/cart": "/cart",
+    "/checkout": "/checkout",
     "/checkout/success": "/checkout/success",
     "/checkout/cancel": "/checkout/cancel",
   },

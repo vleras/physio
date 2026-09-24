@@ -62,6 +62,18 @@
     "addedToCart": "Added"
   },
   "cart": {
+    "requiredFields": "Please complete all required fields.",
+    "orderSummary": "Your order",
+    "finalizeOrder": "Finalize order",
+    "customerDetails": "Customer details",
+    "fullName": "Full name",
+    "phoneNumber": "Phone number",
+    "fulfillment": "Receiving your order",
+    "delivery": "Delivery",
+    "pickup": "Pickup",
+    "deliveryAddress": "Delivery address",
+    "invalidCustomer": "Please enter your name, a valid phone number, and an address for delivery.",
+    "customerDetailsNotice": "Your details will be saved with your order and included in the WhatsApp message.",
     "orderSaveError": "Could not register your order. Please try again.",
     "whatsappConfirm": "Please confirm availability, delivery costs, and payment details.",
     "whatsappIntro": "Hello! I would like to order the following products:",

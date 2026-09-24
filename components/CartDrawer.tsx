@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import IonIcon from "@/components/IonIcon";
 import { useCart } from "@/components/CartProvider";
 import { formatEur } from "@/lib/cart";
@@ -12,14 +12,32 @@ import { getContactPhone } from "@/lib/phone";
 import { useProducts } from "@/hooks/useProducts";
 import { type Locale } from "@/lib/getProducts";
 import { parsePriceToCents } from "@/lib/parsePrice";
+import { validOrderCustomer } from "@/lib/orderCustomer";
 import "./cart-drawer.css";
 
-export default function CartDrawer({ page = false }: { page?: boolean }) {
+export default function CartDrawer({ page = false, checkout = false }: { page?: boolean; checkout?: boolean }) {
+  const router = useRouter();
+  const checkoutRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!checkout) return;
+    const header = document.querySelector<HTMLElement>(".header");
+    if (!header) return;
+    const updateHeaderHeight = () => {
+      checkoutRef.current?.style.setProperty("--checkout-header-height", `${header.getBoundingClientRect().height}px`);
+    };
+    updateHeaderHeight();
+    const observer = new ResizeObserver(updateHeaderHeight);
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, [checkout]);
   const t = useTranslations("cart");
   const locale = useLocale() as Locale;
   const phone = getContactPhone(locale);
   const {
     items,
+    customer,
+    setCustomer,
     isOpen,
     itemCount,
     subtotalCents,
@@ -51,10 +69,12 @@ export default function CartDrawer({ page = false }: { page?: boolean }) {
 
   const handleCheckout = async () => {
     if (!items.length || savingRef.current) return;
+    if (!note.trim()) { toast.error(t("requiredFields")); return; }
+    if (!validOrderCustomer({ ...customer, fulfillment: "delivery" })) { toast.error(t("invalidCustomer")); return; }
     savingRef.current = true;
     setSavingOrder(true);
     try {
-      const snapshot = JSON.stringify({ locale, note, items: items.map(({ productId, quantity }) => ({ productId, quantity })) });
+      const snapshot = JSON.stringify({ locale, note, customer: { ...customer, fulfillment: "delivery", address: customer.address.trim() }, items: items.map(({ productId, quantity }) => ({ productId, quantity })) });
       if (attemptRef.current?.snapshot !== snapshot) {
         let previous = null;
         try { previous = JSON.parse(sessionStorage.getItem("whatsapp-order-attempt") || "null"); } catch {}
@@ -69,6 +89,9 @@ export default function CartDrawer({ page = false }: { page?: boolean }) {
       if (!response.ok) throw new Error("Order save failed");
     const message = [
       t("whatsappIntro"),
+      `${t("fullName")}: ${customer.name.trim()}`,
+      `${t("phoneNumber")}: ${customer.phone.trim()}`,
+      `${t("deliveryAddress")}: ${customer.address.trim()}`,
       "",
       ...items.map((item, index) => {
         const name = products.find((product) => product.id === item.productId)?.name || item.name;
@@ -104,7 +127,7 @@ export default function CartDrawer({ page = false }: { page?: boolean }) {
   if (!page && !isOpen) return null;
 
   return (
-    <div className={page ? "cart-page" : "cart-drawer-root"} role={page ? undefined : "dialog"} aria-modal={page ? undefined : true} aria-label={t("title")}>
+    <div ref={checkoutRef} className={page ? `cart-page${checkout ? " cart-checkout-page" : ""}` : "cart-drawer-root"} role={page ? undefined : "dialog"} aria-modal={page ? undefined : true} aria-label={t("title")}>
       {!page && <button
         type="button"
         className="cart-drawer-backdrop"
@@ -114,8 +137,8 @@ export default function CartDrawer({ page = false }: { page?: boolean }) {
       <aside className="cart-drawer-panel">
         <div className="cart-drawer-header">
           <h2 className="cart-drawer-title">
-            {t("title")}
-            {itemCount > 0 ? (
+            {t(checkout ? "finalizeOrder" : "title")}
+            {!checkout && itemCount > 0 ? (
               <sup className="cart-drawer-count">{itemCount}</sup>
             ) : null}
           </h2>
@@ -130,6 +153,7 @@ export default function CartDrawer({ page = false }: { page?: boolean }) {
         </div>
 
         <div className="cart-drawer-body">
+          {checkout && <h3 className="checkout-summary-title">{t("orderSummary")}</h3>}
           {items.length === 0 ? (
             <div className="cart-drawer-empty">
               <p>{t("empty")}</p>
@@ -189,7 +213,7 @@ export default function CartDrawer({ page = false }: { page?: boolean }) {
             </ul>
           )}
 
-          {suggestion ? (
+          {suggestion && !checkout ? (
             <div className="cart-suggest">
               <div className="cart-suggest-head">
                 <span>{t("youMayAlsoLike")}</span>
@@ -243,10 +267,23 @@ export default function CartDrawer({ page = false }: { page?: boolean }) {
           ) : null}
         </div>
 
-        <div className="cart-drawer-footer">
+        <form className="cart-drawer-footer" onSubmit={(event) => { event.preventDefault(); void handleCheckout(); }}>
+          {checkout && <fieldset className="cart-customer-fields" disabled={savingOrder}>
+            <legend>{t("customerDetails")}</legend>
+            <label>{t("fullName")} *
+              <input autoComplete="name" required minLength={2} maxLength={100} value={customer.name} onChange={(e) => setCustomer({ ...customer, name: e.target.value })} />
+            </label>
+            <label>{t("phoneNumber")} *
+              <input type="tel" autoComplete="tel" required maxLength={30} value={customer.phone} onChange={(e) => setCustomer({ ...customer, phone: e.target.value })} />
+            </label>
+            <label className="checkout-address">{t("deliveryAddress")} *
+              <input type="text" autoComplete="street-address" required minLength={5} maxLength={500} value={customer.address} onChange={(e) => setCustomer({ ...customer, fulfillment: "delivery", address: e.target.value })} />
+            </label>
+            <p>{t("customerDetailsNotice")}</p>
+          </fieldset>}
           <label className="cart-order-note">
             {t("orderNote")}
-            <textarea value={note} maxLength={500} onChange={(event) => setNote(event.target.value)} placeholder={t("orderNotePlaceholder")} />
+            <textarea required value={note} maxLength={500} onChange={(event) => setNote(event.target.value)} placeholder={t("orderNotePlaceholder")} />
           </label>
           <div className="cart-subtotal-row">
             <p className="cart-tax-note">{t("taxNote")}</p>
@@ -259,13 +296,13 @@ export default function CartDrawer({ page = false }: { page?: boolean }) {
           </div>
           <div className="cart-footer-actions">
             <button
-              type="button"
+              type={checkout ? "submit" : "button"}
+              onClick={checkout ? undefined : () => { closeCart(); router.push("/checkout"); }}
               className="cart-checkout-btn"
               disabled={!items.length || savingOrder}
-              onClick={handleCheckout}
             >
-              <IonIcon name="logo-whatsapp" size={16} />
-              {savingOrder ? t("checkingOut") : t("checkout")}
+              <IonIcon name={checkout ? "logo-whatsapp" : "arrow-forward-outline"} size={16} />
+              {savingOrder ? t("checkingOut") : t(checkout ? "checkout" : "finalizeOrder")}
             </button>
             <Link
               href={page ? "/products" : "/cart"}
@@ -275,7 +312,7 @@ export default function CartDrawer({ page = false }: { page?: boolean }) {
               {t(page ? "continueShopping" : "viewCart")}
             </Link>
           </div>
-        </div>
+        </form>
       </aside>
     </div>
   );

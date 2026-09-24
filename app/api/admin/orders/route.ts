@@ -133,3 +133,34 @@ export async function GET(request: NextRequest) {
   const images = await productImageMap(orders.flatMap(collectProductIds));
   return NextResponse.json(orders.map((order) => withProductImages(order, images)));
 }
+
+export async function DELETE(request: NextRequest) {
+  const authError = await requireAuth(request);
+  if (authError) return authError;
+  const id = new URL(request.url).searchParams.get("id");
+  if (!id || !/^[0-9a-f-]{36}$/i.test(id)) {
+    return NextResponse.json({ error: "Invalid order id" }, { status: 400 });
+  }
+  const { error } = await supabaseAdmin.from("orders").delete().eq("id", id);
+  if (error) return NextResponse.json({ error: "Could not delete order" }, { status: 500 });
+  return NextResponse.json({ success: true });
+}
+
+export async function PATCH(request: NextRequest) {
+  const authError = await requireAuth(request);
+  if (authError) return authError;
+  const body = await request.json().catch(() => null);
+  const id = body?.id;
+  const status = body?.status;
+  if (typeof id !== "string" || !/^[0-9a-f-]{36}$/i.test(id) || !["pending", "paid"].includes(status)) {
+    return NextResponse.json({ error: "Invalid order update" }, { status: 400 });
+  }
+  const { data, error } = await supabaseAdmin
+    .from("orders")
+    .update({ status })
+    .eq("id", id)
+    .select("*")
+    .single();
+  if (error || !data) return NextResponse.json({ error: "Could not update order" }, { status: 500 });
+  return NextResponse.json(data);
+}

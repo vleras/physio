@@ -3,14 +3,20 @@ import { getProductById, type Locale } from "@/lib/getProducts";
 import { parsePriceToCents } from "@/lib/parsePrice";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
+import { validOrderCustomer } from "@/lib/orderCustomer";
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     if (!body || !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(body.id ?? "") ||
         !Array.isArray(body.items) || !body.items.length || body.items.length > 50 ||
-        (body.note != null && (typeof body.note !== "string" || body.note.length > 500))) {
+        typeof body.note !== "string" || !body.note.trim() || body.note.length > 500) {
       return NextResponse.json({ error: "Invalid order" }, { status: 400 });
     }
+    if (!validOrderCustomer(body.customer)) {
+      return NextResponse.json({ error: "Invalid customer details" }, { status: 400 });
+    }
+    const customer = body.customer;
     const locale: Locale = ["en", "sq", "mk"].includes(body.locale) ? body.locale : "en";
     const quantities = new Map<number, number>();
     for (const item of body.items) {
@@ -39,7 +45,11 @@ export async function POST(request: NextRequest) {
       quantity: lines.reduce((sum, item) => sum + item.quantity, 0),
       amount_cents: lines.reduce((sum, item) => sum + item.quantity * item.unit_amount_cents, 0),
       currency: "eur", status: "pending", line_items: lines,
-      order_note: body.note?.trim() || null,
+      customer_name: customer.name.trim(),
+      customer_phone: customer.phone.trim(),
+      shipping_name: customer.fulfillment === "delivery" ? customer.name.trim() : null,
+      shipping_line1: customer.fulfillment === "delivery" ? customer.address.trim() : null,
+      order_note: [customer.fulfillment === "delivery" ? "Delivery" : "Pickup", body.note?.trim()].filter(Boolean).join("\n"),
     });
     // Repeated clicks/retries reuse the UUID; never overwrite the saved order.
     if (error && error.code !== "23505") {

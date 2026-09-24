@@ -17,9 +17,13 @@ import {
   type CartItem,
 } from "@/lib/cart";
 
+import { type OrderCustomer } from "@/lib/orderCustomer";
+
 type AddItemInput = Omit<CartItem, "quantity"> & { quantity?: number };
 
 type CartContextValue = {
+  customer: OrderCustomer;
+  setCustomer: (customer: OrderCustomer) => void;
   items: CartItem[];
   note: string;
   isOpen: boolean;
@@ -53,6 +57,7 @@ function loadCart(): { items: CartItem[]; note: string } {
 }
 
 export function CartProvider({ children }: { children: ReactNode }) {
+  const [customer, setCustomer] = useState<OrderCustomer>({ name: "", phone: "", fulfillment: "delivery", address: "" });
   const [items, setItems] = useState<CartItem[]>([]);
   const [note, setNoteState] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -136,6 +141,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<CartContextValue>(
     () => ({
+      customer,
+      setCustomer,
       items,
       note,
       isOpen,
@@ -150,7 +157,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       setNote: setNoteState,
       clearCart,
     }),
-    [items, note, isOpen, addItem, removeItem, setQuantity, clearCart]
+    [customer, items, note, isOpen, addItem, removeItem, setQuantity, clearCart]
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { toast } from "sonner";
 import IonIcon from "@/components/IonIcon";
@@ -170,6 +170,8 @@ export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<Order | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<Order | null>(null);
+  const [filter, setFilter] = useState<"all" | "paid" | "pending">("all");
 
   useEffect(() => {
     let cancelled = false;
@@ -207,12 +209,34 @@ export default function AdminOrdersPage() {
     };
   }, []);
 
-  const paidTotal = useMemo(() => {
-    return orders.filter((o) => o.status === "paid").reduce((sum, o) => sum + (o.amount_cents || 0), 0);
-  }, [orders]);
-
   const selectedLines = selected ? getLineItems(selected) : [];
   const selectedAddress = selected ? formatAddress(selected) : null;
+  const visibleOrders = filter === "all" ? orders : orders.filter((order) => order.status === filter);
+  const visibleTotal = visibleOrders.reduce((sum, order) => sum + (order.amount_cents || 0), 0);
+
+  const deleteOrder = async (order: Order) => {
+    const response = await fetch(`/api/admin/orders?id=${encodeURIComponent(order.id)}`, { method: "DELETE" });
+    if (!response.ok) {
+      toast.error("Porosia nuk u fshi");
+      return;
+    }
+    setOrders((current) => current.filter((item) => item.id !== order.id));
+    if (selected?.id === order.id) setSelected(null);
+    toast.success("Porosia u fshi");
+    setDeleteTarget(null);
+  };
+
+  const updateOrderStatus = async (order: Order, status: "paid" | "pending") => {
+    const response = await fetch("/api/admin/orders", {
+      method: "PATCH", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: order.id, status }),
+    });
+    if (!response.ok) { toast.error("Statusi nuk u ndryshua"); return; }
+    const updated = (await response.json()) as Order;
+    setOrders((current) => current.map((item) => item.id === updated.id ? { ...item, ...updated } : item));
+    setSelected((current) => current?.id === updated.id ? { ...current, ...updated } : current);
+    toast.success(status === "paid" ? "Porosia u konfirmua" : "Porosia u kthye në pritje");
+  };
 
   return (
     <main className="main-content">
@@ -226,37 +250,37 @@ export default function AdminOrdersPage() {
 
         <AdminNav />
 
-        <div className="mb-5 grid gap-3 sm:grid-cols-2">
-          <div className="rounded-xl border border-black/10 bg-white px-4 py-3.5">
-            <div className="text-xs font-medium uppercase tracking-wide text-neutral-500">
-              Porosi të regjistruara
+            <div className="mb-5 flex flex-wrap gap-2">
+              {(["all", "paid", "pending"] as const).map((value) => (
+                <Button key={value} size="sm" variant={filter === value ? "default" : "outline"} onClick={() => setFilter(value)}>
+                  {value === "all" ? "Të gjitha" : value === "paid" ? "Të konfirmuara" : "Në pritje"}
+                </Button>
+              ))}
             </div>
-            <div className="mt-1 text-2xl font-semibold tracking-tight">
-              {loading ? "—" : orders.length}
-            </div>
-          </div>
-          <div className="rounded-xl border border-black/10 bg-white px-4 py-3.5">
-            <div className="text-xs font-medium uppercase tracking-wide text-neutral-500">
-              Totali i shitjeve
-            </div>
-            <div className="mt-1 text-2xl font-semibold tracking-tight">
-              {loading ? "—" : formatMoney(paidTotal)}
-            </div>
-          </div>
-        </div>
-
+            {filter !== "all" && (
+              <div className="mb-5 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-xl border border-black/10 bg-white px-4 py-3.5">
+                  <div className="text-xs font-medium uppercase tracking-wide text-neutral-500">Porosi të regjistruara</div>
+                  <div className="mt-1 text-2xl font-semibold tracking-tight">{loading ? "—" : visibleOrders.length}</div>
+                </div>
+                <div className="rounded-xl border border-black/10 bg-white px-4 py-3.5">
+                  <div className="text-xs font-medium uppercase tracking-wide text-neutral-500">Totali i shitjeve</div>
+                  <div className="mt-1 text-2xl font-semibold tracking-tight">{loading ? "—" : formatMoney(visibleTotal)}</div>
+                </div>
+              </div>
+            )}
         {loading ? (
           <div className="modern-loader">
             <div className="modern-loader-spinner" />
             <span className="modern-loader-text">Duke ngarkuar porositë...</span>
           </div>
-        ) : orders.length === 0 ? (
+        ) : visibleOrders.length === 0 ? (
           <div className="rounded-xl border border-dashed border-black/15 bg-white px-6 py-16 text-center text-neutral-500">
             Nuk u gjetën porosi
           </div>
         ) : (
           <div className="space-y-3">
-            {orders.map((order) => {
+            {visibleOrders.map((order) => {
               const lines = getLineItems(order);
               const address = formatAddress(order);
               const itemCount = lines.reduce((sum, l) => sum + l.quantity, 0);
@@ -264,33 +288,51 @@ export default function AdminOrdersPage() {
               return (
                 <article
                   key={order.id}
-                  className="overflow-hidden rounded-xl border border-black/10 bg-white"
+                  className={cn(
+                    "overflow-hidden rounded-xl border bg-white",
+                    order.status === "paid" ? "border-emerald-200" : "border-amber-200"
+                  )}
                 >
-                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-black/10 bg-neutral-200 px-4 py-3 sm:px-5">
+                  <div className={cn(
+                    "flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3 sm:px-5",
+                    order.status === "paid"
+                      ? "border-emerald-200 bg-emerald-50/70"
+                      : "border-amber-200 bg-amber-50/70"
+                  )}>
                     <div>
                       <div className="text-sm font-medium text-neutral-900">
                         {formatDate(order.created_at)}
-                        <div className="text-xs mt-1">{order.status === "paid" ? "E paguar" : "Në pritje të konfirmimit — mesazhi dhe pagesa nuk janë konfirmuar"}</div>
-                        <div className="text-xs break-all">#{order.id}</div>
+                      </div>
+                      <div className={cn("mt-1 inline-flex rounded-full px-2 py-0.5 text-xs font-medium", order.status === "paid" ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800")}>
+                        {order.status === "paid" ? "E paguar" : "Pending"}
                       </div>
                       <div className="mt-0.5 text-xs text-neutral-500">
                         {itemCount} {itemCount === 1 ? "artikull" : "artikuj"}
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-wrap items-center justify-end gap-2">
                       <div className="text-right">
                         <div className="text-xs text-neutral-500">Shuma</div>
                         <div className="text-lg font-semibold tracking-tight text-neutral-900">
                           {formatMoney(order.amount_cents, order.currency)}
                         </div>
                       </div>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => setSelected(order)}
-                      >
-                        Shiko
-                      </Button>
+                      <div className="flex flex-col items-stretch gap-2">
+                        <Button
+                          size="sm"
+                          className="h-9 min-w-[3.5rem]"
+                          variant="outline"
+                          onClick={() => setSelected(order)}
+                        >
+                          Shiko
+                        </Button>
+                        {order.status === "pending" ? (
+                          <Button size="sm" className="h-9 min-w-[5.25rem]" onClick={() => void updateOrderStatus(order, "paid")}>Konfirmo</Button>
+                        ) : null}
+                        <Button size="sm" className="h-9 min-w-[3.5rem]" variant="destructive" onClick={() => setDeleteTarget(order)}>
+                          Fshi
+                        </Button>
+                      </div>
                     </div>
                   </div>
 
@@ -455,6 +497,21 @@ export default function AdminOrdersPage() {
               </div>
             </div>
           ) : null}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
+        <DialogContent className="sm:max-w-[420px]">
+          <DialogHeader>
+            <DialogTitle>Fshi porosinë?</DialogTitle>
+            <DialogDescription>
+              Ky veprim nuk mund të zhbëhet. Porosia dhe detajet e saj do të hiqen nga paneli.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="mt-5 flex justify-end gap-2">
+            <Button variant="outline" onClick={() => setDeleteTarget(null)}>Anulo</Button>
+            <Button variant="destructive" onClick={() => deleteTarget && void deleteOrder(deleteTarget)}>Fshi porosinë</Button>
+          </div>
         </DialogContent>
       </Dialog>
     </main>

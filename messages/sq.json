@@ -62,6 +62,18 @@
     "addedToCart": "U shtua"
   },
   "cart": {
+    "requiredFields": "Ju lutemi plotësoni të gjitha fushat e detyrueshme.",
+    "orderSummary": "Porosia juaj",
+    "finalizeOrder": "Përfundo porosinë",
+    "customerDetails": "Të dhënat e klientit",
+    "fullName": "Emri dhe mbiemri",
+    "phoneNumber": "Numri i telefonit",
+    "fulfillment": "Marrja e porosisë",
+    "delivery": "Dërgesë",
+    "pickup": "Marrje në klinikë",
+    "deliveryAddress": "Adresa e dërgesës",
+    "invalidCustomer": "Ju lutemi shkruani emrin, një numër telefoni të vlefshëm dhe adresën për dërgesë.",
+    "customerDetailsNotice": "Të dhënat tuaja ruhen me porosinë dhe përfshihen në mesazhin në WhatsApp.",
     "orderSaveError": "Porosia nuk u regjistrua. Ju lutemi provoni përsëri.",
     "whatsappConfirm": "Ju lutem konfirmoni disponueshmërinë, koston e transportit dhe mënyrën e pagesës.",
     "whatsappIntro": "Përshëndetje! Dëshiroj të porosis produktet e mëposhtme:",
