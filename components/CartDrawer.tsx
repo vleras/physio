@@ -45,6 +45,7 @@ export default function CartDrawer({ page = false, checkout = false }: { page?: 
     removeItem,
     setQuantity,
     addItem,
+    clearCart,
     note,
     setNote,
   } = useCart();
@@ -69,7 +70,6 @@ export default function CartDrawer({ page = false, checkout = false }: { page?: 
 
   const handleCheckout = async () => {
     if (!items.length || savingRef.current) return;
-    if (!note.trim()) { toast.error(t("requiredFields")); return; }
     if (!validOrderCustomer({ ...customer, fulfillment: "delivery" })) { toast.error(t("invalidCustomer")); return; }
     savingRef.current = true;
     setSavingOrder(true);
@@ -101,6 +101,9 @@ export default function CartDrawer({ page = false, checkout = false }: { page?: 
       "",
       t("whatsappConfirm"),
     ].join("\n");
+    // The order has been saved successfully. Clear the local checkout state
+    // before leaving so returning to the page does not show the completed order.
+    clearCart();
     window.location.href = `https://wa.me/${phone.whatsapp}?text=${encodeURIComponent(message)}`;
     } catch {
       toast.error(t("orderSaveError"));
@@ -283,7 +286,7 @@ export default function CartDrawer({ page = false, checkout = false }: { page?: 
           </fieldset>}
           <label className="cart-order-note">
             {t("orderNote")}
-            <textarea required value={note} maxLength={500} onChange={(event) => setNote(event.target.value)} placeholder={t("orderNotePlaceholder")} />
+            <textarea value={note} maxLength={500} onChange={(event) => setNote(event.target.value)} placeholder={t("orderNotePlaceholder")} />
           </label>
           <div className="cart-subtotal-row">
             <p className="cart-tax-note">{t("taxNote")}</p>

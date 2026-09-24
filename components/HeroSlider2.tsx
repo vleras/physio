@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import IonIcon from "./IonIcon";
 
 const heroImages = [
@@ -70,6 +71,13 @@ export default function HeroSlider2() {
             />
           </div>
         ))}
+        <div className="mobile-comeback-hero" aria-label="The Comeback">
+          <div className="mobile-comeback-slide mobile-comeback-slide-second">
+            <Image src="/images/mobile-comeback.png" alt="The Comeback" fill sizes="100vw" style={{ objectFit: "cover" }} />
+            <Link className="mobile-comeback-click-area" href="/products" aria-label="View products" />
+            <Link className="mobile-comeback-title-button" href="/products">Buy Now</Link>
+          </div>
+        </div>
       </div>
 
       {/* Navigation Arrows */}
