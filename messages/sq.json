@@ -62,6 +62,7 @@
     "addedToCart": "U shtua"
   },
   "cart": {
+    "orderSaveError": "Porosia nuk u regjistrua. Ju lutemi provoni përsëri.",
     "whatsappConfirm": "Ju lutem konfirmoni disponueshmërinë, koston e transportit dhe mënyrën e pagesës.",
     "whatsappIntro": "Përshëndetje! Dëshiroj të porosis produktet e mëposhtme:",
     "title": "Shporta",

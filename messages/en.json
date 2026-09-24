@@ -62,6 +62,7 @@
     "addedToCart": "Added"
   },
   "cart": {
+    "orderSaveError": "Could not register your order. Please try again.",
     "whatsappConfirm": "Please confirm availability, delivery costs, and payment details.",
     "whatsappIntro": "Hello! I would like to order the following products:",
     "title": "Cart",

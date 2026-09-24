@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import ProductCartButton from "@/components/ProductCartButton";
+import "./product-cart-button.css";
 import IonIcon from "./IonIcon";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -272,7 +272,7 @@ export default function ProductsSidebarDesktop({
                   draggable={false}
                 />
               </div>
-              <div className="sidebar-product-content product-cart-details" style={{ paddingRight: "50px" }}>
+              <div className="sidebar-product-content">
                 <div className="sidebar-product-name">{product.name}</div>
                 <div className="sidebar-product-description">
                   {product.description_1 ||
@@ -283,7 +283,6 @@ export default function ProductsSidebarDesktop({
                 <span className="sidebar-product-link">
                   {t("viewDetails")}
                 </span>
-                <ProductCartButton product={product} />
               </div>
             </div>
           ))}

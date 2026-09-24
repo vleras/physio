@@ -104,7 +104,7 @@ export async function GET(request: NextRequest) {
       .from("orders")
       .select("*")
       .eq("id", id)
-      .eq("status", "paid")
+      .in("status", ["paid", "pending"])
       .single();
 
     if (error) {
@@ -121,7 +121,7 @@ export async function GET(request: NextRequest) {
   const { data, error } = await supabaseAdmin
     .from("orders")
     .select("*")
-    .eq("status", "paid")
+    .in("status", ["paid", "pending"])
     .order("created_at", { ascending: false })
     .limit(200);
 

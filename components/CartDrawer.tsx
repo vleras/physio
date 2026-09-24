@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { toast } from "sonner";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -44,9 +45,28 @@ export default function CartDrawer({ page = false }: { page?: boolean }) {
   }, [suggestions.length, suggestIndex]);
 
   const suggestion = suggestions[suggestIndex] ?? null;
+  const [savingOrder, setSavingOrder] = useState(false);
+  const savingRef = useRef(false);
+  const attemptRef = useRef<{ snapshot: string; id: string } | null>(null);
 
-  const handleCheckout = () => {
-    if (!items.length) return;
+  const handleCheckout = async () => {
+    if (!items.length || savingRef.current) return;
+    savingRef.current = true;
+    setSavingOrder(true);
+    try {
+      const snapshot = JSON.stringify({ locale, note, items: items.map(({ productId, quantity }) => ({ productId, quantity })) });
+      if (attemptRef.current?.snapshot !== snapshot) {
+        let previous = null;
+        try { previous = JSON.parse(sessionStorage.getItem("whatsapp-order-attempt") || "null"); } catch {}
+        attemptRef.current = previous?.snapshot === snapshot && typeof previous.id === "string"
+          ? previous : { snapshot, id: crypto.randomUUID() };
+        try { sessionStorage.setItem("whatsapp-order-attempt", JSON.stringify(attemptRef.current)); } catch {}
+      }
+      const response = await fetch("/api/orders/whatsapp", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...JSON.parse(snapshot), id: attemptRef.current!.id }),
+      });
+      if (!response.ok) throw new Error("Order save failed");
     const message = [
       t("whatsappIntro"),
       "",
@@ -59,6 +79,12 @@ export default function CartDrawer({ page = false }: { page?: boolean }) {
       t("whatsappConfirm"),
     ].join("\n");
     window.location.href = `https://wa.me/${phone.whatsapp}?text=${encodeURIComponent(message)}`;
+    } catch {
+      toast.error(t("orderSaveError"));
+    } finally {
+      savingRef.current = false;
+      setSavingOrder(false);
+    }
   };
 
   const addSuggestion = () => {
@@ -235,11 +261,11 @@ export default function CartDrawer({ page = false }: { page?: boolean }) {
             <button
               type="button"
               className="cart-checkout-btn"
-              disabled={!items.length}
+              disabled={!items.length || savingOrder}
               onClick={handleCheckout}
             >
               <IonIcon name="logo-whatsapp" size={16} />
-              {t("checkout")}
+              {savingOrder ? t("checkingOut") : t("checkout")}
             </button>
             <Link
               href={page ? "/products" : "/cart"}

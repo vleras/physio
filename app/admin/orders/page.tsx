@@ -208,7 +208,7 @@ export default function AdminOrdersPage() {
   }, []);
 
   const paidTotal = useMemo(() => {
-    return orders.reduce((sum, o) => sum + (o.amount_cents || 0), 0);
+    return orders.filter((o) => o.status === "paid").reduce((sum, o) => sum + (o.amount_cents || 0), 0);
   }, [orders]);
 
   const selectedLines = selected ? getLineItems(selected) : [];
@@ -229,7 +229,7 @@ export default function AdminOrdersPage() {
         <div className="mb-5 grid gap-3 sm:grid-cols-2">
           <div className="rounded-xl border border-black/10 bg-white px-4 py-3.5">
             <div className="text-xs font-medium uppercase tracking-wide text-neutral-500">
-              Porosi të paguara
+              Porosi të regjistruara
             </div>
             <div className="mt-1 text-2xl font-semibold tracking-tight">
               {loading ? "—" : orders.length}
@@ -252,7 +252,7 @@ export default function AdminOrdersPage() {
           </div>
         ) : orders.length === 0 ? (
           <div className="rounded-xl border border-dashed border-black/15 bg-white px-6 py-16 text-center text-neutral-500">
-            Nuk u gjetën porosi të paguara
+            Nuk u gjetën porosi
           </div>
         ) : (
           <div className="space-y-3">
@@ -270,6 +270,8 @@ export default function AdminOrdersPage() {
                     <div>
                       <div className="text-sm font-medium text-neutral-900">
                         {formatDate(order.created_at)}
+                        <div className="text-xs mt-1">{order.status === "paid" ? "E paguar" : "Në pritje të konfirmimit — mesazhi dhe pagesa nuk janë konfirmuar"}</div>
+                        <div className="text-xs break-all">#{order.id}</div>
                       </div>
                       <div className="mt-0.5 text-xs text-neutral-500">
                         {itemCount} {itemCount === 1 ? "artikull" : "artikuj"}
@@ -370,7 +372,7 @@ export default function AdminOrdersPage() {
               <div className="bg-neutral-950 px-6 pb-5 pt-6 text-white">
                 <div className="mb-3 flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-white/55">
                   <IonIcon name="receipt-outline" size={14} />
-                  Porosi e paguar
+                  {selected.status === "paid" ? "Porosi e paguar" : "Në pritje të konfirmimit"}
                 </div>
                 <div className="flex flex-wrap items-end justify-between gap-3">
                   <div>
