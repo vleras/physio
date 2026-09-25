@@ -31,6 +31,10 @@
 }
 
 @media (max-width: 768px) {
+  .hero-slider-container > .hero-slide {
+    display: none;
+  }
+
   .hero-section {
     height: 60vh;
     min-height: 400px;
@@ -492,7 +496,9 @@
   }
 
   .mobile-comeback-hero {
-    display: none;
+    display: block;
+    position: absolute;
+    inset: 0;
   }
 
   .mobile-comeback-slide {
