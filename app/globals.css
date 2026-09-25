@@ -538,6 +538,14 @@ body {
   flex-wrap: wrap;
 }
 
+@media (min-width: 769px) {
+  .header .nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
 .nav-link {
   color: #000;
   text-decoration: none;
@@ -2230,8 +2238,8 @@ body {
 /* Product Card - Reference Design Style */
 .product-card {
   background: #fff;
-  border: 1px solid #d5d5d5;
-  border-radius: 12px;
+  border: 1px solid #eeeeee;
+  border-radius: 0;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -2245,7 +2253,7 @@ body {
 
 /* Add subtle hover effect on card */
 .product-card:hover {
-  border-color: #aaa;
+  border-color: #e4e4e4;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   transform: translateY(-2px);
 }
@@ -2373,12 +2381,17 @@ body {
 
 /* Content area */
 .product-card__content {
-  padding: 20px;
+  padding: 16px 20px;
+  background: #f7f7f7;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   text-align: left;
+}
+
+.product-card > .product-cart-details {
+  background: #f7f7f7;
 }
 
 .product-card__top {
@@ -2437,7 +2450,7 @@ body {
   color: #000;
   text-decoration: none;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
 }
 
 .product-card__title:hover {
