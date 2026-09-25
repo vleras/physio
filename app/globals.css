@@ -3283,6 +3283,7 @@ body {
 
   .footer-v2-brand {
     grid-column: 1 / -1;
+    display: none;
   }
 
   .footer-v2-bottom {

@@ -5,7 +5,7 @@ export default function ClinicLogo({ footer = false }: { footer?: boolean }) {
   return (
     <span className={`clinic-logo${footer ? " clinic-logo--footer" : ""}`}>
       <Image
-        src="/clinic-logo.jpeg"
+        src={footer ? "/clinic-logo-transparent.png" : "/clinic-logo.jpeg"}
         alt="VSO Clinic"
         width={1254}
         height={1254}
