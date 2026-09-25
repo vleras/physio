@@ -31,10 +31,6 @@
 }
 
 @media (max-width: 768px) {
-  .hero-slider-container > .hero-slide {
-    display: none;
-  }
-
   .hero-section {
     height: 60vh;
     min-height: 400px;

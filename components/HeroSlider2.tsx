@@ -16,21 +16,37 @@ const heroImages = [
   "/images/Pro_Physio_2.png",
   "/images/All_Products.png",
 ];
+const mobileHeroImages = ["/images/mobile-comeback.png", ...heroImages];
 
 export default function HeroSlider2() {
   const t = useTranslations("common");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  const slides = isMobile ? mobileHeroImages : heroImages;
+
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [isMobile]);
 
   useEffect(() => {
     if (!isAutoPlaying) return;
 
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % heroImages.length);
+      setCurrentIndex((prev) => (prev + 1) % slides.length);
     }, 3000); // Change slide every 4 seconds
 
     return () => clearInterval(interval);
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, slides.length]);
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
@@ -47,7 +63,7 @@ export default function HeroSlider2() {
 
   const prevSlide = () => {
     setCurrentIndex(
-      (prev) => (prev - 1 + heroImages.length) % heroImages.length
+      (prev) => (prev - 1 + slides.length) % slides.length
     );
     setIsAutoPlaying(false);
     setTimeout(() => setIsAutoPlaying(true), 10000);
@@ -56,7 +72,7 @@ export default function HeroSlider2() {
   return (
     <div className="hero-slider">
       <div className="hero-slider-container">
-        {heroImages.map((image, index) => (
+        {slides.map((image, index) => (
           <div
             key={index}
             className={`hero-slide ${index === currentIndex ? "active" : ""}`}
@@ -70,18 +86,12 @@ export default function HeroSlider2() {
               priority={index === 0}
               quality={75}
             />
-            {index === 0 && (
+            {index === 0 && !isMobile && (
               <Link className="hero-buy-now-bottom" href="/products">Buy Now</Link>
             )}
+            {index === 0 && isMobile && <Link className="mobile-comeback-title-button" href="/products">Buy Now</Link>}
           </div>
         ))}
-        <div className="mobile-comeback-hero" aria-label="The Comeback">
-          <div className="mobile-comeback-slide mobile-comeback-slide-second">
-            <Image src="/images/mobile-comeback.png" alt="The Comeback" fill sizes="100vw" style={{ objectFit: "cover" }} />
-            <Link className="mobile-comeback-click-area" href="/products" aria-label="View products" />
-            <Link className="mobile-comeback-title-button" href="/products">Buy Now</Link>
-          </div>
-        </div>
       </div>
 
       {/* Navigation Arrows */}
@@ -102,7 +112,7 @@ export default function HeroSlider2() {
 
       {/* Dots Indicator */}
       <div className="hero-slider-dots">
-        {heroImages.map((_, index) => (
+        {slides.map((_, index) => (
           <button
             key={index}
             className={`hero-slider-dot ${
