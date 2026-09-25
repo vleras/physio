@@ -550,6 +550,7 @@
   }
   .cart-checkout-page .cart-subtotal {
     margin-top: .75rem;
+    width: 100%;
     text-align: right;
   }
 }

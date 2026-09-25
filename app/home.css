@@ -470,8 +470,28 @@
   display: none;
 }
 
+.hero-buy-now-bottom {
+  position: absolute;
+  right: 3.5%;
+  bottom: 8%;
+  z-index: 2;
+  padding: 0.7rem 2rem;
+  border-radius: 1px;
+  background: linear-gradient(110deg, #25b9b5, #147d79);
+  color: #fff;
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 900;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
 @media (max-width: 768px) {
   .hero-slider-container > .hero-slide {
+    display: none;
+  }
+
+  .hero-buy-now-bottom {
     display: none;
   }
 

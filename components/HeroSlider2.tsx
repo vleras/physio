@@ -7,8 +7,9 @@ import { Link } from "@/i18n/navigation";
 import IonIcon from "./IonIcon";
 
 const heroImages = [
-  "/images/IMG_0458.png", // cryosports
   "/images/Recovery-Boots.png",
+  "/images/IMG_0458.png", // cryosports
+  "/images/Ledboots.png",
   "/images/IMG_0457.png", // avaboots
   "/images/Light_Heat_Cold.png",
   "/images/HOME_Exercise.png",
@@ -69,6 +70,9 @@ export default function HeroSlider2() {
               priority={index === 0}
               quality={75}
             />
+            {index === 0 && (
+              <Link className="hero-buy-now-bottom" href="/products">Buy Now</Link>
+            )}
           </div>
         ))}
         <div className="mobile-comeback-hero" aria-label="The Comeback">
