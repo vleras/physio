@@ -487,18 +487,12 @@
 }
 
 @media (max-width: 768px) {
-  .hero-slider-container > .hero-slide {
-    display: none;
-  }
-
   .hero-buy-now-bottom {
     display: none;
   }
 
   .mobile-comeback-hero {
-    display: block;
-    position: absolute;
-    inset: 0;
+    display: none;
   }
 
   .mobile-comeback-slide {
